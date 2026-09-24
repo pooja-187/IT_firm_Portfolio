@@ -7,7 +7,10 @@ import HeroCTA from './HeroCTA';
 
 export default function HeroSection() {
   return (
-    <div className="hero-glow-container min-h-screen flex flex-col justify-between relative selection:bg-lime-300">
+    <div
+      id="hero-main-container"
+      className="hero-glow-container min-h-[110vh] sm:min-h-[115vh] flex flex-col justify-between relative selection:bg-lime-300"
+    >
       {/* Saturated Ambient Diffused Lime-Green Studio Light */}
       <div className="hero-glow-layer" aria-hidden="true" />
 
@@ -15,15 +18,15 @@ export default function HeroSection() {
       <Navigation />
 
       {/* Main Hero Content Area with Generous Editorial Whitespace */}
-      <main className="relative z-10 flex-1 flex flex-col justify-between w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-4 sm:pt-8 pb-12 sm:pb-16">
+      <main className="relative z-10 flex-1 flex flex-col justify-between w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-4 sm:pt-8 pb-16 sm:pb-24">
         
         {/* Top Prestige / Authority Laurel Badge */}
         <div className="flex justify-center mb-6 sm:mb-8">
           <AuthorityBadge />
         </div>
 
-        {/* Central Headline Block (Clean, Airy & Classy) */}
-        <div className="text-center relative z-20 max-w-5xl mx-auto">
+        {/* Central Headline Block (Stable Editorial Anchor) */}
+        <div className="text-center relative z-20 max-w-5xl mx-auto pointer-events-none">
           <h1 className="flex flex-col items-center justify-center text-[#111315]">
             {/* Greeting */}
             <span className="text-5xl sm:text-7xl md:text-8xl lg:text-[6.2rem] font-bold tracking-tight leading-[1.05] text-[#0E1113]">
@@ -44,7 +47,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Central Subject Portrait with Refined Depth & Soft Feather Fade */}
+        {/* Central Subject Portrait Area with Scroll-Driven Upward Travel */}
         <div className="relative mt-2 sm:-mt-6 md:-mt-10 mb-0 z-10">
           <PortraitDisplay />
         </div>

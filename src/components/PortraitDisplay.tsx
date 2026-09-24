@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 interface PortraitDisplayProps {
   imageSrc?: string;
@@ -13,17 +15,114 @@ export default function PortraitDisplay({
   altText = 'Nashim Nazar — Best UI UX Designer in Kottayam, Kerala & CEO of Manzio Creative Studio',
 }: PortraitDisplayProps) {
   const [imageError, setImageError] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const portraitMoverRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || !portraitMoverRef.current || !containerRef.current) {
+      if (portraitMoverRef.current) {
+        gsap.set(portraitMoverRef.current, { y: 0, opacity: 1, clearProps: 'transform' });
+      }
+      return;
+    }
+
+    // Responsive GSAP MatchMedia Scroll-Driven Transition
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        isDesktop: '(min-width: 1024px)',
+        isTablet: '(min-width: 640px) and (max-width: 1023px)',
+        isMobile: '(max-width: 639px)',
+      },
+      (context) => {
+        const { isDesktop, isTablet } = context.conditions as {
+          isDesktop: boolean;
+          isTablet: boolean;
+          isMobile: boolean;
+        };
+
+        // Tuned distance per viewport
+        const travelDistance = isDesktop ? 130 : isTablet ? 85 : 50;
+
+        // Set initial lower position (starts below viewport composition)
+        gsap.set(portraitMoverRef.current, {
+          y: travelDistance,
+          force3D: true,
+        });
+
+        if (glowRef.current) {
+          gsap.set(glowRef.current, {
+            y: travelDistance * 0.6,
+            scale: 0.85,
+            opacity: 0.5,
+            force3D: true,
+          });
+        }
+
+        // Scrubbed scroll animation tied to the hero section scroll progress
+        const triggerElement = document.getElementById('hero-main-container') || containerRef.current;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerElement,
+            start: 'top top',
+            end: '+=450',
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        tl.to(portraitMoverRef.current, {
+          y: 0,
+          ease: 'power1.out',
+          duration: 1,
+        });
+
+        if (glowRef.current) {
+          tl.to(
+            glowRef.current,
+            {
+              y: 0,
+              scale: 1.05,
+              opacity: 1,
+              ease: 'power1.out',
+              duration: 1,
+            },
+            0
+          );
+        }
+      }
+    );
+
+    return () => {
+      mm.revert();
+    };
+  }, []);
 
   return (
-    <div className="relative w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[540px] mx-auto aspect-[3/4] flex items-end justify-center">
-      {/* Dynamic Backlight Aura (Synchronized 1.5s Arrival) */}
-      <div 
-        className="consultant7-glow-arrive absolute bottom-8 inset-x-0 mx-auto w-4/5 h-4/5 rounded-full bg-gradient-to-t from-lime-400/60 via-lime-300/40 to-transparent blur-3xl pointer-events-none -z-10" 
-        aria-hidden="true" 
+    <div
+      ref={containerRef}
+      className="relative w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[540px] mx-auto aspect-[3/4] flex items-end justify-center overflow-visible"
+    >
+      {/* Dynamic Backlight Aura (Scroll-synchronized) */}
+      <div
+        ref={glowRef}
+        className="absolute bottom-6 inset-x-0 mx-auto w-4/5 h-4/5 rounded-full bg-gradient-to-t from-lime-400/60 via-lime-300/40 to-transparent blur-3xl pointer-events-none -z-10 will-change-transform"
+        aria-hidden="true"
       />
 
-      {/* TheConsultant7 Style Arriving Picture Wrapper (Scale 1.1 -> 1.0, Y: 100px -> 0, Blur: 10px -> 0) */}
-      <div className="w-full h-full flex items-end justify-center consultant7-arriving-picture">
+      {/* Scroll-Driven Moving Portrait Wrapper */}
+      <div
+        ref={portraitMoverRef}
+        className="w-full h-full flex items-end justify-center will-change-transform"
+      >
         {!imageError ? (
           <div className="relative w-full h-full portrait-fade-mask flex items-end justify-center">
             <Image
@@ -40,7 +139,7 @@ export default function PortraitDisplay({
             <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#FCFDF9] via-[#FCFDF9]/70 to-transparent pointer-events-none z-10" />
           </div>
         ) : (
-          /* Editorial Cutout Silhouette Placeholder with TheConsultant7 Arriving Motion */
+          /* Editorial Cutout Silhouette Placeholder with Preserved Arch Mask */
           <div className="relative w-full h-full flex flex-col items-center justify-end portrait-fade-mask">
             <div className="relative w-full max-w-[420px] h-[480px] sm:h-[540px] rounded-t-[140px] sm:rounded-t-[180px] bg-gradient-to-b from-[#2B3035] via-[#1E2226] to-[#121518] shadow-2xl flex flex-col items-center justify-between p-8 text-center border-t border-x border-slate-700/30">
               {/* Inner highlight */}
