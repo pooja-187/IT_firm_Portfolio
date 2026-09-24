@@ -49,17 +49,18 @@ export default function PortraitDisplay({
         };
 
         // Tuned distance per viewport
-        const travelDistance = isDesktop ? 130 : isTablet ? 85 : 50;
+        const startY = isDesktop ? 90 : isTablet ? 60 : 35;
+        const targetY = isDesktop ? -45 : isTablet ? -25 : -10;
 
         // Set initial lower position (starts below viewport composition)
         gsap.set(portraitMoverRef.current, {
-          y: travelDistance,
+          y: startY,
           force3D: true,
         });
 
         if (glowRef.current) {
           gsap.set(glowRef.current, {
-            y: travelDistance * 0.6,
+            y: startY * 0.6,
             scale: 0.85,
             opacity: 0.5,
             force3D: true,
@@ -73,14 +74,14 @@ export default function PortraitDisplay({
           scrollTrigger: {
             trigger: triggerElement,
             start: 'top top',
-            end: '+=450',
+            end: '+=400',
             scrub: 0.8,
             invalidateOnRefresh: true,
           },
         });
 
         tl.to(portraitMoverRef.current, {
-          y: 0,
+          y: targetY,
           ease: 'power1.out',
           duration: 1,
         });
@@ -89,7 +90,7 @@ export default function PortraitDisplay({
           tl.to(
             glowRef.current,
             {
-              y: 0,
+              y: targetY * 0.7,
               scale: 1.05,
               opacity: 1,
               ease: 'power1.out',
