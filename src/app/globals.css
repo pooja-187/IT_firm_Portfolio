@@ -41,17 +41,12 @@ body {
   filter: blur(6px);
 }
 
-/* Arriving Picture Entrance & Breathing Animation (Consultant7 Inspired) */
-@keyframes arriveUp {
+/* Exact TheConsultant7 Arriving Picture Animation */
+@keyframes theConsultant7Arrival {
   0% {
     opacity: 0;
-    transform: translateY(70px) scale(0.92);
-    filter: blur(8px);
-  }
-  60% {
-    opacity: 0.95;
-    transform: translateY(-8px) scale(1.015);
-    filter: blur(0px);
+    transform: translateY(100px) scale(1.1);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
@@ -60,10 +55,10 @@ body {
   }
 }
 
-@keyframes glowArrive {
+@keyframes glowArriveSync {
   0% {
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.7);
   }
   100% {
     opacity: 1;
@@ -71,29 +66,16 @@ body {
   }
 }
 
-@keyframes subtleFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+.consultant7-arriving-picture {
+  animation: theConsultant7Arrival 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform, opacity, filter;
 }
 
-.portrait-arriving-container {
-  animation: arriveUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
+.consultant7-glow-arrive {
+  animation: glowArriveSync 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-.portrait-floating {
-  animation: subtleFloat 5s ease-in-out infinite 1.3s;
-}
-
-.portrait-glow-arrive {
-  animation: glowArrive 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Portrait bottom feather fade */
+/* Portrait bottom feather fade & gradient blend */
 .portrait-fade-mask {
   mask-image: linear-gradient(to bottom, black 65%, rgba(0, 0, 0, 0.8) 82%, transparent 98%);
   -webkit-mask-image: linear-gradient(to bottom, black 65%, rgba(0, 0, 0, 0.8) 82%, transparent 98%);
