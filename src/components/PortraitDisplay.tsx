@@ -52,22 +52,13 @@ export default function PortraitDisplay({
         const startY = isDesktop ? 60 : isTablet ? 40 : 20;
         const targetY = isDesktop ? -70 : isTablet ? -45 : -20;
 
-        // Set initial lower position (starts below viewport composition)
+        // Set initial lower position for portrait image ONLY
         gsap.set(portraitMoverRef.current, {
           y: startY,
           force3D: true,
         });
 
-        if (glowRef.current) {
-          gsap.set(glowRef.current, {
-            y: startY * 0.6,
-            scale: 0.85,
-            opacity: 0.5,
-            force3D: true,
-          });
-        }
-
-        // Scrubbed scroll animation tied to the hero section scroll progress
+        // Scrubbed scroll animation tied strictly to the portrait image
         const triggerElement = document.getElementById('hero-main-container') || containerRef.current;
 
         const tl = gsap.timeline({
@@ -80,25 +71,12 @@ export default function PortraitDisplay({
           },
         });
 
+        // ONLY the image moves
         tl.to(portraitMoverRef.current, {
           y: targetY,
           ease: 'power1.out',
           duration: 1,
         });
-
-        if (glowRef.current) {
-          tl.to(
-            glowRef.current,
-            {
-              y: targetY * 0.7,
-              scale: 1.05,
-              opacity: 1,
-              ease: 'power1.out',
-              duration: 1,
-            },
-            0
-          );
-        }
       }
     );
 
