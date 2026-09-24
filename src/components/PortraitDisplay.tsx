@@ -48,9 +48,9 @@ export default function PortraitDisplay({
           isMobile: boolean;
         };
 
-        // Tuned distance per viewport
-        const startY = isDesktop ? 90 : isTablet ? 60 : 35;
-        const targetY = isDesktop ? -45 : isTablet ? -25 : -10;
+        // Tuned distance per viewport for higher elevation
+        const startY = isDesktop ? 60 : isTablet ? 40 : 20;
+        const targetY = isDesktop ? -70 : isTablet ? -45 : -20;
 
         // Set initial lower position (starts below viewport composition)
         gsap.set(portraitMoverRef.current, {
