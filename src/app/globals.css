@@ -41,7 +41,7 @@ body {
   filter: blur(6px);
 }
 
-/* Exact TheConsultant7 1.5s Arriving Entrance Keyframes */
+/* Exact TheConsultant7 Arriving Picture Animation */
 @keyframes theConsultant7Arrival {
   0% {
     opacity: 0;
@@ -55,7 +55,7 @@ body {
   }
 }
 
-@keyframes theConsultant7Glow {
+@keyframes glowArriveSync {
   0% {
     opacity: 0;
     transform: scale(0.7);
@@ -72,7 +72,13 @@ body {
 }
 
 .consultant7-glow-arrive {
-  animation: theConsultant7Glow 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: glowArriveSync 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Portrait bottom feather fade & gradient blend */
+.portrait-fade-mask {
+  mask-image: linear-gradient(to bottom, black 65%, rgba(0, 0, 0, 0.8) 82%, transparent 98%);
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, rgba(0, 0, 0, 0.8) 82%, transparent 98%);
 }
 
 /* Glassmorphic pill */
