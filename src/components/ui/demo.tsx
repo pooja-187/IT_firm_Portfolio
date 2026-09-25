@@ -1,37 +1,63 @@
 "use client"
 
 import React from "react"
-import {
-  ContainerAnimated,
-  ContainerScroll,
-  ContainerStagger,
-  ContainerSticky,
-  GalleryCol,
-  GalleryContainer,
-} from "@/components/blocks/animated-gallery"
+import { motion } from "motion/react"
+import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery"
 
-const IMAGES_1 = [
-  "https://cdn.21st.dev/assets/mirror/db/db8e72b6f6e2f325ec74898fdab6a02f3c0ba7962f3cf0b89f0ee3b22aa2a083.jpg",
-  "https://cdn.21st.dev/assets/mirror/77/777c9bd220f0c47c9eb699ebbd77fb0c6c9a8d8b0cd77f089bab93a18586d578.jpg",
-  "https://cdn.21st.dev/assets/mirror/f9/f992831c368ea7e12c51417be55fda812d1502e9bb6730d94bc6b1e0c6a2ae57.jpg",
-  "https://cdn.21st.dev/assets/mirror/8c/8c0a104646b9b9d6680c2222cf84cfd3e4e10ada11fd0d0759093db9a69cfd3d.jpg",
-]
-const IMAGES_2 = [
-  "https://cdn.21st.dev/assets/mirror/4e/4eb85747c8113c6edcbec2671a5aa4e62d0569488ad75652c16dd7598a1196e1.jpg",
-  "https://cdn.21st.dev/assets/mirror/ab/ab1fd4fd007ecad2ad9a5350341b1013589f05f8f30b8fdd4a35728a800e9fce.jpg",
-  "https://cdn.21st.dev/assets/mirror/4d/4de1f4952d0420f95ade25fc723d8042ece00762429cdccb79fd3a29ffe5f33d.jpg",
-  "https://cdn.21st.dev/assets/mirror/53/53f281293f06536d7f60b1786b0a39404390a55e1675e99e089d2b72234cf8cb.jpg",
-]
-const IMAGES_3 = [
-  "https://cdn.21st.dev/assets/mirror/35/358a63f0c4cb478488bdf1bfb90ed5fd785c28bcddbf058b4a7287fe8ed75fff.jpg",
-  "https://cdn.21st.dev/assets/mirror/e8/e81126a3c16766e36ed84d2226b0b11507e86b999d4d07cd7e88c0f04e14c0eb.jpg",
-  "https://cdn.21st.dev/assets/mirror/77/777c9bd220f0c47c9eb699ebbd77fb0c6c9a8d8b0cd77f089bab93a18586d578.jpg",
-  "https://cdn.21st.dev/assets/mirror/85/85a98f8253097be06cfdaa5a312c644d4df00749aad17dda4468ab8d3dce7bd0.jpg",
+export const galleryItems: GalleryItem[] = [
+  {
+    image: "https://cdn.21st.dev/assets/mirror/e9/e9f40fde089106509f8f0618d109f54f6d684390f843e8d1a6b5059e81453caf.jpg",
+    text: "Bridge",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/07/07b4e801248a3aea53329b56e50ff0bf4500ee0e603742000db362557ccd609f.jpg",
+    text: "Desk Setup",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/ef/ef490a9710d011911f365ff14eaa1ba7cca5d8f327c67df6e2d8796abdd0afb0.jpg",
+    text: "Waterfall",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/98/980d919a5154a9d98a355748381dc20fd4a5df9feb5d36ce01f6bc561e8cda1b.jpg",
+    text: "Strawberries",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/01/01d0cba6c7a56afeef2040d5d2a1dfd6a1c86fafa703e0f498f6f8794c11ef66.jpg",
+    text: "Deep Diving",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/28/28b5936e7c76019c46d2b22ac3abbd18b1a3aaa0c3962ff723e25973f59763ba.jpg",
+    text: "Train Track",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/3a/3a7a5e345bc71cb788e0a8538006dec703983b3f32412623d5a64d5b1e4cd00e.jpg",
+    text: "Santorini",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/06/065c0afc39b065e339dee3d1bbda6787882dbe81a676f54f0847cfb1c8493d7d.jpg",
+    text: "Blurry Lights",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/46/46065f54c2e5b2f6b9f178227e0383cf0a8b12daab1556be26dbfcfb1de1de82.jpg",
+    text: "New York",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/99/99bc6663facf0eb98396f8b78d274cd58d78817db2ff9c89d3c16729bf9ae5fd.jpg",
+    text: "Good Boy",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/40/4020b7c8c9171f12a7747c0850d854cbd16aab16b4d17d8bfce841dc7fdacd8e.jpg",
+    text: "Coastline",
+  },
+  {
+    image: "https://cdn.21st.dev/assets/mirror/99/99321a58b63bf661e414cde2a66ae72d10f7af24d5b25c248a63b10106c43d13.jpg",
+    text: "Palm Trees",
+  },
 ]
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-white pt-16 sm:pt-20">
+    <div id="work" className="relative bg-white pt-16 sm:pt-20 pb-16 sm:pb-24 overflow-hidden">
       {/* ===================================================
           ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (SEAMLESSLY BLENDED)
          =================================================== */}
@@ -74,19 +100,31 @@ export const DemoVariant1 = () => {
         />
       </div>
 
-      <ContainerStagger className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
+      {/* Section Header */}
+      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
         {/* Section Label */}
-        <ContainerAnimated className="flex justify-center mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mb-4"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-slate-200/80 shadow-sm backdrop-blur-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16] animate-pulse" />
             <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
               03 — SELECTED WORK
             </span>
           </div>
-        </ContainerAnimated>
+        </motion.div>
 
         {/* Main Heading */}
-        <ContainerAnimated>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           <h2 className="font-sans font-normal tracking-[-0.03em] text-[#111111] text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.12]">
             Selected work where{" "}
             <span className="font-serif italic font-normal text-[#84CC16]">
@@ -95,55 +133,33 @@ export const DemoVariant1 = () => {
             , technology and{" "}
             <span className="text-[#64748B]">business come together.</span>
           </h2>
-        </ContainerAnimated>
+        </motion.div>
 
         {/* Supporting Text */}
-        <ContainerAnimated className="mt-4 sm:mt-5 max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 sm:mt-5 max-w-2xl mx-auto"
+        >
           <p className="font-sans text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
             A selection of projects shaped through thoughtful design, technology and business-focused thinking.
           </p>
-        </ContainerAnimated>
-      </ContainerStagger>
+        </motion.div>
+      </div>
 
-      <ContainerScroll className="relative h-[220vh]">
-        <ContainerSticky className="h-screen max-h-screen">
-          <GalleryContainer className="px-4 sm:px-8">
-            <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
-              {IMAGES_1.map((imageUrl, index) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={index}
-                  className="aspect-video block h-auto max-h-full w-full  rounded-md  object-cover shadow"
-                  src={imageUrl}
-                  alt="gallery item"
-                />
-              ))}
-            </GalleryCol>
-            <GalleryCol className="mt-[-50%]" yRange={["15%", "5%"]}>
-              {IMAGES_2.map((imageUrl, index) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={index}
-                  className="aspect-video block h-auto max-h-full w-full  rounded-md  object-cover shadow"
-                  src={imageUrl}
-                  alt="gallery item"
-                />
-              ))}
-            </GalleryCol>
-            <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
-              {IMAGES_3.map((imageUrl, index) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={index}
-                  className="aspect-video block h-auto max-h-full w-full  rounded-md  object-cover shadow"
-                  src={imageUrl}
-                  alt="gallery item"
-                />
-              ))}
-            </GalleryCol>
-          </GalleryContainer>
-        </ContainerSticky>
-      </ContainerScroll>
+      {/* 3D WebGL Circular Gallery Showcase */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-4">
+        <div className="relative h-[550px] sm:h-[620px] md:h-[680px] w-full rounded-2xl overflow-hidden">
+          <CircularGallery
+            items={galleryItems}
+            bend={3}
+            borderRadius={0.05}
+            scrollEase={0.02}
+          />
+        </div>
+      </div>
     </div>
   )
 }
