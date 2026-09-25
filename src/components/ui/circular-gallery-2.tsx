@@ -101,6 +101,50 @@ function createTextTexture(
   return { texture, width: canvas.width, height: canvas.height };
 }
 
+/**
+ * Robust WebGL Context probe with clean canvas isolation
+ */
+function probeWebGLContext(): { canvas: HTMLCanvasElement; webglVersion: number; antialias: boolean } | null {
+  if (typeof window === "undefined") return null;
+
+  const strategies = [
+    { version: 2, antialias: true },
+    { version: 2, antialias: false },
+    { version: 1, antialias: true },
+    { version: 1, antialias: false },
+  ];
+
+  for (const s of strategies) {
+    const canvas = document.createElement("canvas");
+    const attrs: WebGLContextAttributes = {
+      alpha: true,
+      antialias: s.antialias,
+      depth: false,
+      stencil: false,
+      powerPreference: "default",
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false,
+    };
+
+    let gl: RenderingContext | null = null;
+    try {
+      if (s.version === 2) {
+        gl = canvas.getContext("webgl2", attrs);
+      } else {
+        gl = canvas.getContext("webgl", attrs) || canvas.getContext("experimental-webgl", attrs);
+      }
+    } catch {
+      gl = null;
+    }
+
+    if (gl) {
+      return { canvas, webglVersion: s.version, antialias: s.antialias };
+    }
+  }
+
+  return null;
+}
+
 /* --------------------------------
  * OGL Classes
  ----------------------------------- */
@@ -496,47 +540,42 @@ class App {
   }
 
   createRenderer(): boolean {
-    // Try multiple fallback configuration profiles to guarantee context initialization on all browsers
-    const profiles = [
-      { webgl: 2, alpha: true, antialias: true, depth: false, powerPreference: "default" as const },
-      { webgl: 2, alpha: true, antialias: false, depth: false, powerPreference: "default" as const },
-      { webgl: 1, alpha: true, antialias: true, depth: false, powerPreference: "default" as const },
-      { webgl: 1, alpha: true, antialias: false, depth: false, powerPreference: "default" as const },
-    ];
-
-    for (const profile of profiles) {
-      try {
-        const canvas = document.createElement("canvas");
-        this.renderer = new Renderer({
-          canvas,
-          alpha: profile.alpha,
-          antialias: profile.antialias,
-          depth: profile.depth,
-          webgl: profile.webgl,
-          dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
-        });
-        this.gl = this.renderer.gl;
-        if (this.gl && this.gl.canvas) {
-          this.gl.clearColor(0, 0, 0, 0);
-          this.container.appendChild(this.gl.canvas);
-
-          // Handle WebGL context lost gracefully
-          this.handleContextLost = (e: Event) => {
-            e.preventDefault();
-            console.warn("[CircularGallery] WebGL context lost.");
-            this.destroy();
-            if (this.onContextLostCallback) {
-              this.onContextLostCallback();
-            }
-          };
-          this.gl.canvas.addEventListener("webglcontextlost", this.handleContextLost, false);
-          return true;
-        }
-      } catch (err) {
-        // Continue to next profile
-      }
+    const probe = probeWebGLContext();
+    if (!probe) {
+      return false;
     }
-    return false;
+
+    try {
+      this.renderer = new Renderer({
+        canvas: probe.canvas,
+        alpha: true,
+        antialias: probe.antialias,
+        depth: false,
+        webgl: probe.webglVersion,
+        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+      });
+      this.gl = this.renderer.gl;
+      if (!this.gl || !this.gl.canvas) {
+        return false;
+      }
+      this.gl.clearColor(0, 0, 0, 0);
+      this.container.appendChild(this.gl.canvas);
+
+      // Handle WebGL context lost gracefully
+      this.handleContextLost = (e: Event) => {
+        e.preventDefault();
+        console.warn("[CircularGallery] WebGL context lost.");
+        this.destroy();
+        if (this.onContextLostCallback) {
+          this.onContextLostCallback();
+        }
+      };
+      this.gl.canvas.addEventListener("webglcontextlost", this.handleContextLost, false);
+      return true;
+    } catch (e) {
+      console.warn("[CircularGallery] Renderer instantiation error:", e);
+      return false;
+    }
   }
 
   createCamera() {
