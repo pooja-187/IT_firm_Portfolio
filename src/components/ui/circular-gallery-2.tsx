@@ -29,12 +29,12 @@ interface CircularGalleryProps
   items?: GalleryItem[];
   /**
    * The amount of curvature. Higher values create a stronger bend.
-   * @default 2.5
+   * @default 3
    */
   bend?: number;
   /**
    * The border radius for the images, as a percentage (0.0 to 0.5).
-   * @default 0.06
+   * @default 0.05
    */
   borderRadius?: number;
   /**
@@ -80,29 +80,22 @@ function autoBind(instance: object) {
 function createTextTexture(
   gl: OGLRenderingContext,
   text: string,
-  textColor: string,
+  font: string,
+  color: string,
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
-  const fontSize = 42;
-  const fontFamily = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-  
-  context.font = `600 ${fontSize}px ${fontFamily}`;
+  context.font = font;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const paddingX = 48;
-  
-  canvas.width = Math.max(textWidth + paddingX * 2, 256);
-  canvas.height = 96;
-  
-  // Render crisp label
-  context.font = `600 ${fontSize}px ${fontFamily}`;
-  context.fillStyle = textColor || "#111111";
+  canvas.width = Math.max(textWidth + 40, 256);
+  canvas.height = 80;
+  context.font = font;
+  context.fillStyle = color;
   context.textBaseline = "middle";
   context.textAlign = "center";
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillText(text, canvas.width / 2, canvas.height / 2);
-
   const texture = new Texture(gl, { generateMipmaps: false });
   texture.image = canvas;
   return { texture, width: canvas.width, height: canvas.height };
@@ -117,8 +110,8 @@ class Title {
   renderer: Renderer;
   text: string;
   textColor: string;
+  font: string;
   mesh!: Mesh;
-  aspect: number = 1;
 
   constructor({
     gl,
@@ -126,12 +119,14 @@ class Title {
     renderer,
     text,
     textColor,
+    font,
   }: {
     gl: OGLRenderingContext;
     plane: Mesh;
     renderer: Renderer;
     text: string;
     textColor: string;
+    font: string;
   }) {
     autoBind(this);
     this.gl = gl;
@@ -139,6 +134,7 @@ class Title {
     this.renderer = renderer;
     this.text = text;
     this.textColor = textColor;
+    this.font = font;
     this.createMesh();
   }
 
@@ -146,9 +142,9 @@ class Title {
     const { texture, width, height } = createTextTexture(
       this.gl,
       this.text,
+      this.font,
       this.textColor,
     );
-    this.aspect = width / height;
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
       vertex: `
@@ -168,33 +164,20 @@ class Title {
         varying vec2 vUv;
         void main() {
           vec4 color = texture2D(tMap, vUv);
-          if (color.a < 0.05) discard;
+          if (color.a < 0.1) discard;
           gl_FragColor = color;
         }
       `,
       uniforms: { tMap: { value: texture } },
       transparent: true,
-      depthTest: false,
-      depthWrite: false,
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
+    const aspect = width / height;
+    const textHeight = this.plane.scale.y * 0.15;
+    const textWidth = textHeight * aspect;
+    this.mesh.scale.set(textWidth, textHeight, 1);
+    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5;
     this.mesh.setParent(this.plane);
-    this.updateTransform();
-  }
-
-  updateTransform() {
-    if (!this.mesh) return;
-    const parentScaleX = Math.max(this.plane.scale.x, 0.001);
-    const parentScaleY = Math.max(this.plane.scale.y, 0.001);
-    
-    // Relative height of the label relative to parent card
-    const relHeight = 0.08;
-    // Compensate for non-uniform parent scaling so text is never stretched
-    const relWidth = relHeight * this.aspect * (parentScaleY / parentScaleX);
-    
-    this.mesh.scale.set(relWidth, relHeight, 1);
-    // Position below card's bottom edge (-0.5 in normalized parent coordinates)
-    this.mesh.position.y = -0.5 - relHeight * 0.85;
   }
 }
 
@@ -212,6 +195,7 @@ class Media {
   bend: number;
   textColor: string;
   borderRadius: number;
+  font: string;
   program!: Program;
   plane!: Mesh;
   title!: Title;
@@ -238,7 +222,8 @@ class Media {
     viewport,
     bend,
     textColor,
-    borderRadius = 0.06,
+    borderRadius = 0,
+    font,
   }: {
     geometry: Plane;
     gl: OGLRenderingContext;
@@ -253,6 +238,7 @@ class Media {
     bend: number;
     textColor: string;
     borderRadius: number;
+    font: string;
   }) {
     this.geometry = geometry;
     this.gl = gl;
@@ -267,6 +253,7 @@ class Media {
     this.bend = bend;
     this.textColor = textColor;
     this.borderRadius = borderRadius;
+    this.font = font;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -292,7 +279,7 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.08 + uSpeed * 0.4);
+          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -320,7 +307,7 @@ class Media {
           );
           vec4 color = texture2D(tMap, uv);
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-          float edgeSmooth = 0.003;
+          float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
           gl_FragColor = vec4(color.rgb, alpha);
         }
@@ -362,6 +349,7 @@ class Media {
       renderer: this.renderer,
       text: this.text,
       textColor: this.textColor,
+      font: this.font,
     });
   }
 
@@ -380,14 +368,11 @@ class Media {
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
       const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-      
-      // Gentle vertical lift so the arc and labels stay balanced and centered without huge bottom voids
-      const verticalLift = B_abs * 0.15;
       if (this.bend > 0) {
-        this.plane.position.y = -arc + verticalLift;
+        this.plane.position.y = -arc;
         this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
       } else {
-        this.plane.position.y = arc - verticalLift;
+        this.plane.position.y = arc;
         this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
     }
@@ -427,23 +412,18 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    // Harmonious card dimensions with generous vertical room
     this.plane.scale.y =
-      (this.viewport.height * (720 * this.scale)) / this.screen.height;
+      (this.viewport.height * (700 * this.scale)) / this.screen.height;
     this.plane.scale.x =
-      (this.viewport.width * (540 * this.scale)) / this.screen.width;
+      (this.viewport.width * (520 * this.scale)) / this.screen.width;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 1.5;
+    this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
-
-    if (this.title) {
-      this.title.updateTransform();
-    }
   }
 }
 
@@ -464,7 +444,6 @@ class App {
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf!: number;
-  destroyed: boolean = false;
   boundOnResize!: () => void;
   boundOnWheel!: (e: WheelEvent) => void;
   boundOnTouchDown!: (e: MouseEvent | TouchEvent) => void;
@@ -478,6 +457,7 @@ class App {
       bend,
       textColor,
       borderRadius,
+      font,
       scrollSpeed,
       scrollEase,
     }: {
@@ -485,6 +465,7 @@ class App {
       bend: number;
       textColor: string;
       borderRadius: number;
+      font: string;
       scrollSpeed: number;
       scrollEase: number;
     },
@@ -494,39 +475,25 @@ class App {
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     autoBind(this);
-
-    const initialized = this.createRenderer();
-    if (!initialized) {
-      return;
-    }
-
+    this.createRenderer();
     this.createCamera();
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius);
+    this.createMedias(items, bend, textColor, borderRadius, font);
     this.update();
     this.addEventListeners();
   }
 
-  createRenderer(): boolean {
-    try {
-      this.renderer = new Renderer({
-        alpha: true,
-        antialias: true,
-        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
-      });
-      this.gl = this.renderer.gl;
-      if (!this.gl || !this.gl.canvas) {
-        return false;
-      }
-      this.gl.clearColor(0, 0, 0, 0);
-      this.container.appendChild(this.gl.canvas);
-      return true;
-    } catch (e) {
-      console.warn("CircularGallery: WebGL context creation failed, falling back.", e);
-      return false;
-    }
+  createRenderer() {
+    this.renderer = new Renderer({
+      alpha: true,
+      antialias: true,
+      dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+    });
+    this.gl = this.renderer.gl;
+    this.gl.clearColor(0, 0, 0, 0);
+    this.container.appendChild(this.gl.canvas);
   }
 
   createCamera() {
@@ -551,6 +518,7 @@ class App {
     bend: number,
     textColor: string,
     borderRadius: number,
+    font: string,
   ) {
     const defaultItems: GalleryItem[] = [
       {
@@ -571,7 +539,6 @@ class App {
       },
     ];
     const galleryItems = items && items.length > 0 ? items : defaultItems;
-    // Duplicate items for seamless continuous looping
     this.mediasImages = [...galleryItems, ...galleryItems];
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
@@ -588,6 +555,7 @@ class App {
         bend,
         textColor,
         borderRadius,
+        font,
       });
     });
   }
@@ -646,7 +614,7 @@ class App {
   }
 
   update() {
-    if (this.destroyed || !this.renderer || !this.gl) return;
+    if (!this.renderer || !this.gl) return;
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
@@ -678,34 +646,21 @@ class App {
   }
 
   destroy() {
-    this.destroyed = true;
     if (this.raf) {
       window.cancelAnimationFrame(this.raf);
     }
-    if (this.boundOnResize) window.removeEventListener("resize", this.boundOnResize);
-    if (this.boundOnWheel) window.removeEventListener("wheel", this.boundOnWheel);
-    if (this.container && this.boundOnTouchDown) {
+    window.removeEventListener("resize", this.boundOnResize);
+    window.removeEventListener("wheel", this.boundOnWheel);
+    if (this.container) {
       this.container.removeEventListener("mousedown", this.boundOnTouchDown);
       this.container.removeEventListener("touchstart", this.boundOnTouchDown);
     }
-    if (this.boundOnTouchMove) {
-      window.removeEventListener("mousemove", this.boundOnTouchMove);
-      window.removeEventListener("touchmove", this.boundOnTouchMove);
-    }
-    if (this.boundOnTouchUp) {
-      window.removeEventListener("mouseup", this.boundOnTouchUp);
-      window.removeEventListener("touchend", this.boundOnTouchUp);
-    }
-    if (this.gl) {
-      try {
-        const loseContext = this.gl.getExtension("WEBGL_lose_context");
-        if (loseContext) {
-          loseContext.loseContext();
-        }
-      } catch (e) {}
-      if (this.gl.canvas && this.gl.canvas.parentNode) {
-        this.gl.canvas.parentNode.removeChild(this.gl.canvas);
-      }
+    window.removeEventListener("mousemove", this.boundOnTouchMove);
+    window.removeEventListener("mouseup", this.boundOnTouchUp);
+    window.removeEventListener("touchmove", this.boundOnTouchMove);
+    window.removeEventListener("touchend", this.boundOnTouchUp);
+    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas && this.renderer.gl.canvas.parentNode) {
+      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
     }
   }
 }
@@ -715,8 +670,8 @@ class App {
  ----------------------------------- */
 const CircularGallery = ({
   items,
-  bend = 2.5,
-  borderRadius = 0.06,
+  bend = 3,
+  borderRadius = 0.05,
   scrollSpeed = 2,
   scrollEase = 0.05,
   className,
@@ -724,80 +679,40 @@ const CircularGallery = ({
   ...props
 }: CircularGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
+    containerRef.current.innerHTML = ""; // Ensure clean canvas mount
 
-    // Check WebGL support
-    const testCanvas = document.createElement("canvas");
-    const gl = testCanvas.getContext("webgl2") || testCanvas.getContext("webgl");
-    if (!gl) {
-      setWebglSupported(false);
-      return;
-    }
-    setWebglSupported(true);
+    const computedStyle = getComputedStyle(containerRef.current);
+    const computedColor = computedStyle.color || "#111111";
+    const computedFontWeight = computedStyle.fontWeight || "bold";
+    const computedFontSize = computedStyle.fontSize || "30px";
+    const computedFontFamily = computedStyle.fontFamily || "sans-serif";
+    const computedFont = `${computedFontWeight} ${computedFontSize} ${computedFontFamily}`;
 
-    const computedColor = "#111111";
-    let app: App | null = null;
-
-    try {
-      app = new App(containerRef.current, {
-        items,
-        bend,
-        textColor: computedColor,
-        borderRadius,
-        scrollSpeed,
-        scrollEase,
-      });
-    } catch (err) {
-      console.warn("CircularGallery initialization caught error:", err);
-      setWebglSupported(false);
-    }
+    const app = new App(containerRef.current, {
+      items,
+      bend,
+      textColor: computedColor,
+      borderRadius,
+      font: computedFont,
+      scrollSpeed,
+      scrollEase,
+    });
 
     return () => {
-      if (app) {
-        app.destroy();
-      }
+      app.destroy();
     };
   }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName]);
-
-  // Fallback interactive carousel if WebGL is unavailable on device/browser
-  if (webglSupported === false && items && items.length > 0) {
-    return (
-      <div
-        className={cn(
-          "w-full h-full overflow-x-auto overflow-y-hidden flex items-center gap-6 px-8 py-6 no-scrollbar",
-          className,
-        )}
-        {...props}
-      >
-        {items.map((item, idx) => (
-          <div
-            key={`fallback-${idx}`}
-            className="shrink-0 w-[280px] sm:w-[340px] flex flex-col items-center gap-3"
-          >
-            <div className="w-full h-[360px] sm:h-[440px] rounded-3xl overflow-hidden shadow-lg border border-black/5 bg-slate-100">
-              <img
-                src={item.image}
-                alt={item.text}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="font-sans font-semibold text-sm text-[#111111] text-center">
-              {item.text}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div
       ref={containerRef}
       className={cn(
         "w-full h-full overflow-hidden cursor-grab active:cursor-grabbing",
+        "text-foreground font-bold text-[30px]",
+        fontClassName,
         className,
       )}
       {...props}
@@ -806,5 +721,3 @@ const CircularGallery = ({
 };
 
 export { CircularGallery };
-
-

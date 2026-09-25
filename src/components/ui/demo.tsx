@@ -127,11 +127,11 @@ export const DemoVariant1 = () => {
 
       {/* 3D WebGL Circular Gallery Showcase (Full Screen Width Edge-to-Edge) */}
       <div className="relative z-10 w-full overflow-hidden">
-        <div className="relative h-[480px] sm:h-[560px] md:h-[620px] lg:h-[660px] w-full">
+        <div className="relative h-[540px] sm:h-[620px] md:h-[700px] lg:h-[760px] w-full">
           <CircularGallery
             items={galleryItems}
-            bend={2.5}
-            borderRadius={0.06}
+            bend={3}
+            borderRadius={0.05}
             scrollSpeed={2}
             scrollEase={0.05}
           />
