@@ -10,8 +10,7 @@ import {
   Transform,
   type OGLRenderingContext,
 } from "ogl";
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 /* --------------------------------
@@ -30,7 +29,7 @@ interface CircularGalleryProps
   items?: GalleryItem[];
   /**
    * The amount of curvature. Higher values create a stronger bend.
-   * @default 2.0
+   * @default 2.5
    */
   bend?: number;
   /**
@@ -188,14 +187,14 @@ class Title {
     const parentScaleX = Math.max(this.plane.scale.x, 0.001);
     const parentScaleY = Math.max(this.plane.scale.y, 0.001);
     
-    // Crisp text height proportional to card
-    const relHeight = 0.07;
-    // Aspect ratio compensation so text font is never squished or stretched
+    // Relative height of the label relative to parent card
+    const relHeight = 0.08;
+    // Compensate for non-uniform parent scaling so text is never stretched
     const relWidth = relHeight * this.aspect * (parentScaleY / parentScaleX);
     
     this.mesh.scale.set(relWidth, relHeight, 1);
-    // Position comfortably below card bottom edge
-    this.mesh.position.y = -0.5 - relHeight * 0.75;
+    // Position below card's bottom edge (-0.5 in normalized parent coordinates)
+    this.mesh.position.y = -0.5 - relHeight * 0.85;
   }
 }
 
@@ -292,16 +291,11 @@ class Media {
         varying vec2 vUv;
         void main() {
           vUv = uv;
+          vec3 p = position;
+          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.08 + uSpeed * 0.4);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
-      `.replace(
-        "gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);",
-        `
-          vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.06 + uSpeed * 0.3);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-        `
-      ),
+      `,
       fragment: `
         precision highp float;
         uniform vec2 uImageSizes;
@@ -385,15 +379,15 @@ class Media {
       const B_abs = Math.abs(this.bend);
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
-      const arc = R - Math.sqrt(Math.max(R * R - effectiveX * effectiveX, 0));
+      const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
       
-      // Arc midpoint offset: centers the curve vertically in the canvas
-      const arcOffset = B_abs * 0.48;
+      // Gentle vertical lift so the arc and labels stay balanced and centered without huge bottom voids
+      const verticalLift = B_abs * 0.15;
       if (this.bend > 0) {
-        this.plane.position.y = -arc + arcOffset;
+        this.plane.position.y = -arc + verticalLift;
         this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
       } else {
-        this.plane.position.y = arc - arcOffset;
+        this.plane.position.y = arc - verticalLift;
         this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
     }
@@ -432,16 +426,17 @@ class Media {
         ).uViewportSizes.value = [this.viewport.width, this.viewport.height];
       }
     }
-    
-    // Robust card dimensions that gracefully fit the canvas without overflow
-    this.plane.scale.y = this.viewport.height * 0.58;
-    this.plane.scale.x = this.plane.scale.y * 0.72;
-    
+    this.scale = this.screen.height / 1500;
+    // Harmonious card dimensions with generous vertical room
+    this.plane.scale.y =
+      (this.viewport.height * (720 * this.scale)) / this.screen.height;
+    this.plane.scale.x =
+      (this.viewport.width * (540 * this.scale)) / this.screen.width;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 1.2;
+    this.padding = 1.5;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
@@ -457,8 +452,8 @@ class App {
   scrollSpeed: number;
   scroll: { ease: number; current: number; target: number; last: number };
   onCheckDebounce: () => void;
-  renderer: Renderer | null = null;
-  gl: OGLRenderingContext | null = null;
+  renderer!: Renderer;
+  gl!: OGLRenderingContext;
   camera!: Camera;
   scene!: Transform;
   planeGeometry!: Plane;
@@ -468,13 +463,12 @@ class App {
   start: number = 0;
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
-  raf: number | null = null;
+  raf!: number;
   boundOnResize!: () => void;
   boundOnWheel!: (e: WheelEvent) => void;
   boundOnTouchDown!: (e: MouseEvent | TouchEvent) => void;
   boundOnTouchMove!: (e: MouseEvent | TouchEvent) => void;
   boundOnTouchUp!: () => void;
-  isDestroyed: boolean = false;
 
   constructor(
     container: HTMLElement,
@@ -499,12 +493,7 @@ class App {
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     autoBind(this);
-    
-    const initialized = this.createRenderer();
-    if (!initialized || !this.gl) {
-      return;
-    }
-    
+    this.createRenderer();
     this.createCamera();
     this.createScene();
     this.onResize();
@@ -514,29 +503,18 @@ class App {
     this.addEventListeners();
   }
 
-  createRenderer(): boolean {
-    try {
-      this.renderer = new Renderer({
-        alpha: true,
-        antialias: true,
-        dpr: Math.min(window.devicePixelRatio || 1, 2),
-        powerPreference: "high-performance",
-      });
-      this.gl = this.renderer.gl;
-      if (!this.gl) return false;
-      this.gl.clearColor(0, 0, 0, 0);
-      this.container.appendChild(this.gl.canvas);
-      return true;
-    } catch (e) {
-      console.warn("Unable to create WebGL context in CircularGallery:", e);
-      this.renderer = null;
-      this.gl = null;
-      return false;
-    }
+  createRenderer() {
+    this.renderer = new Renderer({
+      alpha: true,
+      antialias: true,
+      dpr: Math.min(window.devicePixelRatio || 1, 2),
+    });
+    this.gl = this.renderer.gl;
+    this.gl.clearColor(0, 0, 0, 0);
+    this.container.appendChild(this.gl.canvas);
   }
 
   createCamera() {
-    if (!this.gl) return;
     this.camera = new Camera(this.gl);
     this.camera.fov = 45;
     this.camera.position.z = 20;
@@ -547,7 +525,6 @@ class App {
   }
 
   createGeometry() {
-    if (!this.gl) return;
     this.planeGeometry = new Plane(this.gl, {
       heightSegments: 50,
       widthSegments: 100,
@@ -560,35 +537,35 @@ class App {
     textColor: string,
     borderRadius: number,
   ) {
-    if (!this.gl || !this.renderer) return;
     const defaultItems: GalleryItem[] = [
       {
         image: "/images/projects/travinno.jpg",
-        text: "Travinno · AI Travel Companion",
+        text: "Travinno — AI Travel",
       },
       {
         image: "/images/projects/manzio.jpg",
-        text: "Manzio · Creative Agency",
+        text: "Manzio Creative Studio",
       },
       {
         image: "/images/projects/faazo.jpg",
-        text: "Faazo · Logistics SaaS",
+        text: "Faazo — Smart Logistics",
       },
       {
         image: "/images/projects/careva.jpg",
-        text: "Careva · Healthcare Ecosystem",
+        text: "Careva — Health Portal",
       },
     ];
     const galleryItems = items && items.length > 0 ? items : defaultItems;
+    // Duplicate items for seamless continuous looping
     this.mediasImages = [...galleryItems, ...galleryItems];
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
-        gl: this.gl!,
+        gl: this.gl,
         image: data.image,
         index,
         length: this.mediasImages.length,
-        renderer: this.renderer!,
+        renderer: this.renderer,
         scene: this.scene,
         screen: this.screen,
         text: data.text,
@@ -633,10 +610,9 @@ class App {
   }
 
   onResize() {
-    if (!this.renderer || !this.camera) return;
     this.screen = {
-      width: this.container.clientWidth || window.innerWidth,
-      height: this.container.clientHeight || 500,
+      width: this.container.clientWidth,
+      height: this.container.clientHeight,
     };
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({
@@ -654,7 +630,6 @@ class App {
   }
 
   update() {
-    if (this.isDestroyed || !this.renderer || !this.scene || !this.camera) return;
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
@@ -686,10 +661,7 @@ class App {
   }
 
   destroy() {
-    this.isDestroyed = true;
-    if (this.raf) {
-      window.cancelAnimationFrame(this.raf);
-    }
+    window.cancelAnimationFrame(this.raf);
     window.removeEventListener("resize", this.boundOnResize);
     window.removeEventListener("wheel", this.boundOnWheel);
     this.container.removeEventListener("mousedown", this.boundOnTouchDown);
@@ -698,60 +670,10 @@ class App {
     this.container.removeEventListener("touchstart", this.boundOnTouchDown);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
-
-    // Explicitly lose context to free GPU memory in React dev mode
-    if (this.gl) {
-      try {
-        const loseExt = this.gl.getExtension("WEBGL_lose_context");
-        if (loseExt) loseExt.loseContext();
-      } catch (e) {
-        // ignore
-      }
-    }
-
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas && this.renderer.gl.canvas.parentNode) {
+    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
     }
   }
-}
-
-/* --------------------------------
- * Fallback Component (when WebGL is disabled or unavailable)
- ----------------------------------- */
-function CSSGalleryFallback({
-  items = [],
-  className,
-}: {
-  items?: GalleryItem[];
-  className?: string;
-}) {
-  return (
-    <div className={cn("w-full py-4 overflow-x-auto no-scrollbar", className)}>
-      <div className="flex items-center gap-6 px-6 max-w-7xl mx-auto">
-        {items.map((item, idx) => (
-          <motion.div
-            key={`fallback-${idx}`}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.08 }}
-            className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] group flex flex-col items-center"
-          >
-            <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-slate-100 shadow-[0_16px_40px_rgba(0,0,0,0.08)] border border-black/5 group-hover:scale-[1.02] transition-transform duration-300">
-              <img
-                src={item.image}
-                alt={item.text}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="mt-3 font-sans text-sm sm:text-base font-semibold text-[#111111] text-center tracking-tight">
-              {item.text}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 /* --------------------------------
@@ -759,7 +681,7 @@ function CSSGalleryFallback({
  ----------------------------------- */
 const CircularGallery = ({
   items,
-  bend = 2.0,
+  bend = 2.5,
   borderRadius = 0.06,
   scrollSpeed = 2,
   scrollEase = 0.05,
@@ -768,57 +690,24 @@ const CircularGallery = ({
   ...props
 }: CircularGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [webglFailed, setWebglFailed] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
-    let app: App | null = null;
+    const computedColor = "#111111";
 
-    try {
-      // Check if WebGL context can be created safely
-      const testCanvas = document.createElement("canvas");
-      const testGl = (
-        testCanvas.getContext("webgl2") ||
-        testCanvas.getContext("webgl") ||
-        testCanvas.getContext("experimental-webgl")
-      ) as (WebGLRenderingContext | WebGL2RenderingContext | null);
-
-      if (!testGl) {
-        setWebglFailed(true);
-        return;
-      }
-
-      // Cleanup test canvas context
-      const loseExt = testGl.getExtension("WEBGL_lose_context");
-      loseExt?.loseContext();
-
-      app = new App(containerRef.current, {
-        items,
-        bend,
-        textColor: "#111111",
-        borderRadius,
-        scrollSpeed,
-        scrollEase,
-      });
-
-      if (!app.gl) {
-        setWebglFailed(true);
-      }
-    } catch (e) {
-      console.warn("CircularGallery WebGL initialization error, falling back to CSS carousel:", e);
-      setWebglFailed(true);
-    }
+    const app = new App(containerRef.current, {
+      items,
+      bend,
+      textColor: computedColor,
+      borderRadius,
+      scrollSpeed,
+      scrollEase,
+    });
 
     return () => {
-      if (app) {
-        app.destroy();
-      }
+      app.destroy();
     };
   }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName]);
-
-  if (webglFailed) {
-    return <CSSGalleryFallback items={items} className={className} />;
-  }
 
   return (
     <div
@@ -833,5 +722,4 @@ const CircularGallery = ({
 };
 
 export { CircularGallery };
-
 

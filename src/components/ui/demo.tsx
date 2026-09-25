@@ -7,39 +7,39 @@ import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery-2
 export const galleryItems: GalleryItem[] = [
   {
     image: "/images/projects/travinno.jpg",
-    text: "Travinno · AI Travel Companion",
+    text: "Travinno — AI Travel Companion",
   },
   {
     image: "/images/projects/manzio.jpg",
-    text: "Manzio · Creative Agency",
+    text: "Manzio Creative Studio",
   },
   {
     image: "/images/projects/faazo.jpg",
-    text: "Faazo · Fleet & Logistics SaaS",
+    text: "Faazo — Fleet & Logistics SaaS",
   },
   {
     image: "/images/projects/careva.jpg",
-    text: "Careva · Healthcare Ecosystem",
+    text: "Careva — Healthcare Ecosystem",
   },
   {
     image: "/images/projects/mangalam.jpg",
-    text: "Mangalam · Real Estate Portal",
+    text: "Mangalam — Real Estate Portal",
   },
   {
     image: "/images/projects/auraluxe.jpg",
-    text: "Auraluxe · Spatial Audio App",
+    text: "Auraluxe — Spatial Audio App",
   },
 ]
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-white pt-12 sm:pt-16 pb-4 sm:pb-6 overflow-hidden">
+    <div id="work" className="relative bg-white pt-16 sm:pt-20 pb-6 sm:pb-8 overflow-hidden">
       {/* ===================================================
           ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (SEAMLESSLY BLENDED)
          =================================================== */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 right-0 h-[650px] sm:h-[750px] z-0 overflow-hidden"
+        className="pointer-events-none absolute top-0 left-0 right-0 h-[550px] sm:h-[650px] z-0 overflow-hidden"
         style={{
           background: `
             radial-gradient(
@@ -77,7 +77,7 @@ export const DemoVariant1 = () => {
       </div>
 
       {/* Section Header */}
-      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-6 sm:mb-8">
+      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-6 sm:mb-10">
         {/* Section Label */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -117,7 +117,7 @@ export const DemoVariant1 = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-3 sm:mt-4 max-w-2xl mx-auto"
+          className="mt-4 sm:mt-5 max-w-2xl mx-auto"
         >
           <p className="font-sans text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
             A selection of projects shaped through thoughtful design, technology and business-focused thinking.
@@ -127,10 +127,10 @@ export const DemoVariant1 = () => {
 
       {/* 3D WebGL Circular Gallery Showcase (Full Screen Width Edge-to-Edge) */}
       <div className="relative z-10 w-full overflow-hidden">
-        <div className="relative h-[480px] sm:h-[540px] md:h-[600px] lg:h-[640px] w-full">
+        <div className="relative h-[480px] sm:h-[560px] md:h-[620px] lg:h-[660px] w-full">
           <CircularGallery
             items={galleryItems}
-            bend={2.0}
+            bend={2.5}
             borderRadius={0.06}
             scrollSpeed={2}
             scrollEase={0.05}
