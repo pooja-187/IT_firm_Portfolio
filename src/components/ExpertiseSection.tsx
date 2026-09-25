@@ -222,6 +222,8 @@ export default function ExpertiseSection() {
               transparent 72%
             )
           `,
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
         }}
       >
         {/* Soft Blurred Depth Glow Behind Heading */}

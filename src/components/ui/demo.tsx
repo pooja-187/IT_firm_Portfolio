@@ -31,9 +31,9 @@ const IMAGES_3 = [
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-[#FAFAF8] pt-16 sm:pt-20">
+    <div id="work" className="relative bg-white pt-16 sm:pt-20">
       {/* ===================================================
-          ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (HERO-MATCHED)
+          ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (SEAMLESSLY BLENDED)
          =================================================== */}
       <div
         aria-hidden="true"
@@ -41,7 +41,7 @@ export const DemoVariant1 = () => {
         style={{
           background: `
             radial-gradient(
-              ellipse 70% 60% at 50% 42%,
+              ellipse 70% 55% at 50% 48%,
               rgba(190, 235, 105, 0.32) 0%,
               rgba(190, 235, 105, 0.22) 22%,
               rgba(190, 235, 105, 0.12) 42%,
@@ -49,11 +49,13 @@ export const DemoVariant1 = () => {
               transparent 78%
             ),
             radial-gradient(
-              ellipse 100% 70% at 50% 45%,
+              ellipse 100% 65% at 50% 50%,
               rgba(215, 242, 165, 0.14) 0%,
               transparent 72%
             )
           `,
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
         }}
       >
         {/* Soft Blurred Depth Glow Behind Heading */}
@@ -63,7 +65,7 @@ export const DemoVariant1 = () => {
             width: "65%",
             height: "55%",
             left: "50%",
-            top: "42%",
+            top: "48%",
             transform: "translate(-50%, -50%)",
             background: "rgba(190, 235, 105, 0.14)",
             filter: "blur(100px)",
