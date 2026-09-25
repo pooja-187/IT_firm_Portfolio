@@ -219,10 +219,16 @@ export default function ExpertiseSection() {
             
             {/* Pill 1: UI/UX Design */}
             <div ref={pill1Ref} className={`w-fit ${leftPills[0].offsetClass}`}>
-              <div style={{ transform: `rotate(${leftPills[0].rotation}deg)` }}>
-                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+              <div style={{ transform: `rotate(${leftPills[0].rotation}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow (Behind Pill) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3.5 sm:-inset-5 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-105 transition-all duration-300 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-xl"
+                />
+                {/* Clean White Pill (Above Glow) */}
+                <div className="relative z-10 inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] group-hover:scale-[1.08] group-hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
                   <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105`}
                   >
                     <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
@@ -235,10 +241,16 @@ export default function ExpertiseSection() {
 
             {/* Pill 2: Software Development */}
             <div ref={pill2Ref} className={`w-fit ${leftPills[1].offsetClass}`}>
-              <div style={{ transform: `rotate(${leftPills[1].rotation}deg)` }}>
-                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+              <div style={{ transform: `rotate(${leftPills[1].rotation}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow (Behind Pill) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3.5 sm:-inset-5 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-105 transition-all duration-300 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-xl"
+                />
+                {/* Clean White Pill (Above Glow) */}
+                <div className="relative z-10 inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] group-hover:scale-[1.08] group-hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
                   <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105`}
                   >
                     <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
@@ -251,8 +263,14 @@ export default function ExpertiseSection() {
 
             {/* Pill 3: App Development */}
             <div ref={pill3Ref} className={`w-fit ${leftPills[2].offsetClass}`}>
-              <div style={{ transform: `rotate(${leftPills[2].rotation}deg)` }}>
-                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+              <div style={{ transform: `rotate(${leftPills[2].rotation}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow (Behind Pill) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3.5 sm:-inset-5 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-105 transition-all duration-300 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-xl"
+                />
+                {/* Clean White Pill (Above Glow) */}
+                <div className="relative z-10 inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] group-hover:scale-[1.08] group-hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
                   <span
                     className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[2].iconBg} shadow-sm shrink-0`}
                   >
@@ -290,10 +308,16 @@ export default function ExpertiseSection() {
             
             {/* Pill 4: Performance Marketing */}
             <div ref={pill4Ref} className={`w-fit ${rightPills[0].offsetClass}`}>
-              <div style={{ transform: `rotate(${rightPills[0].rotation}deg)` }}>
-                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+              <div style={{ transform: `rotate(${rightPills[0].rotation}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow (Behind Pill) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3.5 sm:-inset-5 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-105 transition-all duration-300 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-xl"
+                />
+                {/* Clean White Pill (Above Glow) */}
+                <div className="relative z-10 inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] group-hover:scale-[1.08] group-hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
                   <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105`}
                   >
                     <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
@@ -306,10 +330,16 @@ export default function ExpertiseSection() {
 
             {/* Pill 5: Ethical Hacking */}
             <div ref={pill5Ref} className={`w-fit ${rightPills[1].offsetClass}`}>
-              <div style={{ transform: `rotate(${rightPills[1].rotation}deg)` }}>
-                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+              <div style={{ transform: `rotate(${rightPills[1].rotation}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow (Behind Pill) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3.5 sm:-inset-5 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-105 transition-all duration-300 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-xl"
+                />
+                {/* Clean White Pill (Above Glow) */}
+                <div className="relative z-10 inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] group-hover:scale-[1.08] group-hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
                   <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105`}
                   >
                     <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
@@ -333,8 +363,13 @@ export default function ExpertiseSection() {
                 mobilePillsRef.current[idx] = el;
               }}
             >
-              <div style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}>
-                <div className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 active:bg-[rgba(220,255,190,0.45)] active:border-[rgba(132,204,22,0.35)] transition-all duration-200">
+              <div style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }} className="relative group w-fit">
+                {/* External Ambient Green Glow */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-3 rounded-full pointer-events-none opacity-0 group-active:opacity-100 scale-90 group-active:scale-105 transition-all duration-200 ease-out z-0 bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.45)_0%,rgba(184,252,60,0.22)_48%,transparent_72%)] blur-lg"
+                />
+                <div className="relative z-10 inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white border border-slate-200/80 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 transition-all duration-200 select-none">
                   <span
                     className={`flex items-center justify-center w-5 h-5 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
                   >
