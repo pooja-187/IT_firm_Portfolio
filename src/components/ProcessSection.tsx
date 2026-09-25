@@ -53,7 +53,7 @@ export default function ProcessSection() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="relative w-full text-[#111111] py-24 sm:py-32 lg:py-40 overflow-hidden selection:bg-lime-200"
+      className="relative w-full text-[#111111] pt-8 sm:pt-12 lg:pt-16 pb-24 sm:pb-32 lg:pb-40 overflow-hidden selection:bg-lime-200"
       style={{
         backgroundColor: '#FFFFFF',
         backgroundImage: `
@@ -77,9 +77,9 @@ export default function ProcessSection() {
         {/* ===================================================
             SECTION HEADER
            =================================================== */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20 lg:mb-24">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 lg:mb-20">
           {/* Small Section Label */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-4 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
             <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
               07 — PROCESS

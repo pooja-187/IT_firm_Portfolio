@@ -187,14 +187,14 @@ class Title {
     const parentScaleX = Math.max(this.plane.scale.x, 0.001);
     const parentScaleY = Math.max(this.plane.scale.y, 0.001);
     
-    // Relative height of the label relative to parent card
-    const relHeight = 0.08;
-    // Compensate for non-uniform parent scaling so text is never stretched
+    // Crisp text height proportional to card
+    const relHeight = 0.07;
+    // Aspect ratio compensation so text font is never squished or stretched
     const relWidth = relHeight * this.aspect * (parentScaleY / parentScaleX);
     
     this.mesh.scale.set(relWidth, relHeight, 1);
-    // Position below card's bottom edge (-0.5 in normalized parent coordinates)
-    this.mesh.position.y = -0.5 - relHeight * 0.85;
+    // Position comfortably below card bottom edge
+    this.mesh.position.y = -0.5 - relHeight * 0.75;
   }
 }
 
@@ -292,7 +292,7 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.08 + uSpeed * 0.4);
+          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.06 + uSpeed * 0.3);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -379,15 +379,15 @@ class Media {
       const B_abs = Math.abs(this.bend);
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
-      const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+      const arc = R - Math.sqrt(Math.max(R * R - effectiveX * effectiveX, 0));
       
-      // Vertical lift keeps the curved side cards and bottom labels high and clear of the bottom boundary
-      const verticalLift = B_abs * 0.42;
+      // Arc midpoint offset: centers the curve vertically in the canvas
+      const arcOffset = B_abs * 0.48;
       if (this.bend > 0) {
-        this.plane.position.y = -arc + verticalLift;
+        this.plane.position.y = -arc + arcOffset;
         this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
       } else {
-        this.plane.position.y = arc - verticalLift;
+        this.plane.position.y = arc - arcOffset;
         this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
     }
@@ -426,17 +426,16 @@ class Media {
         ).uViewportSizes.value = [this.viewport.width, this.viewport.height];
       }
     }
-    this.scale = this.screen.height / 1500;
-    // Harmonious card dimensions with generous vertical room
-    this.plane.scale.y =
-      (this.viewport.height * (640 * this.scale)) / this.screen.height;
-    this.plane.scale.x =
-      (this.viewport.width * (500 * this.scale)) / this.screen.width;
+    
+    // Robust card dimensions that gracefully fit the canvas without overflow
+    this.plane.scale.y = this.viewport.height * 0.58;
+    this.plane.scale.x = this.plane.scale.y * 0.72;
+    
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 1.4;
+    this.padding = 1.2;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
