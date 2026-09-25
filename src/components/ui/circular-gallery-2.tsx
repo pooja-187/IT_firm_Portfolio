@@ -10,7 +10,7 @@ import {
   Transform,
   type OGLRenderingContext,
 } from "ogl";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 /* --------------------------------
@@ -444,6 +444,8 @@ class App {
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf!: number;
+  onContextLostCallback?: () => void;
+  handleContextLost?: (e: Event) => void;
   boundOnResize!: () => void;
   boundOnWheel!: (e: WheelEvent) => void;
   boundOnTouchDown!: (e: MouseEvent | TouchEvent) => void;
@@ -460,6 +462,7 @@ class App {
       font,
       scrollSpeed,
       scrollEase,
+      onContextLost,
     }: {
       items?: GalleryItem[];
       bend: number;
@@ -468,16 +471,20 @@ class App {
       font: string;
       scrollSpeed: number;
       scrollEase: number;
+      onContextLost?: () => void;
     },
   ) {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
+    this.onContextLostCallback = onContextLost;
     autoBind(this);
-    
+
     const initialized = this.createRenderer();
-    if (!initialized) return;
+    if (!initialized) {
+      throw new Error("Unable to create WebGL context");
+    }
 
     this.createCamera();
     this.createScene();
@@ -489,25 +496,47 @@ class App {
   }
 
   createRenderer(): boolean {
-    try {
-      const canvas = document.createElement("canvas");
-      this.renderer = new Renderer({
-        canvas,
-        alpha: true,
-        antialias: true,
-        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
-      });
-      this.gl = this.renderer.gl;
-      if (!this.gl || !this.gl.canvas) {
-        return false;
+    // Try multiple fallback configuration profiles to guarantee context initialization on all browsers
+    const profiles = [
+      { webgl: 2, alpha: true, antialias: true, depth: false, powerPreference: "default" as const },
+      { webgl: 2, alpha: true, antialias: false, depth: false, powerPreference: "default" as const },
+      { webgl: 1, alpha: true, antialias: true, depth: false, powerPreference: "default" as const },
+      { webgl: 1, alpha: true, antialias: false, depth: false, powerPreference: "default" as const },
+    ];
+
+    for (const profile of profiles) {
+      try {
+        const canvas = document.createElement("canvas");
+        this.renderer = new Renderer({
+          canvas,
+          alpha: profile.alpha,
+          antialias: profile.antialias,
+          depth: profile.depth,
+          webgl: profile.webgl,
+          dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+        });
+        this.gl = this.renderer.gl;
+        if (this.gl && this.gl.canvas) {
+          this.gl.clearColor(0, 0, 0, 0);
+          this.container.appendChild(this.gl.canvas);
+
+          // Handle WebGL context lost gracefully
+          this.handleContextLost = (e: Event) => {
+            e.preventDefault();
+            console.warn("[CircularGallery] WebGL context lost.");
+            this.destroy();
+            if (this.onContextLostCallback) {
+              this.onContextLostCallback();
+            }
+          };
+          this.gl.canvas.addEventListener("webglcontextlost", this.handleContextLost, false);
+          return true;
+        }
+      } catch (err) {
+        // Continue to next profile
       }
-      this.gl.clearColor(0, 0, 0, 0);
-      this.container.appendChild(this.gl.canvas);
-      return true;
-    } catch (e) {
-      console.warn("CircularGallery renderer creation:", e);
-      return false;
     }
+    return false;
   }
 
   createCamera() {
@@ -675,6 +704,9 @@ class App {
     window.removeEventListener("touchend", this.boundOnTouchUp);
     
     if (this.gl) {
+      if (this.handleContextLost && this.gl.canvas) {
+        this.gl.canvas.removeEventListener("webglcontextlost", this.handleContextLost);
+      }
       try {
         const ext = this.gl.getExtension("WEBGL_lose_context");
         if (ext) {
@@ -689,7 +721,159 @@ class App {
 }
 
 /* --------------------------------
- * React Component
+ * 3D Curved CSS Transform Fallback (Equivalent Circular Arc Design)
+ ----------------------------------- */
+const CurvedCSSGalleryFallback = ({
+  items = [],
+  bend = 3,
+  scrollSpeed = 2,
+  scrollEase = 0.05,
+  className,
+}: {
+  items: GalleryItem[];
+  bend: number;
+  scrollSpeed: number;
+  scrollEase: number;
+  className?: string;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollX, setScrollX] = useState(0);
+  const targetScrollX = useRef(0);
+  const currentScrollX = useRef(0);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const startScroll = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  // Duplicated items for seamless continuous looping
+  const displayItems = [...items, ...items, ...items];
+  const cardWidth = 340;
+  const cardGap = 32;
+  const totalItemWidth = cardWidth + cardGap;
+  const totalLoopWidth = items.length * totalItemWidth;
+
+  const updateLoop = useCallback(() => {
+    currentScrollX.current = lerp(currentScrollX.current, targetScrollX.current, scrollEase);
+    
+    // Seamless loop wrapping
+    if (currentScrollX.current >= totalLoopWidth) {
+      currentScrollX.current -= totalLoopWidth;
+      targetScrollX.current -= totalLoopWidth;
+    } else if (currentScrollX.current <= -totalLoopWidth) {
+      currentScrollX.current += totalLoopWidth;
+      targetScrollX.current += totalLoopWidth;
+    }
+
+    setScrollX(currentScrollX.current);
+    rafRef.current = requestAnimationFrame(updateLoop);
+  }, [scrollEase, totalLoopWidth]);
+
+  useEffect(() => {
+    rafRef.current = requestAnimationFrame(updateLoop);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [updateLoop]);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    isDown.current = true;
+    startX.current = e.clientX;
+    startScroll.current = targetScrollX.current;
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDown.current) return;
+    const dx = (startX.current - e.clientX) * scrollSpeed * 0.8;
+    targetScrollX.current = startScroll.current + dx;
+  };
+
+  const onMouseUp = () => {
+    isDown.current = false;
+  };
+
+  const onWheel = (e: React.WheelEvent) => {
+    const delta = e.deltaY || e.deltaX;
+    targetScrollX.current += (delta > 0 ? 60 : -60) * scrollSpeed * 0.5;
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    isDown.current = true;
+    startX.current = e.touches[0].clientX;
+    startScroll.current = targetScrollX.current;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!isDown.current) return;
+    const dx = (startX.current - e.touches[0].clientX) * scrollSpeed * 0.8;
+    targetScrollX.current = startScroll.current + dx;
+  };
+
+  const onTouchEnd = () => {
+    isDown.current = false;
+  };
+
+  const containerWidth = typeof window !== "undefined" ? window.innerWidth : 1200;
+  const H = containerWidth / 2;
+  const B_abs = Math.max(Math.abs(bend), 1);
+  const R = (H * H + B_abs * 200 * B_abs * 200) / (2 * B_abs * 200);
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onWheel={onWheel}
+      className={cn(
+        "relative w-full h-full overflow-hidden select-none cursor-grab active:cursor-grabbing flex items-center justify-center",
+        className
+      )}
+      style={{ perspective: "1400px" }}
+    >
+      <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
+        {displayItems.map((item, index) => {
+          const itemOffset = (index - items.length) * totalItemWidth - scrollX;
+          const clampedX = Math.max(-H, Math.min(H, itemOffset));
+          // Cylindrical arc math identical to OGL shader
+          const arc = R - Math.sqrt(Math.max(0, R * R - clampedX * clampedX));
+          const rotationZ = -(clampedX / H) * (bend * 4.5);
+          const translateY = arc * 0.65;
+          const rotateY = -(clampedX / H) * 12;
+
+          return (
+            <div
+              key={`css-card-${index}`}
+              className="absolute pointer-events-auto will-change-transform flex flex-col items-center"
+              style={{
+                transform: `translateX(${itemOffset}px) translateY(${translateY}px) rotateZ(${rotationZ}deg) rotateY(${rotateY}deg)`,
+                transition: isDown.current ? "none" : "transform 0.05s linear",
+              }}
+            >
+              <div className="w-[280px] sm:w-[320px] md:w-[340px] h-[380px] sm:h-[440px] md:h-[470px] rounded-[32px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 bg-slate-100">
+                <img
+                  src={item.image}
+                  alt={item.text}
+                  draggable={false}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="mt-4 text-center font-sans font-bold text-sm sm:text-base text-[#111111] tracking-tight whitespace-nowrap">
+                {item.text}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+/* --------------------------------
+ * Main CircularGallery Component
  ----------------------------------- */
 const CircularGallery = ({
   items,
@@ -702,9 +886,10 @@ const CircularGallery = ({
   ...props
 }: CircularGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || useFallback) return;
     containerRef.current.innerHTML = "";
 
     const computedStyle = getComputedStyle(containerRef.current);
@@ -724,9 +909,13 @@ const CircularGallery = ({
         font: computedFont,
         scrollSpeed,
         scrollEase,
+        onContextLost: () => {
+          setUseFallback(true);
+        },
       });
     } catch (err) {
-      console.warn("CircularGallery init:", err);
+      console.warn("[CircularGallery] WebGL unavailable; using visually equivalent 3D circular arc fallback.", err);
+      setUseFallback(true);
     }
 
     return () => {
@@ -734,7 +923,19 @@ const CircularGallery = ({
         app.destroy();
       }
     };
-  }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName]);
+  }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName, useFallback]);
+
+  if (useFallback && items && items.length > 0) {
+    return (
+      <CurvedCSSGalleryFallback
+        items={items}
+        bend={bend}
+        scrollSpeed={scrollSpeed}
+        scrollEase={scrollEase}
+        className={className}
+      />
+    );
+  }
 
   return (
     <div
