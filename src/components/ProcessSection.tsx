@@ -53,14 +53,8 @@ export default function ProcessSection() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="relative w-full bg-white text-[#111111] py-24 sm:py-32 lg:py-40 overflow-hidden selection:bg-lime-300"
+      className="relative w-full bg-[#FAFAF8] text-[#111111] py-24 sm:py-32 lg:py-40 overflow-hidden selection:bg-slate-200"
     >
-      {/* Diffused Ambient Lime Glow Behind the Composition */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[700px] bg-[radial-gradient(circle_at_center,rgba(183,227,106,0.12)_0%,rgba(183,227,106,0.03)_48%,transparent_72%)] blur-3xl -z-10"
-      />
-
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ===================================================
@@ -68,8 +62,8 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20 lg:mb-24">
           {/* Small Section Label */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200/80 mb-5 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B7E36A] animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[rgba(30,30,30,0.07)] mb-5 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B8C4A0]" />
             <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
               07 — PROCESS
             </span>
@@ -89,7 +83,7 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="hidden lg:block relative w-full max-w-[1180px] mx-auto">
           
-          {/* SVG Organic Connector Lines Layer */}
+          {/* SVG Muted Sage Connector Lines Layer */}
           <svg
             aria-hidden="true"
             className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
@@ -99,7 +93,7 @@ export default function ProcessSection() {
             {/* 1. Connector: 01 (Understand) -> 02 (Define) */}
             <motion.path
               d="M 310 160 C 360 110, 420 100, 480 120"
-              stroke="#B7E36A"
+              stroke="#B8C4A0"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -108,13 +102,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, delay: 0.2, ease: 'easeInOut' }}
             />
-            <circle cx="310" cy="160" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
-            <circle cx="480" cy="120" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
+            <circle cx="310" cy="160" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="480" cy="120" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
 
             {/* 2. Connector: 02 (Define) -> 03 (Create) with Organic Loop */}
             <motion.path
               d="M 700 120 C 750 140, 780 190, 755 195 C 730 200, 760 145, 835 160"
-              stroke="#B7E36A"
+              stroke="#B8C4A0"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -123,13 +117,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 1.0, delay: 0.4, ease: 'easeInOut' }}
             />
-            <circle cx="700" cy="120" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
-            <circle cx="835" cy="160" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
+            <circle cx="700" cy="120" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="835" cy="160" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
 
-            {/* 3. Connector: 03 (Create) -> 04 (Deliver) — CRUCIAL CONNECTION */}
+            {/* 3. Connector: 03 (Create) -> 04 (Deliver) */}
             <motion.path
               d="M 940 370 C 960 460, 810 490, 710 430 C 630 380, 560 390, 510 440"
-              stroke="#B7E36A"
+              stroke="#B8C4A0"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -138,13 +132,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 1.1, delay: 0.6, ease: 'easeInOut' }}
             />
-            <circle cx="940" cy="370" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
-            <circle cx="510" cy="440" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
+            <circle cx="940" cy="370" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="510" cy="440" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
 
             {/* 4. Connector: 04 (Deliver) -> 05 (Review) with Loop */}
             <motion.path
               d="M 540 580 C 580 545, 615 545, 605 585 C 595 615, 615 620, 645 605"
-              stroke="#B7E36A"
+              stroke="#B8C4A0"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -153,8 +147,8 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.9, delay: 0.8, ease: 'easeInOut' }}
             />
-            <circle cx="540" cy="580" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
-            <circle cx="645" cy="605" r="4" fill="#FFFFFF" stroke="#B7E36A" strokeWidth="2" />
+            <circle cx="540" cy="580" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="645" cy="605" r="4" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
           </svg>
 
           {/* Tier 1 Floating Cards (01, 02, 03) */}
@@ -199,10 +193,10 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="lg:hidden relative max-w-md mx-auto">
           
-          {/* Vertical Lime Timeline */}
+          {/* Vertical Sage Timeline */}
           <div
             aria-hidden="true"
-            className="absolute top-8 bottom-8 left-6 sm:left-7 w-0.5 bg-gradient-to-b from-[#B7E36A] via-[#B7E36A] to-slate-200"
+            className="absolute top-8 bottom-8 left-6 sm:left-7 w-0.5 bg-[#B8C4A0]/60"
           />
 
           <div className="space-y-6 relative z-10 pl-14 sm:pl-16">
@@ -216,12 +210,12 @@ export default function ProcessSection() {
                 className="relative"
               >
                 {/* Timeline Node */}
-                <div className="absolute -left-14 sm:-left-16 top-7 w-4 h-4 rounded-full bg-white border-2 border-[#B7E36A] shadow-sm flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#B7E36A]" />
+                <div className="absolute -left-14 sm:-left-16 top-7 w-4 h-4 rounded-full bg-[#FAFAF8] border-2 border-[#B8C4A0] shadow-sm flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#B8C4A0]" />
                 </div>
 
-                {/* Mobile Glass Card */}
-                <div className="bg-[rgba(244,252,238,0.76)] backdrop-blur-xl border border-[rgba(183,227,106,0.24)] rounded-[26px] p-6 sm:p-7 shadow-[0_14px_35px_rgba(20,30,20,0.05)]">
+                {/* Mobile Warm Ivory Paper Card */}
+                <div className="bg-[#F4F1EA] border border-[rgba(30,30,30,0.07)] rounded-[26px] p-6 sm:p-7 shadow-[0_14px_35px_rgba(20,20,20,0.05)]">
                   <span className="font-sans text-4xl sm:text-5xl font-light text-[#111111] tracking-tight block mb-6 leading-none">
                     {step.number}
                   </span>
@@ -244,28 +238,24 @@ export default function ProcessSection() {
 }
 
 // =========================================================================
-// Individual Process Card (3D Tilt, Subtle Green Frosted Glass & Reflection)
+// Individual Process Card (Warm Ivory Paper, Subtle 3D Tilt & Shadows)
 // =========================================================================
 function ProcessCard({ step, delay }: { step: ProcessStep; delay: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const xPercent = (x / rect.width) * 100;
-    const yPercent = (y / rect.height) * 100;
 
-    // Subtle 3D tilt (max ~3.5deg)
-    const rotateX = ((y / rect.height) - 0.5) * -7;
-    const rotateY = ((x / rect.width) - 0.5) * 7;
+    // Subtle 3D tilt (max ~3deg)
+    const rotateX = ((y / rect.height) - 0.5) * -6;
+    const rotateY = ((x / rect.width) - 0.5) * 6;
 
     setTilt({ x: rotateX, y: rotateY });
-    setMousePos({ x: xPercent, y: yPercent });
   };
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -291,28 +281,17 @@ function ProcessCard({ step, delay }: { step: ProcessStep; delay: number }) {
             : 'translateY(0px) scale(1)'
         }`,
       }}
-      className="relative w-[300px] xl:w-[325px] h-[360px] xl:h-[390px] rounded-[30px] p-7 xl:p-8 bg-[rgba(244,252,238,0.74)] hover:bg-[rgba(248,254,244,0.90)] backdrop-blur-[20px] border border-[rgba(183,227,106,0.22)] hover:border-[rgba(183,227,106,0.36)] shadow-[0_15px_45px_rgba(20,30,20,0.05)] hover:shadow-[0_25px_60px_rgba(20,30,20,0.12),0_10px_25px_rgba(183,227,106,0.09)] transition-all duration-400 ease-out flex flex-col justify-between select-none cursor-default overflow-hidden will-change-transform"
+      className="relative w-[300px] xl:w-[325px] h-[360px] xl:h-[390px] rounded-[30px] p-7 xl:p-8 bg-[#F4F1EA] hover:bg-[#FAF7F2] border border-[rgba(30,30,30,0.07)] hover:border-[rgba(30,30,30,0.12)] shadow-[0_18px_45px_rgba(20,20,20,0.06)] hover:shadow-[0_28px_65px_rgba(20,20,20,0.12)] transition-all duration-400 ease-out flex flex-col justify-between select-none cursor-default will-change-transform"
     >
-      {/* 3D Glass Light Reflection Highlight */}
-      <div
-        aria-hidden="true"
-        style={{
-          background: `radial-gradient(circle 160px at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.45), transparent 70%)`,
-        }}
-        className={`pointer-events-none absolute inset-0 rounded-[30px] transition-opacity duration-300 ${
-          isHovered ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-
       {/* Top: Very Large Lightweight Step Number */}
-      <div className="relative z-10">
+      <div>
         <span className="font-sans text-5xl xl:text-6xl font-light text-[#111111] tracking-tight leading-none block">
           {step.number}
         </span>
       </div>
 
       {/* Bottom: Title & Approved Process Description */}
-      <div className="relative z-10">
+      <div>
         <h3 className="font-sans text-xl xl:text-2xl font-normal text-[#111111] tracking-tight mb-2">
           {step.title}
         </h3>
