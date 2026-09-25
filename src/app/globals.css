@@ -41,40 +41,6 @@ body {
   filter: blur(6px);
 }
 
-/* Exact TheConsultant7 Arriving Picture Animation */
-@keyframes theConsultant7Arrival {
-  0% {
-    opacity: 0;
-    transform: translateY(100px) scale(1.1);
-    filter: blur(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-  }
-}
-
-@keyframes glowArriveSync {
-  0% {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.consultant7-arriving-picture {
-  animation: theConsultant7Arrival 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  will-change: transform, opacity, filter;
-}
-
-.consultant7-glow-arrive {
-  animation: glowArriveSync 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
 /* Portrait bottom feather fade & gradient blend */
 .portrait-fade-mask {
   mask-image: linear-gradient(to bottom, black 65%, rgba(0, 0, 0, 0.8) 82%, transparent 98%);

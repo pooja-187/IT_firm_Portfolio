@@ -47,8 +47,8 @@ export default function PortraitDisplay({
             isMobile: boolean;
           };
 
-          // Visible and elegant parallax distance
-          const travelDistance = isDesktop ? 140 : isTablet ? 90 : 50;
+          // Visible, elegant parallax distance
+          const travelDistance = isDesktop ? 160 : isTablet ? 100 : 60;
 
           // Initial position reset
           gsap.set(portraitMoverRef.current, {
@@ -56,15 +56,17 @@ export default function PortraitDisplay({
             force3D: true,
           });
 
-          // ScrollTrigger tuned for visible hero scroll range (0 to 450px of scroll)
+          // Trigger on hero section from scroll position 0 to 600px of scroll
+          const triggerEl = document.getElementById('hero-main-container') || document.body;
+
           gsap.to(portraitMoverRef.current, {
             y: -travelDistance,
             ease: 'none',
             scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 75%',
-              end: 'bottom 10%',
-              scrub: 0.8,
+              trigger: triggerEl,
+              start: 'top top',
+              end: '+=600',
+              scrub: true,
               invalidateOnRefresh: true,
             },
           });
@@ -72,7 +74,6 @@ export default function PortraitDisplay({
       );
     }, containerRef);
 
-    // Refresh dimensions once mounted
     ScrollTrigger.refresh();
 
     return () => {
