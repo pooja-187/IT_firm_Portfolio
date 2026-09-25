@@ -1,5 +1,6 @@
 import HeroSection from '@/components/HeroSection';
 import ExpertiseSection from '@/components/ExpertiseSection';
+import { DemoVariant1 } from '@/components/ui/demo';
 
 export default function HomePage() {
   return (
@@ -9,6 +10,9 @@ export default function HomePage() {
 
       {/* 02 — Expertise Section */}
       <ExpertiseSection />
+
+      {/* 03 — Animated Gallery Demo */}
+      <DemoVariant1 />
     </div>
   );
 }
