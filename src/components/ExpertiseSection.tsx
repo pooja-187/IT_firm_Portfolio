@@ -200,15 +200,56 @@ export default function ExpertiseSection() {
       ref={sectionRef}
       id="expertise"
       aria-labelledby="expertise-heading"
-      className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 lg:py-40 overflow-hidden"
+      className="relative w-full bg-white py-24 sm:py-32 lg:py-40 overflow-hidden selection:bg-lime-200"
     >
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Saturated Ambient Diffused Lime-Green Studio Light (Matching Hero & Selected Work) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(
+              ellipse 75% 55% at 50% 50%,
+              rgba(190, 235, 105, 0.32) 0%,
+              rgba(190, 235, 105, 0.20) 25%,
+              rgba(190, 235, 105, 0.10) 48%,
+              rgba(190, 235, 105, 0.04) 65%,
+              transparent 80%
+            ),
+            radial-gradient(
+              ellipse 95% 70% at 50% 48%,
+              rgba(215, 242, 165, 0.15) 0%,
+              transparent 72%
+            )
+          `,
+        }}
+      >
+        {/* Soft Blurred Depth Glow Behind Heading */}
+        <div
+          className="absolute"
+          style={{
+            width: "60%",
+            height: "50%",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "rgba(190, 235, 105, 0.14)",
+            filter: "blur(100px)",
+            borderRadius: "50%",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Editorial Label */}
         <div ref={labelRef} className="text-center mb-8 sm:mb-12">
-          <span className="font-sans text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-            EXPERTISE
-          </span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-slate-200/80 shadow-sm backdrop-blur-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16] animate-pulse" />
+            <span className="font-sans text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+              02 — EXPERTISE
+            </span>
+          </div>
         </div>
 
         {/* 3-Column Flanking Stage: Zero Collision, Zero Overlap, Perfect Organic Alignment */}
