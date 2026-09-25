@@ -17,7 +17,6 @@ export default function PortraitDisplay({
   const [imageError, setImageError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const portraitMoverRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -27,12 +26,12 @@ export default function PortraitDisplay({
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion || !portraitMoverRef.current || !containerRef.current) {
       if (portraitMoverRef.current) {
-        gsap.set(portraitMoverRef.current, { y: 0, opacity: 1, clearProps: 'transform' });
+        gsap.set(portraitMoverRef.current, { y: 0, clearProps: 'transform' });
       }
       return;
     }
 
-    // Responsive GSAP MatchMedia Scroll-Driven Transition
+    // Responsive GSAP MatchMedia True Parallax Implementation
     const mm = gsap.matchMedia();
 
     mm.add(
@@ -48,35 +47,35 @@ export default function PortraitDisplay({
           isMobile: boolean;
         };
 
-        // Tuned distance per viewport for higher elevation
-        const startY = isDesktop ? 60 : isTablet ? 40 : 20;
-        const targetY = isDesktop ? -70 : isTablet ? -45 : -20;
+        // Responsive parallax distance
+        const travelDistance = isDesktop ? 140 : isTablet ? 90 : 50;
 
-        // Set initial lower position for portrait image ONLY
+        // Reset to natural 0 position
         gsap.set(portraitMoverRef.current, {
-          y: startY,
+          y: 0,
           force3D: true,
         });
 
-        // Scrubbed scroll animation tied strictly to the portrait image
+        // Trigger on hero section
         const triggerElement = document.getElementById('hero-main-container') || containerRef.current;
 
-        const tl = gsap.timeline({
+        // Pure linear scroll-driven parallax (image-only)
+        const tween = gsap.to(portraitMoverRef.current, {
+          y: -travelDistance,
+          ease: 'none',
           scrollTrigger: {
             trigger: triggerElement,
             start: 'top top',
-            end: '+=400',
-            scrub: 0.8,
+            end: 'bottom top',
+            scrub: true,
             invalidateOnRefresh: true,
           },
         });
 
-        // ONLY the image moves
-        tl.to(portraitMoverRef.current, {
-          y: targetY,
-          ease: 'power1.out',
-          duration: 1,
-        });
+        return () => {
+          tween.scrollTrigger?.kill();
+          tween.kill();
+        };
       }
     );
 
@@ -90,14 +89,13 @@ export default function PortraitDisplay({
       ref={containerRef}
       className="relative w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[540px] mx-auto aspect-[3/4] flex items-end justify-center overflow-visible"
     >
-      {/* Dynamic Backlight Aura (Scroll-synchronized) */}
+      {/* 100% Static Ambient Glow Aura (Zero Animation / Never Moves) */}
       <div
-        ref={glowRef}
-        className="absolute bottom-6 inset-x-0 mx-auto w-4/5 h-4/5 rounded-full bg-gradient-to-t from-lime-400/60 via-lime-300/40 to-transparent blur-3xl pointer-events-none -z-10 will-change-transform"
+        className="absolute bottom-6 inset-x-0 mx-auto w-4/5 h-4/5 rounded-full bg-gradient-to-t from-lime-400/60 via-lime-300/40 to-transparent blur-3xl pointer-events-none -z-10"
         aria-hidden="true"
       />
 
-      {/* Scroll-Driven Moving Portrait Wrapper */}
+      {/* True Parallax Moving Portrait Element ONLY */}
       <div
         ref={portraitMoverRef}
         className="w-full h-full flex items-end justify-center will-change-transform"

@@ -47,8 +47,8 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Central Subject Portrait Area with Scroll-Driven Upward Travel */}
-        <div className="relative -mt-12 sm:-mt-24 md:-mt-32 lg:-mt-40 -mb-6 sm:-mb-12 z-10">
+        {/* Central Subject Portrait Area (Clean True Parallax) */}
+        <div className="relative mt-4 sm:mt-6 md:mt-8 mb-2 sm:mb-4 z-10">
           <PortraitDisplay />
         </div>
 
