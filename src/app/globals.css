@@ -61,22 +61,3 @@ body {
   border-color: rgba(148, 235, 16, 0.8);
   box-shadow: 0 10px 30px -4px rgba(148, 235, 16, 0.35);
 }
-
-@keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes modalScaleUp {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-fadeIn {
-  animation: modalFadeIn 0.25s ease-out forwards;
-}
-
-.animate-scaleUp {
-  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
