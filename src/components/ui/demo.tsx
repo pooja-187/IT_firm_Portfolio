@@ -149,14 +149,15 @@ export const DemoVariant1 = () => {
         </motion.div>
       </div>
 
-      {/* 3D WebGL Circular Gallery Showcase */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-4">
-        <div className="relative h-[550px] sm:h-[620px] md:h-[680px] w-full rounded-2xl overflow-hidden">
+      {/* 3D WebGL Circular Gallery Showcase (Full Screen Width Edge-to-Edge) */}
+      <div className="relative z-10 w-full overflow-hidden">
+        <div className="relative h-[600px] sm:h-[680px] md:h-[760px] lg:h-[820px] w-full">
           <CircularGallery
             items={galleryItems}
             bend={3}
             borderRadius={0.05}
-            scrollEase={0.02}
+            scrollSpeed={2}
+            scrollEase={0.05}
           />
         </div>
       </div>
