@@ -1,6 +1,5 @@
 import HeroSection from '@/components/HeroSection';
 import ExpertiseSection from '@/components/ExpertiseSection';
-import SelectedWorkSection from '@/components/SelectedWorkSection';
 
 export default function HomePage() {
   return (
@@ -10,9 +9,6 @@ export default function HomePage() {
 
       {/* 02 — Expertise Section */}
       <ExpertiseSection />
-
-      {/* 03 — Selected Work */}
-      <SelectedWorkSection />
     </div>
   );
 }
