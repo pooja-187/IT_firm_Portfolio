@@ -53,8 +53,8 @@ export default function Navigation() {
           aria-label="Main Navigation"
           className={`relative flex items-center justify-between transition-all duration-500 ease-out ${
             isScrolled
-              ? 'bg-[#ECFDCB]/80 sm:bg-[#ECFDCB]/75 backdrop-blur-2xl border border-[#BEF264]/80 shadow-[0_12px_36px_-5px_rgba(132,204,22,0.18)] px-5 sm:px-7 py-2.5 sm:py-3 rounded-full'
-              : 'bg-[#F3FCE8]/50 sm:bg-[#F3FCE8]/40 backdrop-blur-xl border border-[#D9F99D]/60 shadow-[0_4px_24px_rgba(163,230,53,0.08)] px-5 sm:px-7 py-3 sm:py-3.5 rounded-full'
+              ? 'bg-white/75 sm:bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.06)] px-5 sm:px-7 py-2.5 sm:py-3 rounded-full'
+              : 'bg-white/35 sm:bg-white/25 backdrop-blur-md border border-white/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] px-5 sm:px-7 py-3 sm:py-3.5 rounded-full'
           } ${isScrollingDown ? '-translate-y-1' : 'translate-y-0'}`}
         >
           {/* Brand Logo / Name in Apple's SF Pro Font */}
@@ -68,7 +68,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Minimal Navigation Links */}
-          <div className="hidden md:flex items-center gap-7 lg:gap-9 text-[13px] sm:text-sm font-medium text-[#374151]">
+          <div className="hidden md:flex items-center gap-7 lg:gap-9 text-[13px] sm:text-sm font-medium text-[#484F56]">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -85,7 +85,7 @@ export default function Navigation() {
             <a
               href="#contact"
               id="nav-cta-btn"
-              className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-[#111315] bg-white/95 border border-[#D9F99D] shadow-sm hover:border-lime-500 hover:bg-[#F7FEE7] transition-all duration-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"
+              className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-[#111315] bg-white/90 border border-[#E2E8F0] shadow-sm hover:border-lime-400 hover:bg-[#F9FCF2] transition-all duration-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"
             >
               <span>Let&apos;s Talk</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#111315]" />
@@ -97,22 +97,22 @@ export default function Navigation() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
-              className="md:hidden p-2 sm:p-2.5 rounded-full bg-white/95 border border-[#D9F99D] text-[#111315] shadow-sm hover:bg-lime-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"
+              className="md:hidden p-2 sm:p-2.5 rounded-full bg-white/90 border border-[#E2E8F0] text-[#111315] shadow-sm hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-500"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </nav>
 
-        {/* Mobile Menu Dropdown with Matching Green Tinted Glass Styling */}
+        {/* Mobile Menu Dropdown with Matching Apple Glass Styling */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2.5 p-6 rounded-3xl bg-[#ECFDCB]/90 backdrop-blur-2xl border border-[#BEF264]/80 shadow-[0_20px_45px_rgba(132,204,22,0.18)] flex flex-col gap-4 animate-fade-up">
+          <div className="md:hidden mt-2.5 p-6 rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col gap-4 animate-fade-up">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-medium text-[#111315] py-2 border-b border-lime-200/60 last:border-b-0 hover:text-lime-700 transition-colors"
+                className="text-base font-medium text-[#111315] py-2 border-b border-slate-100/80 last:border-b-0 hover:text-lime-600 transition-colors"
               >
                 {link.name}
               </a>
