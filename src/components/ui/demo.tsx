@@ -9,8 +9,6 @@ import {
   GalleryCol,
   GalleryContainer,
 } from "@/components/blocks/animated-gallery"
-import { Button } from "@/components/ui/button"
-import { VideoIcon } from "lucide-react"
 
 const IMAGES_1 = [
   "https://cdn.21st.dev/assets/mirror/db/db8e72b6f6e2f325ec74898fdab6a02f3c0ba7962f3cf0b89f0ee3b22aa2a083.jpg",
@@ -33,47 +31,42 @@ const IMAGES_3 = [
 
 export const DemoVariant1 = () => {
   return (
-    <div className="relative bg-white ">
-      <ContainerStagger className="relative z-[9999] -mb-12 place-self-center px-6 pt-12 text-center">
-        <ContainerAnimated>
-          <h1 className="font-serif text-4xl font-extralight  md:text-5xl">
-            Your{" "}
-            <span className=" font-serif font-extralight text-indigo-600">
-              one source
+    <div id="work" className="relative bg-white pt-16 sm:pt-20">
+      <ContainerStagger className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
+        {/* Section Label */}
+        <ContainerAnimated className="flex justify-center mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200/80 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16] animate-pulse" />
+            <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+              03 — SELECTED WORK
             </span>
-          </h1>
-        </ContainerAnimated>
-        <ContainerAnimated>
-          <h1 className="font-serif text-4xl font-extralight md:text-5xl">
-            for all your designs
-          </h1>
+          </div>
         </ContainerAnimated>
 
-        <ContainerAnimated className="my-4">
-          <p className="leading-normal tracking-tight text-muted-foreground">
-            No waste of time and money, we provide you with
-            <br /> collection of designs to plan your next project.
+        {/* Main Heading */}
+        <ContainerAnimated>
+          <h2 className="font-sans font-normal tracking-[-0.03em] text-[#111111] text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.12]">
+            Selected work where{" "}
+            <span className="font-serif italic font-normal text-[#84CC16]">
+              design
+            </span>
+            , technology and{" "}
+            <span className="text-[#64748B]">business come together.</span>
+          </h2>
+        </ContainerAnimated>
+
+        {/* Supporting Text */}
+        <ContainerAnimated className="mt-4 sm:mt-5 max-w-2xl mx-auto">
+          <p className="font-sans text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
+            A selection of projects shaped through thoughtful design, technology and business-focused thinking.
           </p>
         </ContainerAnimated>
-
-        <ContainerAnimated>
-          <Button
-            className="gap-1 bg-indigo-700"
-          >
-            Book free call <VideoIcon className="size-4  " />
-          </Button>
-          <Button variant={"link"} className="text-secondary">
-            About Us
-          </Button>
-        </ContainerAnimated>
       </ContainerStagger>
+
+      {/* Subtle Ambient Lime Studio Light */}
       <div
-        className="pointer-events-none absolute z-10 h-[70vh] w-full "
-        style={{
-          background: "linear-gradient(to right, gray, rebeccapurple, blue)",
-          filter: "blur(84px)",
-          mixBlendMode: "screen",
-        }}
+        aria-hidden="true"
+        className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 z-10 h-[500px] w-[800px] bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.12)_0%,rgba(184,252,60,0.04)_45%,transparent_70%)] blur-3xl"
       />
 
       <ContainerScroll className="relative h-[350vh]">
