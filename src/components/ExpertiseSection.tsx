@@ -11,6 +11,7 @@ interface ExpertisePillData {
   iconBg: string;
   rotation: number;
   offsetClass: string;
+  side: 'left' | 'right';
 }
 
 export default function ExpertiseSection() {
@@ -19,49 +20,62 @@ export default function ExpertiseSection() {
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const line3Ref = useRef<HTMLSpanElement>(null);
-  const leftPillsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const rightPillsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const leftPills: ExpertisePillData[] = [
+  // Individual refs for strictly ordered 1-to-5 sequential entrance
+  const pill1Ref = useRef<HTMLDivElement>(null); // 1. UI/UX Design (Left)
+  const pill2Ref = useRef<HTMLDivElement>(null); // 2. Software Development (Left)
+  const pill3Ref = useRef<HTMLDivElement>(null); // 3. App Development (Left)
+  const pill4Ref = useRef<HTMLDivElement>(null); // 4. Performance Marketing (Right)
+  const pill5Ref = useRef<HTMLDivElement>(null); // 5. Ethical Hacking (Right)
+
+  // Mobile pills ref
+  const mobilePillsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const pills: ExpertisePillData[] = [
     {
       id: 'ui-ux',
       name: 'UI/UX Design',
-      iconBg: 'bg-[#FF6B00]', // Reference Vibrant Orange
+      iconBg: 'bg-[#FF6B00]',
       rotation: -4.5,
       offsetClass: 'self-start',
+      side: 'left',
     },
     {
       id: 'software-dev',
       name: 'Software Development',
-      iconBg: 'bg-[#00A3FF]', // Reference Cyan/Electric Blue
+      iconBg: 'bg-[#00A3FF]',
       rotation: 3.5,
       offsetClass: 'self-end translate-x-2 xl:translate-x-6',
+      side: 'left',
     },
     {
       id: 'app-dev',
       name: 'App Development',
-      iconBg: 'bg-[#262626]', // Reference Charcoal/Black
+      iconBg: 'bg-[#262626]',
       rotation: -3.5,
       offsetClass: 'self-start -translate-x-2',
+      side: 'left',
     },
-  ];
-
-  const rightPills: ExpertisePillData[] = [
     {
       id: 'performance-mkt',
       name: 'Performance Marketing',
-      iconBg: 'bg-[#FFD600]', // Reference Bright Yellow
+      iconBg: 'bg-[#FFD600]',
       rotation: 4,
       offsetClass: 'self-end translate-x-2',
+      side: 'right',
     },
     {
       id: 'ethical-hacking',
       name: 'Ethical Hacking',
-      iconBg: 'bg-[#00E676]', // Reference Vivid Green
+      iconBg: 'bg-[#00E676]',
       rotation: -4,
       offsetClass: 'self-start -translate-x-2 xl:-translate-x-6',
+      side: 'right',
     },
   ];
+
+  const leftPills = pills.filter((p) => p.side === 'left');
+  const rightPills = pills.filter((p) => p.side === 'right');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -82,7 +96,7 @@ export default function ExpertiseSection() {
         },
       });
 
-      // 1. Reveal Label
+      // 1. Reveal Label ("Expertise")
       if (labelRef.current) {
         tl.fromTo(
           labelRef.current,
@@ -91,7 +105,7 @@ export default function ExpertiseSection() {
         );
       }
 
-      // 2. Central Statement progressive line arrival
+      // 2. Central Statement: 3 lines progressive arrival
       const lines = [line1Ref.current, line2Ref.current, line3Ref.current].filter(Boolean);
       tl.fromTo(
         lines,
@@ -104,58 +118,82 @@ export default function ExpertiseSection() {
           opacity: 1,
           y: 0,
           filter: 'blur(0px)',
-          duration: 0.85,
-          stagger: 0.16,
+          duration: 0.8,
+          stagger: 0.18,
           ease: 'power3.out',
         },
-        '-=0.3'
+        '-=0.2'
       );
 
-      // 3. Left Pills Arrival from Left (preserving tilt)
-      const validLeftPills = leftPillsRef.current.filter(Boolean);
-      tl.fromTo(
-        validLeftPills,
-        {
-          opacity: 0,
-          x: -100,
-          scale: 0.94,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.9,
-          stagger: 0.14,
-          ease: 'power3.out',
-        },
-        '-=0.6'
-      );
+      // 3. Strict 1-by-1 Sequential Pill Entrance:
+      // Order: 1 (UI/UX) -> 2 (Software Dev) -> 3 (App Dev) -> 4 (Performance Mkt) -> 5 (Ethical Hacking)
+      const pillDuration = 0.8;
+      const sequenceGap = '-=0.56'; // Leaves ~0.24s between start of each consecutive pill for a clear flowing sequence
 
-      // 4. Right Pills Arrival from Right (preserving tilt)
-      const validRightPills = rightPillsRef.current.filter(Boolean);
-      tl.fromTo(
-        validRightPills,
-        {
-          opacity: 0,
-          x: 100,
-          scale: 0.94,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.9,
-          stagger: 0.14,
-          ease: 'power3.out',
-        },
-        '-=0.75'
-      );
+      // Pill 1: UI/UX Design (Left)
+      if (pill1Ref.current) {
+        tl.fromTo(
+          pill1Ref.current,
+          { opacity: 0, x: -120, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: pillDuration, ease: 'power3.out' },
+          '+=0.1'
+        );
+      }
+
+      // Pill 2: Software Development (Left)
+      if (pill2Ref.current) {
+        tl.fromTo(
+          pill2Ref.current,
+          { opacity: 0, x: -120, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: pillDuration, ease: 'power3.out' },
+          sequenceGap
+        );
+      }
+
+      // Pill 3: App Development (Left)
+      if (pill3Ref.current) {
+        tl.fromTo(
+          pill3Ref.current,
+          { opacity: 0, x: -120, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: pillDuration, ease: 'power3.out' },
+          sequenceGap
+        );
+      }
+
+      // Pill 4: Performance Marketing (Right)
+      if (pill4Ref.current) {
+        tl.fromTo(
+          pill4Ref.current,
+          { opacity: 0, x: 120, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: pillDuration, ease: 'power3.out' },
+          sequenceGap
+        );
+      }
+
+      // Pill 5: Ethical Hacking (Right)
+      if (pill5Ref.current) {
+        tl.fromTo(
+          pill5Ref.current,
+          { opacity: 0, x: 120, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: pillDuration, ease: 'power3.out' },
+          sequenceGap
+        );
+      }
+
+      // Mobile Responsive Staggered Entrance (1-to-5 sequential)
+      const validMobilePills = mobilePillsRef.current.filter(Boolean);
+      if (validMobilePills.length > 0) {
+        tl.fromTo(
+          validMobilePills,
+          { opacity: 0, y: 25, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.18, ease: 'power3.out' },
+          '<0.15'
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
-
-  const allPills = [...leftPills, ...rightPills];
 
   return (
     <section
@@ -176,31 +214,60 @@ export default function ExpertiseSection() {
         {/* 3-Column Flanking Stage: Zero Collision, Zero Overlap, Perfect Organic Alignment */}
         <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_220px] lg:grid-cols-[260px_1fr_260px] xl:grid-cols-[290px_1fr_290px] items-center gap-6 lg:gap-8 min-h-[380px] sm:min-h-[440px]">
           
-          {/* Left Flanking Column (3 Staggered Pills) */}
+          {/* Left Flanking Column (Pills 1, 2, 3) */}
           <div className="hidden md:flex flex-col justify-center gap-10 lg:gap-14">
-            {leftPills.map((pill, idx) => (
+            
+            {/* Pill 1: UI/UX Design */}
+            <div ref={pill1Ref} className={`w-fit ${leftPills[0].offsetClass}`}>
               <div
-                key={pill.id}
-                ref={(el) => {
-                  leftPillsRef.current[idx] = el;
-                }}
-                className={`w-fit ${pill.offsetClass}`}
+                style={{ transform: `rotate(${leftPills[0].rotation}deg)` }}
+                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
               >
-                <div
-                  style={{ transform: `rotate(${pill.rotation}deg)` }}
-                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+                <span
+                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[0].iconBg} shadow-sm shrink-0`}
                 >
-                  <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
-                  >
-                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                  </span>
-                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                    {pill.name}
-                  </span>
-                </div>
+                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                </span>
+                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  {leftPills[0].name}
+                </span>
               </div>
-            ))}
+            </div>
+
+            {/* Pill 2: Software Development */}
+            <div ref={pill2Ref} className={`w-fit ${leftPills[1].offsetClass}`}>
+              <div
+                style={{ transform: `rotate(${leftPills[1].rotation}deg)` }}
+                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+              >
+                <span
+                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[1].iconBg} shadow-sm shrink-0`}
+                >
+                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                </span>
+                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  {leftPills[1].name}
+                </span>
+              </div>
+            </div>
+
+            {/* Pill 3: App Development */}
+            <div ref={pill3Ref} className={`w-fit ${leftPills[2].offsetClass}`}>
+              <div
+                style={{ transform: `rotate(${leftPills[2].rotation}deg)` }}
+                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+              >
+                <span
+                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[2].iconBg} shadow-sm shrink-0`}
+                >
+                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                </span>
+                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  {leftPills[2].name}
+                </span>
+              </div>
+            </div>
+
           </div>
 
           {/* Central Statement Column (SEO-Structured H2) */}
@@ -221,40 +288,55 @@ export default function ExpertiseSection() {
             </h2>
           </div>
 
-          {/* Right Flanking Column (2 Staggered Pills) */}
+          {/* Right Flanking Column (Pills 4, 5) */}
           <div className="hidden md:flex flex-col justify-center gap-14 lg:gap-20">
-            {rightPills.map((pill, idx) => (
+            
+            {/* Pill 4: Performance Marketing */}
+            <div ref={pill4Ref} className={`w-fit ${rightPills[0].offsetClass}`}>
               <div
-                key={pill.id}
-                ref={(el) => {
-                  rightPillsRef.current[idx] = el;
-                }}
-                className={`w-fit ${pill.offsetClass}`}
+                style={{ transform: `rotate(${rightPills[0].rotation}deg)` }}
+                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
               >
-                <div
-                  style={{ transform: `rotate(${pill.rotation}deg)` }}
-                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+                <span
+                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[0].iconBg} shadow-sm shrink-0`}
                 >
-                  <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
-                  >
-                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                  </span>
-                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                    {pill.name}
-                  </span>
-                </div>
+                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                </span>
+                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  {rightPills[0].name}
+                </span>
               </div>
-            ))}
+            </div>
+
+            {/* Pill 5: Ethical Hacking */}
+            <div ref={pill5Ref} className={`w-fit ${rightPills[1].offsetClass}`}>
+              <div
+                style={{ transform: `rotate(${rightPills[1].rotation}deg)` }}
+                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+              >
+                <span
+                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[1].iconBg} shadow-sm shrink-0`}
+                >
+                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                </span>
+                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  {rightPills[1].name}
+                </span>
+              </div>
+            </div>
+
           </div>
 
         </div>
 
-        {/* Mobile Responsive Staggered Layout */}
+        {/* Mobile Responsive Staggered Layout (Sequential 1-to-5 order) */}
         <div className="md:hidden mt-10 flex flex-wrap justify-center gap-3 px-2">
-          {allPills.map((pill) => (
+          {pills.map((pill, idx) => (
             <div
               key={`mobile-${pill.id}`}
+              ref={(el) => {
+                mobilePillsRef.current[idx] = el;
+              }}
               style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}
               className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white border border-slate-100 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 transition-transform"
             >
