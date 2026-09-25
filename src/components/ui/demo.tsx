@@ -31,11 +31,33 @@ const IMAGES_3 = [
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-white pt-16 sm:pt-20">
-      <ContainerStagger className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
+    <div id="work" className="relative bg-[#FAFAF8] pt-16 sm:pt-20 overflow-hidden">
+      {/* Soft Lime Atmospheric Background Glow behind heading */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-0 right-0 h-[650px] sm:h-[750px] z-0"
+        style={{
+          background: `
+            radial-gradient(
+              ellipse 65% 50% at 50% 42%,
+              rgba(190, 235, 120, 0.18) 0%,
+              rgba(190, 235, 120, 0.10) 28%,
+              rgba(190, 235, 120, 0.045) 48%,
+              transparent 72%
+            ),
+            radial-gradient(
+              ellipse 95% 60% at 50% 40%,
+              rgba(215, 240, 175, 0.07) 0%,
+              transparent 68%
+            )
+          `,
+        }}
+      />
+
+      <ContainerStagger className="relative z-10 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
         {/* Section Label */}
         <ContainerAnimated className="flex justify-center mb-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200/80 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16] animate-pulse" />
             <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
               03 — SELECTED WORK
@@ -62,12 +84,6 @@ export const DemoVariant1 = () => {
           </p>
         </ContainerAnimated>
       </ContainerStagger>
-
-      {/* Subtle Ambient Lime Studio Light */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 z-10 h-[500px] w-[800px] bg-[radial-gradient(ellipse_at_center,rgba(162,246,36,0.12)_0%,rgba(184,252,60,0.04)_45%,transparent_70%)] blur-3xl"
-      />
 
       <ContainerScroll className="relative h-[350vh]">
         <ContainerSticky className="h-svh">
