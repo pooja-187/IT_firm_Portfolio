@@ -55,20 +55,20 @@ export default function ProcessSection() {
       aria-labelledby="process-heading"
       className="relative w-full text-[#111111] py-24 sm:py-32 lg:py-40 overflow-hidden selection:bg-lime-200"
       style={{
-        background: `
+        backgroundColor: '#FFFFFF',
+        backgroundImage: `
           radial-gradient(
-            ellipse 65% 45% at 50% 48%,
-            rgba(190, 235, 120, 0.20) 0%,
-            rgba(190, 235, 120, 0.11) 30%,
-            rgba(190, 235, 120, 0.045) 52%,
-            transparent 75%
+            ellipse 65% 42% at 50% 32%,
+            rgba(163, 230, 53, 0.26) 0%,
+            rgba(190, 242, 100, 0.12) 40%,
+            rgba(217, 249, 157, 0.04) 65%,
+            transparent 78%
           ),
           radial-gradient(
-            ellipse 90% 55% at 50% 45%,
-            rgba(210, 240, 165, 0.08) 0%,
+            ellipse 85% 55% at 52% 38%,
+            rgba(163, 230, 53, 0.10) 0%,
             transparent 70%
-          ),
-          #FAFAF8
+          )
         `,
       }}
     >
@@ -79,8 +79,8 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20 lg:mb-24">
           {/* Small Section Label */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-black/5 mb-5 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B8C4A0]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
             <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
               07 — PROCESS
             </span>
@@ -100,7 +100,7 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="hidden lg:block relative w-full max-w-[1180px] mx-auto">
           
-          {/* SVG Sage Connector Lines Layer */}
+          {/* SVG Lime Connector Lines Layer (Matching Reference) */}
           <svg
             aria-hidden="true"
             className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
@@ -110,7 +110,7 @@ export default function ProcessSection() {
             {/* 1. Connector: 01 (Understand) -> 02 (Define) */}
             <motion.path
               d="M 310 160 C 360 110, 420 100, 480 120"
-              stroke="#B8C4A0"
+              stroke="#A3E635"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -119,13 +119,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, delay: 0.2, ease: 'easeInOut' }}
             />
-            <circle cx="310" cy="160" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
-            <circle cx="480" cy="120" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="310" cy="160" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
+            <circle cx="480" cy="120" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
 
             {/* 2. Connector: 02 (Define) -> 03 (Create) with Organic Loop */}
             <motion.path
               d="M 700 120 C 750 140, 780 190, 755 195 C 730 200, 760 145, 835 160"
-              stroke="#B8C4A0"
+              stroke="#A3E635"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -134,13 +134,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 1.0, delay: 0.4, ease: 'easeInOut' }}
             />
-            <circle cx="700" cy="120" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
-            <circle cx="835" cy="160" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="700" cy="120" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
+            <circle cx="835" cy="160" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
 
             {/* 3. Connector: 03 (Create) -> 04 (Deliver) */}
             <motion.path
               d="M 940 370 C 960 460, 810 490, 710 430 C 630 380, 560 390, 510 440"
-              stroke="#B8C4A0"
+              stroke="#A3E635"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -149,13 +149,13 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 1.1, delay: 0.6, ease: 'easeInOut' }}
             />
-            <circle cx="940" cy="370" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
-            <circle cx="510" cy="440" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="940" cy="370" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
+            <circle cx="510" cy="440" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
 
             {/* 4. Connector: 04 (Deliver) -> 05 (Review) with Loop */}
             <motion.path
               d="M 540 580 C 580 545, 615 545, 605 585 C 595 615, 615 620, 645 605"
-              stroke="#B8C4A0"
+              stroke="#A3E635"
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
@@ -164,8 +164,8 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.9, delay: 0.8, ease: 'easeInOut' }}
             />
-            <circle cx="540" cy="580" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
-            <circle cx="645" cy="605" r="4.5" fill="#FAFAF8" stroke="#B8C4A0" strokeWidth="2" />
+            <circle cx="540" cy="580" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
+            <circle cx="645" cy="605" r="4.5" fill="#FFFFFF" stroke="#A3E635" strokeWidth="2" />
           </svg>
 
           {/* Tier 1 Floating Cards (01, 02, 03) */}
@@ -210,10 +210,10 @@ export default function ProcessSection() {
            =================================================== */}
         <div className="lg:hidden relative max-w-md mx-auto">
           
-          {/* Vertical Sage Timeline */}
+          {/* Vertical Lime Timeline */}
           <div
             aria-hidden="true"
-            className="absolute top-8 bottom-8 left-6 sm:left-7 w-0.5 bg-[#B8C4A0]/60"
+            className="absolute top-8 bottom-8 left-6 sm:left-7 w-0.5 bg-[#A3E635]/60"
           />
 
           <div className="space-y-6 relative z-10 pl-14 sm:pl-16">
@@ -227,12 +227,12 @@ export default function ProcessSection() {
                 className="relative"
               >
                 {/* Timeline Node */}
-                <div className="absolute -left-14 sm:-left-16 top-7 w-4 h-4 rounded-full bg-[#FAFAF8] border-2 border-[#B8C4A0] shadow-sm flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#B8C4A0]" />
+                <div className="absolute -left-14 sm:-left-16 top-7 w-4 h-4 rounded-full bg-[#FFFFFF] border-2 border-[#A3E635] shadow-sm flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
                 </div>
 
-                {/* Mobile Warm Ivory Card */}
-                <div className="bg-[#F4F1EA] border border-[rgba(30,30,30,0.07)] rounded-[26px] p-6 sm:p-7 shadow-[0_18px_45px_rgba(20,20,20,0.06)]">
+                {/* Mobile White Card */}
+                <div className="bg-[#FFFFFF] border border-black/[0.05] rounded-[26px] p-6 sm:p-7 shadow-[0_16px_40px_rgba(0,0,0,0.05)]">
                   <span className="font-sans text-4xl sm:text-5xl font-light text-[#111111] tracking-tight block mb-6 leading-none">
                     {step.number}
                   </span>
@@ -255,7 +255,7 @@ export default function ProcessSection() {
 }
 
 // =========================================================================
-// Individual Process Card (Warm Ivory / Soft Stone Surface)
+// Individual Process Card (Pristine White Card Matching Reference)
 // =========================================================================
 function ProcessCard({ step, delay }: { step: ProcessStep; delay: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -298,7 +298,7 @@ function ProcessCard({ step, delay }: { step: ProcessStep; delay: number }) {
             : 'translateY(0px) scale(1)'
         }`,
       }}
-      className="relative w-[300px] xl:w-[325px] h-[360px] xl:h-[390px] rounded-[30px] p-7 xl:p-8 bg-[#F4F1EA] hover:bg-[#FAF7F2] border border-[rgba(30,30,30,0.07)] shadow-[0_18px_45px_rgba(20,20,20,0.06)] hover:shadow-[0_28px_65px_rgba(20,20,20,0.12)] transition-all duration-400 ease-out flex flex-col justify-between select-none cursor-default will-change-transform"
+      className="relative w-[300px] xl:w-[325px] h-[360px] xl:h-[390px] rounded-[30px] p-7 xl:p-8 bg-[#FFFFFF] hover:bg-[#FFFFFF] border border-black/[0.05] shadow-[0_20px_50px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.12)] transition-all duration-400 ease-out flex flex-col justify-between select-none cursor-default will-change-transform"
     >
       {/* Top: Very Large Lightweight Step Number */}
       <div>
