@@ -3,16 +3,15 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Palette, Code, Smartphone, TrendingUp, ShieldCheck } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 interface ExpertisePillData {
   id: string;
   name: string;
-  icon: React.ReactNode;
   iconBg: string;
   rotation: number;
   side: 'left' | 'right';
-  desktopPos: string;
+  className: string;
 }
 
 export default function ExpertiseSection() {
@@ -24,51 +23,47 @@ export default function ExpertiseSection() {
   const leftPillsRef = useRef<(HTMLDivElement | null)[]>([]);
   const rightPillsRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Exact 5 approved expertise areas matching reference pill styling (circular badge with lightning spark)
   const pills: ExpertisePillData[] = [
     {
       id: 'ui-ux',
       name: 'UI/UX Design',
-      icon: <Palette className="w-4 h-4 text-white" />,
-      iconBg: 'bg-[#F97316]', // Vibrant Coral Orange
-      rotation: -5,
+      iconBg: 'bg-[#FF6B00]', // Reference Vibrant Orange
+      rotation: -4.5,
       side: 'left',
-      desktopPos: 'top-[12%] left-[2%] lg:left-[6%]',
+      className: 'top-2 sm:top-4 -left-12 sm:-left-28 lg:-left-36',
     },
     {
       id: 'software-dev',
       name: 'Software Development',
-      icon: <Code className="w-4 h-4 text-white" />,
-      iconBg: 'bg-[#0284C7]', // Electric Sky Blue
-      rotation: 4,
+      iconBg: 'bg-[#00A3FF]', // Reference Cyan/Electric Blue
+      rotation: 3.5,
       side: 'left',
-      desktopPos: 'top-[44%] left-[0%] lg:left-[3%]',
+      className: 'top-1/2 -translate-y-1/2 -left-6 sm:-left-16 lg:-left-24',
     },
     {
       id: 'app-dev',
       name: 'App Development',
-      icon: <Smartphone className="w-4 h-4 text-white" />,
-      iconBg: 'bg-[#334155]', // Slate Graphite
-      rotation: -4,
+      iconBg: 'bg-[#262626]', // Reference Charcoal/Black
+      rotation: -3.5,
       side: 'left',
-      desktopPos: 'top-[76%] left-[4%] lg:left-[8%]',
+      className: 'bottom-2 sm:bottom-4 -left-14 sm:-left-32 lg:-left-40',
     },
     {
       id: 'performance-mkt',
       name: 'Performance Marketing',
-      icon: <TrendingUp className="w-4 h-4 text-white" />,
-      iconBg: 'bg-[#EAB308]', // Amber Gold
+      iconBg: 'bg-[#FFD600]', // Reference Bright Yellow
       rotation: 4,
       side: 'right',
-      desktopPos: 'top-[22%] right-[2%] lg:right-[6%]',
+      className: 'top-4 sm:top-8 -right-12 sm:-right-28 lg:-right-36',
     },
     {
       id: 'ethical-hacking',
       name: 'Ethical Hacking',
-      icon: <ShieldCheck className="w-4 h-4 text-white" />,
-      iconBg: 'bg-[#84CC16]', // Lime Emerald
-      rotation: -5,
+      iconBg: 'bg-[#00E676]', // Reference Vivid Green
+      rotation: -4,
       side: 'right',
-      desktopPos: 'top-[62%] right-[4%] lg:right-[8%]',
+      className: 'bottom-4 sm:bottom-8 -right-10 sm:-right-24 lg:-right-32',
     },
   ];
 
@@ -103,7 +98,7 @@ export default function ExpertiseSection() {
         );
       }
 
-      // 2. Central Statement progressive lines arrival
+      // 2. Central Statement progressive line arrival
       const lines = [line1Ref.current, line2Ref.current, line3Ref.current].filter(Boolean);
       tl.fromTo(
         lines,
@@ -172,39 +167,39 @@ export default function ExpertiseSection() {
       ref={sectionRef}
       id="expertise"
       aria-labelledby="expertise-heading"
-      className="relative w-full bg-[#FAFAF8] py-28 sm:py-36 lg:py-44 overflow-hidden border-t border-slate-200/50"
+      className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 lg:py-40 overflow-hidden border-t border-slate-100"
     >
-      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="relative w-full max-w-6xl mx-auto px-6 sm:px-8">
         
-        {/* Top Editorial Label inspired by the reference ("02 — Expertise") */}
-        <div ref={labelRef} className="text-center mb-6 sm:mb-10">
-          <span className="font-serif italic text-2xl sm:text-3xl lg:text-4xl text-[#1E242B] font-normal tracking-tight">
+        {/* Top Editorial Label inspired by the reference ("Hallo!" -> "Expertise") */}
+        <div ref={labelRef} className="text-center mb-8 sm:mb-12">
+          <span className="font-serif italic text-3xl sm:text-4xl text-[#1E242B] font-normal tracking-tight">
             Expertise
           </span>
         </div>
 
-        {/* Central Dominant Statement & Floating Pills Stage */}
-        <div className="relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] flex items-center justify-center">
+        {/* Central Stage: Central Statement tightly framed by floating tilted pills */}
+        <div className="relative max-w-3xl lg:max-w-4xl mx-auto py-8 sm:py-12 flex items-center justify-center">
           
-          {/* Main Central Typography (SEO-Structured H2) */}
-          <div className="relative z-10 text-center max-w-3xl lg:max-w-4xl mx-auto px-4">
+          {/* Main Central Typography (SEO-Structured H2 matching reference line breaks) */}
+          <div className="relative z-10 text-center px-4">
             <h2
               id="expertise-heading"
-              className="font-sans font-light tracking-[-0.03em] text-[#111315] text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] leading-[1.12] sm:leading-[1.14] lg:leading-[1.15]"
+              className="font-sans font-normal tracking-[-0.025em] text-[#111315] text-3xl sm:text-5xl md:text-[3.6rem] lg:text-[4.2rem] leading-[1.2] sm:leading-[1.22] lg:leading-[1.24]"
             >
-              <span ref={line1Ref} className="block text-[#0E1113] font-medium">
+              <span ref={line1Ref} className="block text-[#111315]">
                 Design expertise.
               </span>
-              <span ref={line2Ref} className="block text-[#1F2429] mt-1 sm:mt-2">
+              <span ref={line2Ref} className="block text-[#181C20] mt-1 sm:mt-2">
                 Marketing perspective.
               </span>
-              <span ref={line3Ref} className="block text-[#4B5563] mt-1 sm:mt-2">
+              <span ref={line3Ref} className="block text-[#717A84] mt-1 sm:mt-2">
                 Founder-led execution.
               </span>
             </h2>
           </div>
 
-          {/* Desktop Floating Pills Composition */}
+          {/* Desktop Floating Pills Stage (Flanking the central text) */}
           <div className="hidden md:block absolute inset-0 pointer-events-none">
             
             {/* Left Side Floating Pills */}
@@ -214,18 +209,18 @@ export default function ExpertiseSection() {
                 ref={(el) => {
                   leftPillsRef.current[idx] = el;
                 }}
-                className={`absolute ${pill.desktopPos} pointer-events-auto`}
+                className={`absolute ${pill.className} pointer-events-auto`}
               >
                 <div
                   style={{ transform: `rotate(${pill.rotation}deg)` }}
-                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-4px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
                 >
                   <span
-                    className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
                   >
-                    {pill.icon}
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
-                  <span className="font-sans text-sm sm:text-[15px] font-medium text-[#111315] tracking-tight">
+                  <span className="font-sans text-sm sm:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
                     {pill.name}
                   </span>
                 </div>
@@ -239,18 +234,18 @@ export default function ExpertiseSection() {
                 ref={(el) => {
                   rightPillsRef.current[idx] = el;
                 }}
-                className={`absolute ${pill.desktopPos} pointer-events-auto`}
+                className={`absolute ${pill.className} pointer-events-auto`}
               >
                 <div
                   style={{ transform: `rotate(${pill.rotation}deg)` }}
-                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-4px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
                 >
                   <span
-                    className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
                   >
-                    {pill.icon}
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
-                  <span className="font-sans text-sm sm:text-[15px] font-medium text-[#111315] tracking-tight">
+                  <span className="font-sans text-sm sm:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
                     {pill.name}
                   </span>
                 </div>
@@ -262,19 +257,19 @@ export default function ExpertiseSection() {
         </div>
 
         {/* Mobile Responsive Floating/Staggered Pills Layout */}
-        <div className="md:hidden mt-12 flex flex-wrap justify-center gap-3.5 px-2">
+        <div className="md:hidden mt-8 flex flex-wrap justify-center gap-3 px-2">
           {pills.map((pill) => (
             <div
               key={`mobile-${pill.id}`}
               style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}
-              className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/95 border border-slate-200/80 shadow-[0_4px_16px_rgba(0,0,0,0.05)] active:scale-95 transition-transform"
+              className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white border border-slate-100 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 transition-transform"
             >
               <span
-                className={`flex items-center justify-center w-6 h-6 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
+                className={`flex items-center justify-center w-5 h-5 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
               >
-                {pill.icon}
+                <Zap className="w-3 h-3 text-white fill-white" />
               </span>
-              <span className="font-sans text-xs sm:text-sm font-medium text-[#111315]">
+              <span className="font-sans text-xs sm:text-sm font-medium text-[#181C20]">
                 {pill.name}
               </span>
             </div>
