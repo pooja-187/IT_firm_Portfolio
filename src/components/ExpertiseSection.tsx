@@ -209,21 +209,20 @@ export default function ExpertiseSection() {
         style={{
           background: `
             radial-gradient(
-              ellipse 75% 55% at 50% 50%,
+              ellipse 85% 60% at 50% 50%,
               rgba(190, 235, 105, 0.32) 0%,
-              rgba(190, 235, 105, 0.20) 25%,
-              rgba(190, 235, 105, 0.10) 48%,
-              rgba(190, 235, 105, 0.04) 65%,
+              rgba(190, 235, 105, 0.20) 30%,
+              rgba(190, 235, 105, 0.08) 55%,
               transparent 80%
             ),
             radial-gradient(
-              ellipse 95% 70% at 50% 48%,
+              ellipse 100% 75% at 50% 48%,
               rgba(215, 242, 165, 0.15) 0%,
-              transparent 72%
+              transparent 75%
             )
           `,
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
         }}
       >
         {/* Soft Blurred Depth Glow Behind Heading */}

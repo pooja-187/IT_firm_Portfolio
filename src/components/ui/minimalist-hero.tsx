@@ -59,17 +59,17 @@ export const MinimalistHero = ({
         className
       )}
     >
-      {/* Saturated Ambient Diffused Lime-Green Studio Light (From Old Hero) */}
+      {/* Saturated Ambient Diffused Lime-Green Studio Light (Seamlessly Blended) */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background: `
-            radial-gradient(ellipse 90% 60% at 50% 55%, rgba(162, 246, 36, 0.65) 0%, rgba(184, 252, 60, 0.45) 32%, rgba(214, 255, 115, 0.22) 58%, transparent 84%),
-            radial-gradient(circle 600px at 12% 60%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
-            radial-gradient(circle 600px at 88% 60%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
-            linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.4) 16%, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0) 65%, rgba(255, 255, 255, 0.7) 85%, #ffffff 100%)
+            radial-gradient(ellipse 85% 60% at 50% 50%, rgba(190, 235, 105, 0.35) 0%, rgba(190, 235, 105, 0.22) 30%, rgba(190, 235, 105, 0.10) 55%, transparent 80%),
+            radial-gradient(ellipse 100% 75% at 50% 48%, rgba(215, 242, 165, 0.18) 0%, transparent 75%)
           `,
+          maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
         }}
       />
 
