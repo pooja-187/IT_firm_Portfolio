@@ -53,24 +53,24 @@ export default function HeroSection() {
         </div>
 
         {/* Bottom Flanking Controls & Supporting Narrative with Balanced Breathing Room */}
-        <div className="relative z-20 w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center pt-8 border-t border-slate-200/50 mt-4 sm:mt-8">
+        <div className="relative z-20 w-full grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-10 items-center pt-8 border-t border-slate-200/60 mt-6 sm:mt-10">
           
           {/* Left: Availability Status Indicator */}
-          <div className="flex justify-center md:justify-start">
+          <div className="flex justify-center md:justify-start items-center">
             <StatusPill />
           </div>
 
           {/* Center: Primary Call to Action */}
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <HeroCTA label="Discuss Your Project" href="#contact" />
           </div>
 
           {/* Right: Editorial Supporting Narrative */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right">
-            <p className="text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1F2429] mb-1">
+          <div className="flex flex-col justify-center items-center md:items-end text-center md:text-right">
+            <p className="text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1F2429] leading-snug">
               Thoughtful design • Clear experiences • Results
             </p>
-            <p className="text-xs text-[#525B64] max-w-xs leading-relaxed font-normal">
+            <p className="text-xs text-[#525B64] max-w-sm leading-relaxed font-normal mt-1">
               Turning complex ideas into intuitive websites and high-converting digital products.
             </p>
           </div>
