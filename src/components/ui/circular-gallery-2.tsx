@@ -464,6 +464,7 @@ class App {
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf!: number;
+  destroyed: boolean = false;
   boundOnResize!: () => void;
   boundOnWheel!: (e: WheelEvent) => void;
   boundOnTouchDown!: (e: MouseEvent | TouchEvent) => void;
@@ -493,7 +494,12 @@ class App {
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     autoBind(this);
-    this.createRenderer();
+
+    const initialized = this.createRenderer();
+    if (!initialized) {
+      return;
+    }
+
     this.createCamera();
     this.createScene();
     this.onResize();
@@ -503,15 +509,24 @@ class App {
     this.addEventListeners();
   }
 
-  createRenderer() {
-    this.renderer = new Renderer({
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2),
-    });
-    this.gl = this.renderer.gl;
-    this.gl.clearColor(0, 0, 0, 0);
-    this.container.appendChild(this.gl.canvas);
+  createRenderer(): boolean {
+    try {
+      this.renderer = new Renderer({
+        alpha: true,
+        antialias: true,
+        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+      });
+      this.gl = this.renderer.gl;
+      if (!this.gl || !this.gl.canvas) {
+        return false;
+      }
+      this.gl.clearColor(0, 0, 0, 0);
+      this.container.appendChild(this.gl.canvas);
+      return true;
+    } catch (e) {
+      console.warn("CircularGallery: WebGL context creation failed, falling back.", e);
+      return false;
+    }
   }
 
   createCamera() {
@@ -610,9 +625,10 @@ class App {
   }
 
   onResize() {
+    if (!this.container || !this.renderer || !this.camera) return;
     this.screen = {
-      width: this.container.clientWidth,
-      height: this.container.clientHeight,
+      width: this.container.clientWidth || 800,
+      height: this.container.clientHeight || 600,
     };
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({
@@ -630,6 +646,7 @@ class App {
   }
 
   update() {
+    if (this.destroyed || !this.renderer || !this.gl) return;
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
@@ -661,17 +678,34 @@ class App {
   }
 
   destroy() {
-    window.cancelAnimationFrame(this.raf);
-    window.removeEventListener("resize", this.boundOnResize);
-    window.removeEventListener("wheel", this.boundOnWheel);
-    this.container.removeEventListener("mousedown", this.boundOnTouchDown);
-    window.removeEventListener("mousemove", this.boundOnTouchMove);
-    window.removeEventListener("mouseup", this.boundOnTouchUp);
-    this.container.removeEventListener("touchstart", this.boundOnTouchDown);
-    window.removeEventListener("touchmove", this.boundOnTouchMove);
-    window.removeEventListener("touchend", this.boundOnTouchUp);
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    this.destroyed = true;
+    if (this.raf) {
+      window.cancelAnimationFrame(this.raf);
+    }
+    if (this.boundOnResize) window.removeEventListener("resize", this.boundOnResize);
+    if (this.boundOnWheel) window.removeEventListener("wheel", this.boundOnWheel);
+    if (this.container && this.boundOnTouchDown) {
+      this.container.removeEventListener("mousedown", this.boundOnTouchDown);
+      this.container.removeEventListener("touchstart", this.boundOnTouchDown);
+    }
+    if (this.boundOnTouchMove) {
+      window.removeEventListener("mousemove", this.boundOnTouchMove);
+      window.removeEventListener("touchmove", this.boundOnTouchMove);
+    }
+    if (this.boundOnTouchUp) {
+      window.removeEventListener("mouseup", this.boundOnTouchUp);
+      window.removeEventListener("touchend", this.boundOnTouchUp);
+    }
+    if (this.gl) {
+      try {
+        const loseContext = this.gl.getExtension("WEBGL_lose_context");
+        if (loseContext) {
+          loseContext.loseContext();
+        }
+      } catch (e) {}
+      if (this.gl.canvas && this.gl.canvas.parentNode) {
+        this.gl.canvas.parentNode.removeChild(this.gl.canvas);
+      }
     }
   }
 }
@@ -690,24 +724,74 @@ const CircularGallery = ({
   ...props
 }: CircularGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const computedColor = "#111111";
 
-    const app = new App(containerRef.current, {
-      items,
-      bend,
-      textColor: computedColor,
-      borderRadius,
-      scrollSpeed,
-      scrollEase,
-    });
+    // Check WebGL support
+    const testCanvas = document.createElement("canvas");
+    const gl = testCanvas.getContext("webgl2") || testCanvas.getContext("webgl");
+    if (!gl) {
+      setWebglSupported(false);
+      return;
+    }
+    setWebglSupported(true);
+
+    const computedColor = "#111111";
+    let app: App | null = null;
+
+    try {
+      app = new App(containerRef.current, {
+        items,
+        bend,
+        textColor: computedColor,
+        borderRadius,
+        scrollSpeed,
+        scrollEase,
+      });
+    } catch (err) {
+      console.warn("CircularGallery initialization caught error:", err);
+      setWebglSupported(false);
+    }
 
     return () => {
-      app.destroy();
+      if (app) {
+        app.destroy();
+      }
     };
   }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName]);
+
+  // Fallback interactive carousel if WebGL is unavailable on device/browser
+  if (webglSupported === false && items && items.length > 0) {
+    return (
+      <div
+        className={cn(
+          "w-full h-full overflow-x-auto overflow-y-hidden flex items-center gap-6 px-8 py-6 no-scrollbar",
+          className,
+        )}
+        {...props}
+      >
+        {items.map((item, idx) => (
+          <div
+            key={`fallback-${idx}`}
+            className="shrink-0 w-[280px] sm:w-[340px] flex flex-col items-center gap-3"
+          >
+            <div className="w-full h-[360px] sm:h-[440px] rounded-3xl overflow-hidden shadow-lg border border-black/5 bg-slate-100">
+              <img
+                src={item.image}
+                alt={item.text}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="font-sans font-semibold text-sm text-[#111111] text-center">
+              {item.text}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -722,4 +806,5 @@ const CircularGallery = ({
 };
 
 export { CircularGallery };
+
 
