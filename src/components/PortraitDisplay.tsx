@@ -31,56 +31,52 @@ export default function PortraitDisplay({
       return;
     }
 
-    // Responsive GSAP MatchMedia True Parallax Implementation
-    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-    mm.add(
-      {
-        isDesktop: '(min-width: 1024px)',
-        isTablet: '(min-width: 640px) and (max-width: 1023px)',
-        isMobile: '(max-width: 639px)',
-      },
-      (context) => {
-        const { isDesktop, isTablet } = context.conditions as {
-          isDesktop: boolean;
-          isTablet: boolean;
-          isMobile: boolean;
-        };
+      mm.add(
+        {
+          isDesktop: '(min-width: 1024px)',
+          isTablet: '(min-width: 640px) and (max-width: 1023px)',
+          isMobile: '(max-width: 639px)',
+        },
+        (context) => {
+          const { isDesktop, isTablet } = context.conditions as {
+            isDesktop: boolean;
+            isTablet: boolean;
+            isMobile: boolean;
+          };
 
-        // Responsive parallax distance
-        const travelDistance = isDesktop ? 140 : isTablet ? 90 : 50;
+          // Visible and elegant parallax distance
+          const travelDistance = isDesktop ? 140 : isTablet ? 90 : 50;
 
-        // Reset to natural 0 position
-        gsap.set(portraitMoverRef.current, {
-          y: 0,
-          force3D: true,
-        });
+          // Initial position reset
+          gsap.set(portraitMoverRef.current, {
+            y: 0,
+            force3D: true,
+          });
 
-        // Trigger on hero section
-        const triggerElement = document.getElementById('hero-main-container') || containerRef.current;
+          // ScrollTrigger tuned for visible hero scroll range (0 to 450px of scroll)
+          gsap.to(portraitMoverRef.current, {
+            y: -travelDistance,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 75%',
+              end: 'bottom 10%',
+              scrub: 0.8,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+      );
+    }, containerRef);
 
-        // Pure linear scroll-driven parallax (image-only)
-        const tween = gsap.to(portraitMoverRef.current, {
-          y: -travelDistance,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: triggerElement,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-        };
-      }
-    );
+    // Refresh dimensions once mounted
+    ScrollTrigger.refresh();
 
     return () => {
-      mm.revert();
+      ctx.revert();
     };
   }, []);
 
@@ -89,7 +85,7 @@ export default function PortraitDisplay({
       ref={containerRef}
       className="relative w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[540px] mx-auto aspect-[3/4] flex items-end justify-center overflow-visible"
     >
-      {/* 100% Static Ambient Glow Aura (Zero Animation / Never Moves) */}
+      {/* 100% Static Ambient Glow Aura (Never moves with scroll) */}
       <div
         className="absolute bottom-6 inset-x-0 mx-auto w-4/5 h-4/5 rounded-full bg-gradient-to-t from-lime-400/60 via-lime-300/40 to-transparent blur-3xl pointer-events-none -z-10"
         aria-hidden="true"

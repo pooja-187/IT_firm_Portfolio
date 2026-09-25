@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <div
       id="hero-main-container"
-      className="hero-glow-container min-h-[110vh] sm:min-h-[115vh] flex flex-col justify-between relative selection:bg-lime-300"
+      className="hero-glow-container min-h-[130vh] sm:min-h-[140vh] flex flex-col justify-between relative selection:bg-lime-300"
     >
       {/* Saturated Ambient Diffused Lime-Green Studio Light */}
       <div className="hero-glow-layer" aria-hidden="true" />
@@ -18,7 +18,7 @@ export default function HeroSection() {
       <Navigation />
 
       {/* Main Hero Content Area with Generous Editorial Whitespace */}
-      <main className="relative z-10 flex-1 flex flex-col justify-between w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-24">
+      <main className="relative z-10 flex-1 flex flex-col justify-between w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 sm:pt-28 md:pt-32 pb-24 sm:pb-36">
         
         {/* Top Prestige / Authority Laurel Badge */}
         <div className="flex justify-center mb-6 sm:mb-8">
