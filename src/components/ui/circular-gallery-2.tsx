@@ -29,12 +29,12 @@ interface CircularGalleryProps
   items?: GalleryItem[];
   /**
    * The amount of curvature. Higher values create a stronger bend.
-   * @default 3
+   * @default 2.5
    */
   bend?: number;
   /**
    * The border radius for the images, as a percentage (0.0 to 0.5).
-   * @default 0.05
+   * @default 0.06
    */
   borderRadius?: number;
   /**
@@ -48,7 +48,7 @@ interface CircularGalleryProps
    */
   scrollEase?: number;
   /**
-   * Optional class name to override the default font (e.g., from Next/font).
+   * Optional class name to override the default font.
    */
   fontClassName?: string;
 }
@@ -80,23 +80,29 @@ function autoBind(instance: object) {
 function createTextTexture(
   gl: OGLRenderingContext,
   text: string,
-  font: string,
-  color: string,
+  textColor: string,
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
-  context.font = font;
+  const fontSize = 42;
+  const fontFamily = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  
+  context.font = `600 ${fontSize}px ${fontFamily}`;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const textHeight = Math.ceil(parseInt(font, 10) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
-  context.font = font;
-  context.fillStyle = color;
+  const paddingX = 48;
+  
+  canvas.width = Math.max(textWidth + paddingX * 2, 256);
+  canvas.height = 96;
+  
+  // Render crisp label
+  context.font = `600 ${fontSize}px ${fontFamily}`;
+  context.fillStyle = textColor || "#111111";
   context.textBaseline = "middle";
   context.textAlign = "center";
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillText(text, canvas.width / 2, canvas.height / 2);
+
   const texture = new Texture(gl, { generateMipmaps: false });
   texture.image = canvas;
   return { texture, width: canvas.width, height: canvas.height };
@@ -111,8 +117,8 @@ class Title {
   renderer: Renderer;
   text: string;
   textColor: string;
-  font: string;
   mesh!: Mesh;
+  aspect: number = 1;
 
   constructor({
     gl,
@@ -120,14 +126,12 @@ class Title {
     renderer,
     text,
     textColor,
-    font,
   }: {
     gl: OGLRenderingContext;
     plane: Mesh;
     renderer: Renderer;
     text: string;
     textColor: string;
-    font: string;
   }) {
     autoBind(this);
     this.gl = gl;
@@ -135,7 +139,6 @@ class Title {
     this.renderer = renderer;
     this.text = text;
     this.textColor = textColor;
-    this.font = font;
     this.createMesh();
   }
 
@@ -143,9 +146,9 @@ class Title {
     const { texture, width, height } = createTextTexture(
       this.gl,
       this.text,
-      this.font,
       this.textColor,
     );
+    this.aspect = width / height;
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
       vertex: `
@@ -165,20 +168,33 @@ class Title {
         varying vec2 vUv;
         void main() {
           vec4 color = texture2D(tMap, vUv);
-          if (color.a < 0.1) discard;
+          if (color.a < 0.05) discard;
           gl_FragColor = color;
         }
       `,
       uniforms: { tMap: { value: texture } },
       transparent: true,
+      depthTest: false,
+      depthWrite: false,
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
-    const aspect = width / height;
-    const textHeight = this.plane.scale.y * 0.15;
-    const textWidth = textHeight * aspect;
-    this.mesh.scale.set(textWidth, textHeight, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
     this.mesh.setParent(this.plane);
+    this.updateTransform();
+  }
+
+  updateTransform() {
+    if (!this.mesh) return;
+    const parentScaleX = Math.max(this.plane.scale.x, 0.001);
+    const parentScaleY = Math.max(this.plane.scale.y, 0.001);
+    
+    // Relative height of the label relative to parent card
+    const relHeight = 0.08;
+    // Compensate for non-uniform parent scaling so text is never stretched
+    const relWidth = relHeight * this.aspect * (parentScaleY / parentScaleX);
+    
+    this.mesh.scale.set(relWidth, relHeight, 1);
+    // Position below card's bottom edge (-0.5 in normalized parent coordinates)
+    this.mesh.position.y = -0.5 - relHeight * 0.85;
   }
 }
 
@@ -196,7 +212,6 @@ class Media {
   bend: number;
   textColor: string;
   borderRadius: number;
-  font: string;
   program!: Program;
   plane!: Mesh;
   title!: Title;
@@ -223,8 +238,7 @@ class Media {
     viewport,
     bend,
     textColor,
-    borderRadius = 0,
-    font,
+    borderRadius = 0.06,
   }: {
     geometry: Plane;
     gl: OGLRenderingContext;
@@ -239,7 +253,6 @@ class Media {
     bend: number;
     textColor: string;
     borderRadius: number;
-    font: string;
   }) {
     this.geometry = geometry;
     this.gl = gl;
@@ -254,7 +267,6 @@ class Media {
     this.bend = bend;
     this.textColor = textColor;
     this.borderRadius = borderRadius;
-    this.font = font;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -280,7 +292,7 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.08 + uSpeed * 0.4);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -296,9 +308,11 @@ class Media {
           return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
         }
         void main() {
+          vec2 imgSize = max(uImageSizes, vec2(1.0));
+          vec2 planeSize = max(uPlaneSizes, vec2(1.0));
           vec2 ratio = vec2(
-            min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-            min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
+            min((planeSize.x / planeSize.y) / (imgSize.x / imgSize.y), 1.0),
+            min((planeSize.y / planeSize.x) / (imgSize.y / imgSize.x), 1.0)
           );
           vec2 uv = vec2(
             vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
@@ -306,16 +320,15 @@ class Media {
           );
           vec4 color = texture2D(tMap, uv);
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-          // Smooth antialiasing for edges
-          float edgeSmooth = 0.002;
+          float edgeSmooth = 0.003;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
           gl_FragColor = vec4(color.rgb, alpha);
         }
       `,
       uniforms: {
         tMap: { value: texture },
-        uPlaneSizes: { value: [0, 0] },
-        uImageSizes: { value: [0, 0] },
+        uPlaneSizes: { value: [1, 1] },
+        uImageSizes: { value: [1, 1] },
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius },
@@ -349,7 +362,6 @@ class Media {
       renderer: this.renderer,
       text: this.text,
       textColor: this.textColor,
-      font: this.font,
     });
   }
 
@@ -368,11 +380,14 @@ class Media {
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
       const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+      
+      // Vertical lift keeps the curved side cards and bottom labels high and clear of the bottom boundary
+      const verticalLift = B_abs * 0.42;
       if (this.bend > 0) {
-        this.plane.position.y = -arc;
+        this.plane.position.y = -arc + verticalLift;
         this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
       } else {
-        this.plane.position.y = arc;
+        this.plane.position.y = arc - verticalLift;
         this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
     }
@@ -412,18 +427,23 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
+    // Harmonious card dimensions with generous vertical room
     this.plane.scale.y =
-      (this.viewport.height * (900 * this.scale)) / this.screen.height;
+      (this.viewport.height * (640 * this.scale)) / this.screen.height;
     this.plane.scale.x =
-      (this.viewport.width * (700 * this.scale)) / this.screen.width;
+      (this.viewport.width * (500 * this.scale)) / this.screen.width;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 2;
+    this.padding = 1.4;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
+
+    if (this.title) {
+      this.title.updateTransform();
+    }
   }
 }
 
@@ -457,7 +477,6 @@ class App {
       bend,
       textColor,
       borderRadius,
-      font,
       scrollSpeed,
       scrollEase,
     }: {
@@ -465,7 +484,6 @@ class App {
       bend: number;
       textColor: string;
       borderRadius: number;
-      font: string;
       scrollSpeed: number;
       scrollEase: number;
     },
@@ -480,7 +498,7 @@ class App {
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius);
     this.update();
     this.addEventListeners();
   }
@@ -518,24 +536,28 @@ class App {
     bend: number,
     textColor: string,
     borderRadius: number,
-    font: string,
   ) {
     const defaultItems: GalleryItem[] = [
       {
-        image: "https://cdn.21st.dev/assets/mirror/e9/e9f40fde089106509f8f0618d109f54f6d684390f843e8d1a6b5059e81453caf.jpg",
-        text: "Bridge",
+        image: "/images/projects/travinno.jpg",
+        text: "Travinno — AI Travel",
       },
       {
-        image: "https://cdn.21st.dev/assets/mirror/07/07b4e801248a3aea53329b56e50ff0bf4500ee0e603742000db362557ccd609f.jpg",
-        text: "Desk Setup",
+        image: "/images/projects/manzio.jpg",
+        text: "Manzio Creative Studio",
       },
       {
-        image: "https://cdn.21st.dev/assets/mirror/ef/ef490a9710d011911f365ff14eaa1ba7cca5d8f327c67df6e2d8796abdd0afb0.jpg",
-        text: "Waterfall",
+        image: "/images/projects/faazo.jpg",
+        text: "Faazo — Smart Logistics",
+      },
+      {
+        image: "/images/projects/careva.jpg",
+        text: "Careva — Health Portal",
       },
     ];
     const galleryItems = items && items.length > 0 ? items : defaultItems;
-    this.mediasImages = [...galleryItems, ...galleryItems]; // Duplicate for seamless loop
+    // Duplicate items for seamless continuous looping
+    this.mediasImages = [...galleryItems, ...galleryItems];
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
@@ -551,7 +573,6 @@ class App {
         bend,
         textColor,
         borderRadius,
-        font,
       });
     });
   }
@@ -660,8 +681,8 @@ class App {
  ----------------------------------- */
 const CircularGallery = ({
   items,
-  bend = 3,
-  borderRadius = 0.05,
+  bend = 2.5,
+  borderRadius = 0.06,
   scrollSpeed = 2,
   scrollEase = 0.05,
   className,
@@ -672,20 +693,13 @@ const CircularGallery = ({
 
   useEffect(() => {
     if (!containerRef.current) return;
-    // Get computed styles for theme-adaptive text
-    const computedStyle = getComputedStyle(containerRef.current);
-    const computedColor = computedStyle.color || "#111111";
-    const computedFontWeight = computedStyle.fontWeight || "bold";
-    const computedFontSize = computedStyle.fontSize || "30px";
-    const computedFontFamily = computedStyle.fontFamily;
-    const computedFont = `${computedFontWeight} ${computedFontSize} ${computedFontFamily}`;
+    const computedColor = "#111111";
 
     const app = new App(containerRef.current, {
       items,
       bend,
       textColor: computedColor,
       borderRadius,
-      font: computedFont,
       scrollSpeed,
       scrollEase,
     });
@@ -700,8 +714,6 @@ const CircularGallery = ({
       ref={containerRef}
       className={cn(
         "w-full h-full overflow-hidden cursor-grab active:cursor-grabbing",
-        "text-foreground font-bold text-[30px]",
-        fontClassName,
         className,
       )}
       {...props}
@@ -710,3 +722,4 @@ const CircularGallery = ({
 };
 
 export { CircularGallery };
+
