@@ -31,7 +31,7 @@ const IMAGES_3 = [
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-[#FAFAF8] pt-16 sm:pt-20 overflow-hidden">
+    <div id="work" className="relative bg-[#FAFAF8] pt-16 sm:pt-20">
       {/* ===================================================
           ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (HERO-MATCHED)
          =================================================== */}
@@ -103,9 +103,9 @@ export const DemoVariant1 = () => {
         </ContainerAnimated>
       </ContainerStagger>
 
-      <ContainerScroll className="relative h-[350vh]">
-        <ContainerSticky className="h-svh">
-          <GalleryContainer className="">
+      <ContainerScroll className="relative h-[220vh]">
+        <ContainerSticky className="h-screen max-h-screen">
+          <GalleryContainer className="px-4 sm:px-8">
             <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
               {IMAGES_1.map((imageUrl, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
