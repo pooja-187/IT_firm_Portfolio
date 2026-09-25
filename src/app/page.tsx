@@ -1,10 +1,14 @@
 import HeroSection from '@/components/HeroSection';
+import ExpertiseSection from '@/components/ExpertiseSection';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#FAFAF8] text-[#121417]">
-      {/* Hero Section Only (Phase 1 Implementation) */}
+      {/* 01 — Hero Section */}
       <HeroSection />
+
+      {/* 02 — Expertise Section */}
+      <ExpertiseSection />
     </div>
   );
 }
