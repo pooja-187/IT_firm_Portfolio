@@ -52,6 +52,8 @@ export const MinimalistHero = ({
   locationText,
   className,
 }: MinimalistHeroProps) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
   return (
     <div
       className={cn(
@@ -91,7 +93,7 @@ export const MinimalistHero = ({
       </div>
 
       {/* Header */}
-      <header className="z-30 flex w-full max-w-7xl items-center justify-between">
+      <header className="relative z-30 flex w-full max-w-7xl items-center justify-between">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -111,13 +113,36 @@ export const MinimalistHero = ({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col space-y-1.5 md:hidden"
-          aria-label="Open menu"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex flex-col space-y-1.5 p-2 rounded-lg md:hidden"
+          aria-label="Toggle navigation menu"
+          aria-expanded={mobileMenuOpen}
         >
-          <span className="block h-0.5 w-6 bg-foreground"></span>
-          <span className="block h-0.5 w-6 bg-foreground"></span>
-          <span className="block h-0.5 w-5 bg-foreground"></span>
+          <span className={`block h-0.5 w-6 bg-foreground transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+          <span className={`block h-0.5 w-6 bg-foreground transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`block h-0.5 w-6 bg-foreground transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
         </motion.button>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full right-0 mt-3 w-56 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/80 shadow-2xl flex flex-col gap-3 md:hidden z-50"
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-semibold tracking-wider text-[#111315] hover:text-lime-600 py-1.5 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
       </header>
 
       {/* Main Content Area */}
