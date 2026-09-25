@@ -55,17 +55,31 @@ export const MinimalistHero = ({
   return (
     <div
       className={cn(
-        'relative flex h-screen w-full flex-col items-center justify-between overflow-hidden bg-background p-8 font-sans md:p-12',
+        'relative flex h-screen w-full flex-col items-center justify-between overflow-hidden bg-white p-8 font-sans md:p-12 selection:bg-lime-300',
         className
       )}
     >
+      {/* Saturated Ambient Diffused Lime-Green Studio Light (From Old Hero) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 90% 60% at 50% 55%, rgba(162, 246, 36, 0.65) 0%, rgba(184, 252, 60, 0.45) 32%, rgba(214, 255, 115, 0.22) 58%, transparent 84%),
+            radial-gradient(circle 600px at 12% 60%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
+            radial-gradient(circle 600px at 88% 60%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
+            linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.4) 16%, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0) 65%, rgba(255, 255, 255, 0.7) 85%, #ffffff 100%)
+          `,
+        }}
+      />
+
       {/* Header */}
       <header className="z-30 flex w-full max-w-7xl items-center justify-between">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-xl font-bold tracking-wider"
+          className="text-xl font-bold tracking-wider text-foreground"
         >
           {logoText}
         </motion.div>
@@ -90,7 +104,7 @@ export const MinimalistHero = ({
       </header>
 
       {/* Main Content Area */}
-      <div className="relative grid w-full max-w-7xl flex-grow grid-cols-1 items-center md:grid-cols-3">
+      <div className="relative z-10 grid w-full max-w-7xl flex-grow grid-cols-1 items-center md:grid-cols-3">
         {/* Left Text Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,18 +118,12 @@ export const MinimalistHero = ({
           </a>
         </motion.div>
 
-        {/* Center Image with Circle */}
+        {/* Center Image */}
         <div className="relative order-1 md:order-2 flex justify-center items-center h-full">
-            <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="absolute z-0 h-[300px] w-[300px] rounded-full bg-yellow-400/90 md:h-[400px] md:w-[400px] lg:h-[500px] lg:w-[500px]"
-            ></motion.div>
             <motion.img
                 src={imageSrc}
                 alt={imageAlt}
-                className="relative z-10 h-auto w-56 object-cover md:w-64 scale-150 lg:w-72"
+                className="relative z-10 h-auto w-56 object-cover md:w-64 scale-150 lg:w-72 drop-shadow-sm"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
