@@ -56,7 +56,11 @@ export default function HeroSection() {
       imageAlt="Nashim Nazar - UI/UX Designer"
       overlayText={{
         part1: "Kerala's Best",
-        part2: "UI/UX Designer",
+        part2: (
+          <span>
+            <span className="font-serif italic font-normal tracking-normal text-[#111315]">UI/UX</span> Designer
+          </span>
+        ),
       }}
       socialLinks={socialLinks}
       locationText="Kottayam, Kerala"

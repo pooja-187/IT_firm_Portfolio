@@ -14,8 +14,8 @@ interface MinimalistHeroProps {
   imageSrc: string;
   imageAlt: string;
   overlayText: {
-    part1: string;
-    part2: string;
+    part1: React.ReactNode;
+    part2: React.ReactNode;
   };
   socialLinks: { icon: LucideIcon | React.ComponentType<{ className?: string }>; href: string }[];
   locationText: string;
@@ -152,14 +152,14 @@ export const MinimalistHero = ({
             />
         </div>
 
-        {/* Right Text */}
+        {/* Right Text (Right Aligned) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="z-20 order-3 flex items-center justify-center text-center md:justify-start"
+          className="z-20 order-3 flex items-center justify-center md:justify-end text-right"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-foreground leading-[1.08] tracking-tight">
+          <h1 className="text-right text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-foreground leading-[1.08] tracking-tight">
             {overlayText.part1}
             <br />
             {overlayText.part2}
