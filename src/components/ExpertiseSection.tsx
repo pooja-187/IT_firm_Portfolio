@@ -219,52 +219,49 @@ export default function ExpertiseSection() {
             
             {/* Pill 1: UI/UX Design */}
             <div ref={pill1Ref} className={`w-fit ${leftPills[0].offsetClass}`}>
-              <div
-                style={{ transform: `rotate(${leftPills[0].rotation}deg)` }}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[0].iconBg} shadow-sm shrink-0`}
-                >
-                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                </span>
-                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                  {leftPills[0].name}
-                </span>
+              <div style={{ transform: `rotate(${leftPills[0].rotation}deg)` }}>
+                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {leftPills[0].name}
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Pill 2: Software Development */}
             <div ref={pill2Ref} className={`w-fit ${leftPills[1].offsetClass}`}>
-              <div
-                style={{ transform: `rotate(${leftPills[1].rotation}deg)` }}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[1].iconBg} shadow-sm shrink-0`}
-                >
-                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                </span>
-                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                  {leftPills[1].name}
-                </span>
+              <div style={{ transform: `rotate(${leftPills[1].rotation}deg)` }}>
+                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {leftPills[1].name}
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Pill 3: App Development */}
             <div ref={pill3Ref} className={`w-fit ${leftPills[2].offsetClass}`}>
-              <div
-                style={{ transform: `rotate(${leftPills[2].rotation}deg)` }}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[2].iconBg} shadow-sm shrink-0`}
-                >
-                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                </span>
-                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                  {leftPills[2].name}
-                </span>
+              <div style={{ transform: `rotate(${leftPills[2].rotation}deg)` }}>
+                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${leftPills[2].iconBg} shadow-sm shrink-0`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {leftPills[2].name}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -293,35 +290,33 @@ export default function ExpertiseSection() {
             
             {/* Pill 4: Performance Marketing */}
             <div ref={pill4Ref} className={`w-fit ${rightPills[0].offsetClass}`}>
-              <div
-                style={{ transform: `rotate(${rightPills[0].rotation}deg)` }}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[0].iconBg} shadow-sm shrink-0`}
-                >
-                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                </span>
-                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                  {rightPills[0].name}
-                </span>
+              <div style={{ transform: `rotate(${rightPills[0].rotation}deg)` }}>
+                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[0].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {rightPills[0].name}
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Pill 5: Ethical Hacking */}
             <div ref={pill5Ref} className={`w-fit ${rightPills[1].offsetClass}`}>
-              <div
-                style={{ transform: `rotate(${rightPills[1].rotation}deg)` }}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[1].iconBg} shadow-sm shrink-0`}
-                >
-                  <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                </span>
-                <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                  {rightPills[1].name}
-                </span>
+              <div style={{ transform: `rotate(${rightPills[1].rotation}deg)` }}>
+                <div className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:scale-[1.08] hover:bg-[rgba(220,255,190,0.45)] hover:backdrop-blur-md hover:border-[rgba(132,204,22,0.35)] hover:shadow-[0_14px_35px_rgba(132,204,22,0.18),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out cursor-default select-none will-change-transform">
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${rightPills[1].iconBg} shadow-sm shrink-0 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:brightness-105`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {rightPills[1].name}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -337,17 +332,19 @@ export default function ExpertiseSection() {
               ref={(el) => {
                 mobilePillsRef.current[idx] = el;
               }}
-              style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}
-              className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white border border-slate-100 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 transition-transform"
             >
-              <span
-                className={`flex items-center justify-center w-5 h-5 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
-              >
-                <Zap className="w-3 h-3 text-white fill-white" />
-              </span>
-              <span className="font-sans text-xs sm:text-sm font-medium text-[#181C20]">
-                {pill.name}
-              </span>
+              <div style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}>
+                <div className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/95 backdrop-blur-sm border border-slate-200/70 shadow-[0_6px_20px_rgba(0,0,0,0.05)] active:scale-95 active:bg-[rgba(220,255,190,0.45)] active:border-[rgba(132,204,22,0.35)] transition-all duration-200">
+                  <span
+                    className={`flex items-center justify-center w-5 h-5 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
+                  >
+                    <Zap className="w-3 h-3 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-xs sm:text-sm font-medium text-[#181C20]">
+                    {pill.name}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
