@@ -10,8 +10,7 @@ interface ExpertisePillData {
   name: string;
   iconBg: string;
   rotation: number;
-  side: 'left' | 'right';
-  className: string;
+  offsetClass: string;
 }
 
 export default function ExpertiseSection() {
@@ -23,52 +22,46 @@ export default function ExpertiseSection() {
   const leftPillsRef = useRef<(HTMLDivElement | null)[]>([]);
   const rightPillsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Exact 5 approved expertise areas matching reference pill styling (circular badge with lightning spark)
-  const pills: ExpertisePillData[] = [
+  const leftPills: ExpertisePillData[] = [
     {
       id: 'ui-ux',
       name: 'UI/UX Design',
       iconBg: 'bg-[#FF6B00]', // Reference Vibrant Orange
       rotation: -4.5,
-      side: 'left',
-      className: 'top-2 sm:top-4 -left-12 sm:-left-28 lg:-left-36',
+      offsetClass: 'self-start',
     },
     {
       id: 'software-dev',
       name: 'Software Development',
       iconBg: 'bg-[#00A3FF]', // Reference Cyan/Electric Blue
       rotation: 3.5,
-      side: 'left',
-      className: 'top-1/2 -translate-y-1/2 -left-6 sm:-left-16 lg:-left-24',
+      offsetClass: 'self-end translate-x-2 xl:translate-x-6',
     },
     {
       id: 'app-dev',
       name: 'App Development',
       iconBg: 'bg-[#262626]', // Reference Charcoal/Black
       rotation: -3.5,
-      side: 'left',
-      className: 'bottom-2 sm:bottom-4 -left-14 sm:-left-32 lg:-left-40',
+      offsetClass: 'self-start -translate-x-2',
     },
+  ];
+
+  const rightPills: ExpertisePillData[] = [
     {
       id: 'performance-mkt',
       name: 'Performance Marketing',
       iconBg: 'bg-[#FFD600]', // Reference Bright Yellow
       rotation: 4,
-      side: 'right',
-      className: 'top-4 sm:top-8 -right-12 sm:-right-28 lg:-right-36',
+      offsetClass: 'self-end translate-x-2',
     },
     {
       id: 'ethical-hacking',
       name: 'Ethical Hacking',
       iconBg: 'bg-[#00E676]', // Reference Vivid Green
       rotation: -4,
-      side: 'right',
-      className: 'bottom-4 sm:bottom-8 -right-10 sm:-right-24 lg:-right-32',
+      offsetClass: 'self-start -translate-x-2 xl:-translate-x-6',
     },
   ];
-
-  const leftPills = pills.filter((p) => p.side === 'left');
-  const rightPills = pills.filter((p) => p.side === 'right');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -124,7 +117,7 @@ export default function ExpertiseSection() {
         validLeftPills,
         {
           opacity: 0,
-          x: -120,
+          x: -100,
           scale: 0.94,
         },
         {
@@ -144,7 +137,7 @@ export default function ExpertiseSection() {
         validRightPills,
         {
           opacity: 0,
-          x: 120,
+          x: 100,
           scale: 0.94,
         },
         {
@@ -162,6 +155,8 @@ export default function ExpertiseSection() {
     return () => ctx.revert();
   }, []);
 
+  const allPills = [...leftPills, ...rightPills];
+
   return (
     <section
       ref={sectionRef}
@@ -169,23 +164,50 @@ export default function ExpertiseSection() {
       aria-labelledby="expertise-heading"
       className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 lg:py-40 overflow-hidden border-t border-slate-100"
     >
-      <div className="relative w-full max-w-6xl mx-auto px-6 sm:px-8">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Editorial Label inspired by the reference ("Hallo!" -> "Expertise") */}
-        <div ref={labelRef} className="text-center mb-8 sm:mb-12">
+        <div ref={labelRef} className="text-center mb-10 sm:mb-14">
           <span className="font-serif italic text-3xl sm:text-4xl text-[#1E242B] font-normal tracking-tight">
             Expertise
           </span>
         </div>
 
-        {/* Central Stage: Central Statement tightly framed by floating tilted pills */}
-        <div className="relative max-w-3xl lg:max-w-4xl mx-auto py-8 sm:py-12 flex items-center justify-center">
+        {/* 3-Column Flanking Stage: Zero Collision, Zero Overlap, Perfect Organic Alignment */}
+        <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_220px] lg:grid-cols-[260px_1fr_260px] xl:grid-cols-[290px_1fr_290px] items-center gap-6 lg:gap-8 min-h-[380px] sm:min-h-[440px]">
           
-          {/* Main Central Typography (SEO-Structured H2 matching reference line breaks) */}
-          <div className="relative z-10 text-center px-4">
+          {/* Left Flanking Column (3 Staggered Pills) */}
+          <div className="hidden md:flex flex-col justify-center gap-10 lg:gap-14">
+            {leftPills.map((pill, idx) => (
+              <div
+                key={pill.id}
+                ref={(el) => {
+                  leftPillsRef.current[idx] = el;
+                }}
+                className={`w-fit ${pill.offsetClass}`}
+              >
+                <div
+                  style={{ transform: `rotate(${pill.rotation}deg)` }}
+                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
+                >
+                  <span
+                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
+                  >
+                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
+                  </span>
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                    {pill.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Central Statement Column (SEO-Structured H2) */}
+          <div className="text-center px-2 sm:px-4">
             <h2
               id="expertise-heading"
-              className="font-sans font-normal tracking-[-0.025em] text-[#111315] text-3xl sm:text-5xl md:text-[3.6rem] lg:text-[4.2rem] leading-[1.2] sm:leading-[1.22] lg:leading-[1.24]"
+              className="font-sans font-normal tracking-[-0.025em] text-[#111315] text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.5rem] xl:text-[4rem] leading-[1.2] sm:leading-[1.22] lg:leading-[1.24]"
             >
               <span ref={line1Ref} className="block text-[#111315]">
                 Design expertise.
@@ -199,42 +221,15 @@ export default function ExpertiseSection() {
             </h2>
           </div>
 
-          {/* Desktop Floating Pills Stage (Flanking the central text) */}
-          <div className="hidden md:block absolute inset-0 pointer-events-none">
-            
-            {/* Left Side Floating Pills */}
-            {leftPills.map((pill, idx) => (
-              <div
-                key={pill.id}
-                ref={(el) => {
-                  leftPillsRef.current[idx] = el;
-                }}
-                className={`absolute ${pill.className} pointer-events-auto`}
-              >
-                <div
-                  style={{ transform: `rotate(${pill.rotation}deg)` }}
-                  className="group inline-flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white border border-slate-100 shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-default select-none"
-                >
-                  <span
-                    className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full ${pill.iconBg} shadow-sm shrink-0`}
-                  >
-                    <Zap className="w-3.5 h-3.5 text-white fill-white" />
-                  </span>
-                  <span className="font-sans text-sm sm:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
-                    {pill.name}
-                  </span>
-                </div>
-              </div>
-            ))}
-
-            {/* Right Side Floating Pills */}
+          {/* Right Flanking Column (2 Staggered Pills) */}
+          <div className="hidden md:flex flex-col justify-center gap-14 lg:gap-20">
             {rightPills.map((pill, idx) => (
               <div
                 key={pill.id}
                 ref={(el) => {
                   rightPillsRef.current[idx] = el;
                 }}
-                className={`absolute ${pill.className} pointer-events-auto`}
+                className={`w-fit ${pill.offsetClass}`}
               >
                 <div
                   style={{ transform: `rotate(${pill.rotation}deg)` }}
@@ -245,20 +240,19 @@ export default function ExpertiseSection() {
                   >
                     <Zap className="w-3.5 h-3.5 text-white fill-white" />
                   </span>
-                  <span className="font-sans text-sm sm:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
+                  <span className="font-sans text-sm sm:text-[15px] xl:text-base font-medium text-[#181C20] tracking-tight whitespace-nowrap">
                     {pill.name}
                   </span>
                 </div>
               </div>
             ))}
-
           </div>
 
         </div>
 
-        {/* Mobile Responsive Floating/Staggered Pills Layout */}
-        <div className="md:hidden mt-8 flex flex-wrap justify-center gap-3 px-2">
-          {pills.map((pill) => (
+        {/* Mobile Responsive Staggered Layout */}
+        <div className="md:hidden mt-10 flex flex-wrap justify-center gap-3 px-2">
+          {allPills.map((pill) => (
             <div
               key={`mobile-${pill.id}`}
               style={{ transform: `rotate(${pill.rotation * 0.75}deg)` }}
