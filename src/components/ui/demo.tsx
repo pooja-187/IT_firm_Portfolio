@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "motion/react"
-import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery"
+import { CircularGallery, GalleryItem } from "@/components/ui/circular-gallery-2"
 
 export const galleryItems: GalleryItem[] = [
   {
