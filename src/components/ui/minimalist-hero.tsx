@@ -59,19 +59,36 @@ export const MinimalistHero = ({
         className
       )}
     >
-      {/* Saturated Ambient Diffused Lime-Green Studio Light (Seamlessly Blended) */}
+      {/* Saturated Ambient Diffused Lime-Green Studio Light */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background: `
-            radial-gradient(ellipse 85% 60% at 50% 50%, rgba(190, 235, 105, 0.35) 0%, rgba(190, 235, 105, 0.22) 30%, rgba(190, 235, 105, 0.10) 55%, transparent 80%),
-            radial-gradient(ellipse 100% 75% at 50% 48%, rgba(215, 242, 165, 0.18) 0%, transparent 75%)
+            radial-gradient(ellipse 90% 65% at 50% 50%, rgba(162, 246, 36, 0.65) 0%, rgba(184, 252, 60, 0.45) 28%, rgba(214, 255, 115, 0.22) 52%, transparent 80%),
+            radial-gradient(circle 600px at 15% 55%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
+            radial-gradient(circle 600px at 85% 55%, rgba(150, 245, 30, 0.35) 0%, transparent 70%),
+            radial-gradient(ellipse 110% 85% at 50% 45%, rgba(210, 250, 140, 0.25) 0%, transparent 75%)
           `,
-          maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
         }}
-      />
+      >
+        {/* Concentrated Soft Depth Glow Behind Portrait */}
+        <div
+          className="absolute"
+          style={{
+            width: "55%",
+            height: "55%",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "rgba(162, 246, 36, 0.28)",
+            filter: "blur(90px)",
+            borderRadius: "50%",
+          }}
+        />
+      </div>
 
       {/* Header */}
       <header className="z-30 flex w-full max-w-7xl items-center justify-between">
