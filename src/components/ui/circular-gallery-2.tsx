@@ -475,7 +475,10 @@ class App {
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     autoBind(this);
-    this.createRenderer();
+    
+    const initialized = this.createRenderer();
+    if (!initialized) return;
+
     this.createCamera();
     this.createScene();
     this.onResize();
@@ -485,15 +488,26 @@ class App {
     this.addEventListeners();
   }
 
-  createRenderer() {
-    this.renderer = new Renderer({
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
-    });
-    this.gl = this.renderer.gl;
-    this.gl.clearColor(0, 0, 0, 0);
-    this.container.appendChild(this.gl.canvas);
+  createRenderer(): boolean {
+    try {
+      const canvas = document.createElement("canvas");
+      this.renderer = new Renderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+      });
+      this.gl = this.renderer.gl;
+      if (!this.gl || !this.gl.canvas) {
+        return false;
+      }
+      this.gl.clearColor(0, 0, 0, 0);
+      this.container.appendChild(this.gl.canvas);
+      return true;
+    } catch (e) {
+      console.warn("CircularGallery renderer creation:", e);
+      return false;
+    }
   }
 
   createCamera() {
@@ -659,8 +673,17 @@ class App {
     window.removeEventListener("mouseup", this.boundOnTouchUp);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas && this.renderer.gl.canvas.parentNode) {
-      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    
+    if (this.gl) {
+      try {
+        const ext = this.gl.getExtension("WEBGL_lose_context");
+        if (ext) {
+          ext.loseContext();
+        }
+      } catch (e) {}
+      if (this.gl.canvas && this.gl.canvas.parentNode) {
+        this.gl.canvas.parentNode.removeChild(this.gl.canvas);
+      }
     }
   }
 }
@@ -682,7 +705,7 @@ const CircularGallery = ({
 
   useEffect(() => {
     if (!containerRef.current) return;
-    containerRef.current.innerHTML = ""; // Ensure clean canvas mount
+    containerRef.current.innerHTML = "";
 
     const computedStyle = getComputedStyle(containerRef.current);
     const computedColor = computedStyle.color || "#111111";
@@ -691,18 +714,25 @@ const CircularGallery = ({
     const computedFontFamily = computedStyle.fontFamily || "sans-serif";
     const computedFont = `${computedFontWeight} ${computedFontSize} ${computedFontFamily}`;
 
-    const app = new App(containerRef.current, {
-      items,
-      bend,
-      textColor: computedColor,
-      borderRadius,
-      font: computedFont,
-      scrollSpeed,
-      scrollEase,
-    });
+    let app: App | null = null;
+    try {
+      app = new App(containerRef.current, {
+        items,
+        bend,
+        textColor: computedColor,
+        borderRadius,
+        font: computedFont,
+        scrollSpeed,
+        scrollEase,
+      });
+    } catch (err) {
+      console.warn("CircularGallery init:", err);
+    }
 
     return () => {
-      app.destroy();
+      if (app) {
+        app.destroy();
+      }
     };
   }, [items, bend, borderRadius, scrollSpeed, scrollEase, fontClassName]);
 
