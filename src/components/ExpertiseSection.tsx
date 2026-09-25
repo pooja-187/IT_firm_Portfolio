@@ -200,7 +200,7 @@ export default function ExpertiseSection() {
       ref={sectionRef}
       id="expertise"
       aria-labelledby="expertise-heading"
-      className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 lg:py-40 overflow-hidden border-t border-slate-100"
+      className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 lg:py-40 overflow-hidden"
     >
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
