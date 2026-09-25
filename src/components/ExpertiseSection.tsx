@@ -204,10 +204,10 @@ export default function ExpertiseSection() {
     >
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Editorial Label inspired by the reference ("Hallo!" -> "Expertise") */}
-        <div ref={labelRef} className="text-center mb-10 sm:mb-14">
-          <span className="font-serif italic text-3xl sm:text-4xl text-[#1E242B] font-normal tracking-tight">
-            Expertise
+        {/* Top Editorial Label */}
+        <div ref={labelRef} className="text-center mb-8 sm:mb-12">
+          <span className="font-sans text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+            EXPERTISE
           </span>
         </div>
 
