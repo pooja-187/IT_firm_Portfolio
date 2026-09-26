@@ -180,10 +180,10 @@ export function FeatureCarousel() {
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                     className={cn(
-                      "relative flex items-center gap-4 px-6 md:px-9 lg:px-8 py-3.5 md:py-4.5 rounded-full transition-all duration-700 text-left group border backdrop-blur-xs",
+                      "relative flex items-center gap-4 px-6 md:px-9 lg:px-8 py-3.5 md:py-4 rounded-full transition-all duration-700 text-left group border",
                       isActive
                         ? "bg-[#84CC16] text-[#111111] font-medium border-[#84CC16] z-10 shadow-[0_10px_30px_rgba(132,204,22,0.4)] scale-[1.03]"
-                        : "bg-white/80 text-[#525B64] border-black/[0.08] hover:border-[#84CC16]/60 hover:text-[#111111] hover:bg-white shadow-xs"
+                        : "bg-transparent text-[#475569] border-black/[0.12] hover:border-[#84CC16] hover:text-[#111111] hover:bg-[#84CC16]/10"
                     )}
                   >
                     <div
