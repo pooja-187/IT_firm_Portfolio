@@ -6,7 +6,7 @@ import ProcessSection from '@/components/ProcessSection';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white text-[#121417]">
+    <div className="min-h-screen bg-[#FAFAF8] text-[#121417]">
       {/* 01 — Hero Section */}
       <HeroSection />
 
