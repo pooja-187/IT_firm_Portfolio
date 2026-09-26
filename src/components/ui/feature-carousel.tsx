@@ -134,13 +134,18 @@ export function FeatureCarousel() {
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-      {/* Open floating composition (no enclosing box container) */}
+      {/* Completely open floating composition without any background box container */}
       <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[550px] lg:min-h-[620px] w-full gap-8 lg:gap-12">
-        {/* Left column / vertical track */}
-        <div className="w-full lg:w-[42%] min-h-[380px] md:min-h-[460px] lg:h-[550px] relative z-20 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8">
-          <div className="absolute inset-x-0 top-0 h-14 md:h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-40 pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-40 pointer-events-none" />
-
+        {/* Left column / vertical track with alpha transparency mask (no white gradient bars) */}
+        <div
+          className="w-full lg:w-[42%] min-h-[380px] md:min-h-[460px] lg:h-[550px] relative z-20 flex flex-col items-start justify-center px-4 sm:px-8"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+          }}
+        >
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
             {FEATURES.map((feature, index) => {
               const isActive = index === currentIndex;
