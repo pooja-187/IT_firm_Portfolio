@@ -120,7 +120,7 @@ export default function ContactSection() {
             </motion.div>
 
             {/* 4 Asymmetrically Rounded Organic Cards (2x2 Grid) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mt-6 sm:mt-8 lg:mt-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mt-8 sm:mt-12 lg:mt-16 xl:mt-20">
               
               {/* Card 01: WhatsApp (Top-Left leaf radius) */}
               <motion.div
