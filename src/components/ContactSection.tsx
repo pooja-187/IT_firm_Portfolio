@@ -80,7 +80,7 @@ export default function ContactSection() {
           {/* ===================================================
               LEFT SIDE: Contact Info & 4 Leaf-shaped Cards
              =================================================== */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+          <div className="lg:col-span-5 flex flex-col space-y-5">
             {/* Header Content */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -97,7 +97,7 @@ export default function ContactSection() {
               >
                 Contact Info
               </h2>
-              <p className="font-sans text-xs sm:text-[14.5px] text-[#525B64] font-normal leading-relaxed mb-6 sm:mb-8 max-w-md">
+              <p className="font-sans text-xs sm:text-[14.5px] text-[#525B64] font-normal leading-relaxed mb-4 max-w-md">
                 Planning a new website, building software or an app, improving your marketing, or assessing your digital security? Tell me what you&apos;re working on and where you need support.
               </p>
             </motion.div>
@@ -108,7 +108,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-6 sm:mb-8 pt-1 flex items-center gap-2 text-xs sm:text-sm font-medium text-[#111111]"
+              className="flex items-center gap-2 text-xs sm:text-sm font-medium text-[#111111]"
             >
               <span className="text-[#64748B]">Prefer a quick conversation?</span>
               <a
@@ -120,7 +120,7 @@ export default function ContactSection() {
             </motion.div>
 
             {/* 4 Asymmetrically Rounded Organic Cards (2x2 Grid) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 mt-8 sm:mt-12 lg:mt-16 xl:mt-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 pt-1">
               
               {/* Card 01: WhatsApp (Top-Left leaf radius) */}
               <motion.div
