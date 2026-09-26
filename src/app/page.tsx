@@ -21,14 +21,14 @@ export default function HomePage() {
       {/* 05 — Services Section */}
       <ServicesSection />
 
-      {/* 06 — Why Work With Me Section */}
-      <WhyWorkWithMe />
-
       {/* 07 — Process Section */}
       <ProcessSection />
 
       {/* 08 — About Section */}
       <HeroSectionDemo />
+
+      {/* 06 — Why Work With Me Section */}
+      <WhyWorkWithMe />
     </div>
   );
 }
