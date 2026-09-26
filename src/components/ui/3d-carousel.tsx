@@ -1,11 +1,13 @@
 "use client"
 
-import { memo, useEffect, useLayoutEffect, useMemo, useState } from "react"
+import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import {
   AnimatePresence,
   motion,
   useAnimation,
   useMotionValue,
+  useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion"
 
@@ -85,20 +87,41 @@ const Carousel = memo(
     cards: string[]
     isCarouselActive: boolean
   }) => {
+    const containerRef = useRef<HTMLDivElement>(null)
     const isScreenSizeSm = useMediaQuery("(max-width: 640px)")
     const isScreenSizeMd = useMediaQuery("(max-width: 1024px)")
     const cylinderWidth = isScreenSizeSm ? 1600 : isScreenSizeMd ? 2200 : 2800
     const faceCount = cards.length
     const faceWidth = cylinderWidth / faceCount
     const radius = cylinderWidth / (2 * Math.PI)
-    const rotation = useMotionValue(0)
+
+    // Scroll-linked dynamic rotation across the viewport
+    const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start end", "end start"],
+    })
+
+    const rawScrollRotation = useTransform(scrollYProgress, [0, 1], [-160, 240])
+    const smoothScrollRotation = useSpring(rawScrollRotation, {
+      stiffness: 65,
+      damping: 22,
+      restDelta: 0.001,
+    })
+
+    const dragOffset = useMotionValue(0)
+    const totalRotation = useTransform(
+      [smoothScrollRotation, dragOffset],
+      ([scrollVal, dragVal]) => (scrollVal as number) + (dragVal as number)
+    )
+
     const transform = useTransform(
-      rotation,
+      totalRotation,
       (value) => `rotate3d(0, 1, 0, ${value}deg)`
     )
 
     return (
       <div
+        ref={containerRef}
         className="flex h-full items-center justify-center"
         style={{
           perspective: "1400px",
@@ -111,18 +134,18 @@ const Carousel = memo(
           className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing items-center"
           style={{
             transform,
-            rotateY: rotation,
+            rotateY: totalRotation,
             width: cylinderWidth,
             transformStyle: "preserve-3d",
           }}
           onDrag={(_, info) =>
             isCarouselActive &&
-            rotation.set(rotation.get() + info.offset.x * 0.05)
+            dragOffset.set(dragOffset.get() + info.offset.x * 0.05)
           }
           onDragEnd={(_, info) =>
             isCarouselActive &&
             controls.start({
-              rotateY: rotation.get() + info.velocity.x * 0.05,
+              rotateY: dragOffset.get() + info.velocity.x * 0.05,
               transition: {
                 type: "spring",
                 stiffness: 100,
