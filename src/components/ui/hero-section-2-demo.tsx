@@ -7,51 +7,61 @@ export function HeroSectionDemo() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden py-14 sm:py-18 lg:py-24 selection:bg-lime-200"
+      className="relative w-full overflow-hidden pt-8 sm:pt-12 lg:pt-14 pb-14 sm:pb-18 lg:pb-24 selection:bg-lime-200"
       style={{
-        backgroundColor: '#FFFFFF',
-        backgroundImage: `
+        background: `
           radial-gradient(
             ellipse 85% 65% at 50% 50%,
-            rgba(163, 230, 53, 0.42) 0%,
-            rgba(190, 242, 100, 0.25) 35%,
-            rgba(217, 249, 157, 0.12) 60%,
-            transparent 82%
+            rgba(163, 230, 53, 0.45) 0%,
+            rgba(190, 242, 100, 0.28) 35%,
+            rgba(217, 249, 157, 0.16) 60%,
+            transparent 85%
           ),
           radial-gradient(
-            ellipse 75% 50% at 75% 15%,
-            rgba(163, 230, 53, 0.35) 0%,
-            rgba(190, 242, 100, 0.20) 35%,
-            transparent 72%
+            ellipse 75% 55% at 75% 22%,
+            rgba(163, 230, 53, 0.38) 0%,
+            rgba(190, 242, 100, 0.22) 38%,
+            transparent 75%
           ),
           radial-gradient(
-            ellipse 65% 50% at 20% 20%,
-            rgba(132, 204, 22, 0.32) 0%,
+            ellipse 70% 55% at 20% 22%,
+            rgba(132, 204, 22, 0.35) 0%,
+            rgba(190, 242, 100, 0.20) 38%,
+            transparent 75%
+          ),
+          radial-gradient(
+            ellipse 65% 50% at 85% 75%,
+            rgba(163, 230, 53, 0.30) 0%,
             transparent 70%
           ),
-          radial-gradient(
-            ellipse 65% 50% at 85% 70%,
-            rgba(163, 230, 53, 0.28) 0%,
-            transparent 70%
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(244, 250, 235, 0.6) 18%,
+            rgba(244, 250, 235, 0.95) 35%,
+            #F4FAEB 50%,
+            rgba(244, 250, 235, 0.95) 65%,
+            rgba(244, 250, 235, 0.6) 82%,
+            rgba(255, 255, 255, 0) 100%
           )
         `,
       }}
     >
       {/* Prominent atmospheric lime glow orbs across all quadrants */}
-      {/* Top Right Glow (Requested) */}
+      {/* Top Right Glow */}
       <div
         aria-hidden="true"
-        className="absolute -top-20 right-4 sm:right-16 w-[580px] h-[480px] bg-[#A3E635]/30 rounded-full blur-[105px] pointer-events-none"
+        className="absolute -top-12 right-4 sm:right-16 w-[580px] h-[480px] bg-[#A3E635]/30 rounded-full blur-[115px] pointer-events-none"
       />
       {/* Top Center Glow */}
       <div
         aria-hidden="true"
-        className="absolute -top-24 left-1/3 w-[520px] h-[440px] bg-[#84CC16]/24 rounded-full blur-[110px] pointer-events-none"
+        className="absolute -top-16 left-1/3 w-[520px] h-[440px] bg-[#84CC16]/26 rounded-full blur-[120px] pointer-events-none"
       />
       {/* Top Left Glow */}
       <div
         aria-hidden="true"
-        className="absolute -top-16 -left-20 w-[540px] h-[520px] bg-[#84CC16]/26 rounded-full blur-[115px] pointer-events-none"
+        className="absolute -top-12 -left-20 w-[540px] h-[520px] bg-[#84CC16]/28 rounded-full blur-[120px] pointer-events-none"
       />
       {/* Bottom Right Glow */}
       <div
@@ -61,7 +71,7 @@ export function HeroSectionDemo() {
       {/* Center Backdrop Glow */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[580px] bg-[#A3E635]/20 rounded-full blur-[130px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[580px] bg-[#A3E635]/22 rounded-full blur-[130px] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">

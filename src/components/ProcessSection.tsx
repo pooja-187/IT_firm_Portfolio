@@ -53,7 +53,7 @@ export default function ProcessSection() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="relative w-full text-[#111111] pt-2 sm:pt-4 lg:pt-6 pb-20 sm:pb-28 lg:pb-36 overflow-hidden selection:bg-lime-200"
+      className="relative w-full text-[#111111] pt-2 sm:pt-4 lg:pt-6 pb-10 sm:pb-14 lg:pb-16 overflow-hidden selection:bg-lime-200"
       style={{
         backgroundColor: '#FFFFFF',
         backgroundImage: `
