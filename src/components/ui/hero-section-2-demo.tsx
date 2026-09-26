@@ -5,8 +5,8 @@ import { HeroSection } from '@/components/ui/hero-section-2';
 
 export function HeroSectionDemo() {
   return (
-    <section id="about" className="w-full bg-white relative py-10 sm:py-14 lg:py-16">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="w-full bg-white relative py-8 sm:py-10 lg:py-12">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         <HeroSection
           sectionLabel="ABOUT"
           heading="The person behind the work."

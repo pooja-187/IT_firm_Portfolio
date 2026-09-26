@@ -42,20 +42,20 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
       visible: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.1,
-          delayChildren: 0.15,
+          staggerChildren: 0.08,
+          delayChildren: 0.1,
         },
       },
     };
 
-    // Editorial item entrance variant: soft fade + translateY (20-30px, 0.6-0.8s)
+    // Editorial item entrance variant
     const itemVariants: Variants = {
-      hidden: { y: 24, opacity: 0 },
+      hidden: { y: 16, opacity: 0 },
       visible: {
         y: 0,
         opacity: 1,
         transition: {
-          duration: 0.7,
+          duration: 0.6,
           ease: "easeOut",
         },
       },
@@ -68,49 +68,49 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
       <motion.section
         ref={ref}
         className={cn(
-          "relative flex w-full flex-col overflow-hidden bg-[#FAFAF9]/80 border border-black/5 rounded-3xl text-[#111111] lg:flex-row min-h-[620px] lg:min-h-[680px] lg:max-h-[760px] shadow-[0_12px_40px_rgba(0,0,0,0.03)]",
+          "relative flex w-full flex-col overflow-hidden bg-[#FAFAF9]/90 border border-black/5 rounded-2xl sm:rounded-3xl text-[#111111] lg:flex-row min-h-[460px] lg:min-h-[500px] shadow-[0_8px_30px_rgba(0,0,0,0.03)]",
           className
         )}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-60px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={containerVariants}
       >
         {/* Soft lime ambient lighting backdrop */}
         <div
           aria-hidden="true"
-          className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#84CC16]/5 blur-3xl pointer-events-none"
+          className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#84CC16]/5 blur-2xl pointer-events-none"
         />
 
-        {/* Left Side: About Content (~50–52% on desktop) */}
-        <div className="flex w-full flex-col justify-center p-6 sm:p-9 md:p-11 lg:w-[52%] xl:w-[50%] lg:p-12 xl:p-14 z-10">
+        {/* Left Side: About Content (~52–54% on desktop) */}
+        <div className="flex w-full flex-col justify-center p-5 sm:p-7 md:p-8 lg:w-[54%] xl:w-[52%] lg:p-8 xl:p-9 z-10">
           {/* Section Label */}
-          <motion.div variants={itemVariants} className="mb-4 sm:mb-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/5 shadow-xs">
+          <motion.div variants={itemVariants} className="mb-2.5 sm:mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-black/5 shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
-              <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+              <span className="font-sans text-[10.5px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-[#64748B]">
                 {sectionLabel}
               </span>
             </div>
           </motion.div>
 
-          {/* Main Heading: 56–72px responsive clamp desktop, light & editorial */}
+          {/* Main Heading: refined, compact editorial size */}
           <motion.h2
             variants={itemVariants}
-            className="text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[2.85rem] xl:text-[3.25rem] font-light text-[#111111] leading-[1.15] tracking-[-0.03em] mb-5 sm:mb-6"
+            className="text-2xl sm:text-3xl md:text-[2.1rem] lg:text-[2.25rem] xl:text-[2.45rem] font-light text-[#111111] leading-[1.16] tracking-[-0.03em] mb-3.5 sm:mb-4"
           >
             {heading}
           </motion.h2>
 
-          {/* Body Text: 4 approved paragraphs, readable line-height and max-width */}
+          {/* Body Text: 4 approved paragraphs, compact & readable */}
           <motion.div
             variants={itemVariants}
-            className="space-y-3.5 sm:space-y-4 mb-7 sm:mb-8 max-w-[620px]"
+            className="space-y-2 sm:space-y-2.5 mb-5 sm:mb-6 max-w-[560px]"
           >
             {paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className="text-[14.5px] sm:text-[15.5px] lg:text-[16.5px] text-[#4B5563] leading-[1.68] font-normal"
+                className="text-[13px] sm:text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-[#4B5563] leading-[1.58] font-normal"
               >
                 {paragraph}
               </p>
@@ -121,32 +121,32 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
           <motion.div variants={itemVariants}>
             <a
               href={cta.href}
-              className="inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-medium text-[#111111] hover:text-[#84CC16] transition-colors duration-300 group"
+              className="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-medium text-[#111111] hover:text-[#84CC16] transition-colors duration-300 group"
             >
               <span>{ctaTextClean}</span>
-              <span className="text-lg transition-transform duration-300 ease-out group-hover:translate-x-1.5">
+              <span className="text-base transition-transform duration-300 ease-out group-hover:translate-x-1.5">
                 →
               </span>
             </a>
           </motion.div>
         </div>
 
-        {/* Right Side: Authentic Image with controlled proportions and organic clip path (~44–48%) */}
+        {/* Right Side: Authentic Image with controlled proportions and organic clip path */}
         <motion.div
-          className="w-full relative overflow-hidden lg:w-[48%] xl:w-[50%] min-h-[320px] sm:min-h-[400px] lg:min-h-full"
-          initial={{ opacity: 0, x: 20 }}
+          className="w-full relative overflow-hidden lg:w-[46%] xl:w-[48%] min-h-[260px] sm:min-h-[300px] lg:min-h-full"
+          initial={{ opacity: 0, x: 16 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div
-            className="w-full h-full min-h-[320px] sm:min-h-[400px] lg:min-h-[640px] bg-cover bg-center transition-transform duration-700 hover:scale-[1.02]"
+            className="w-full h-full min-h-[260px] sm:min-h-[300px] lg:min-h-[500px] bg-cover bg-center transition-transform duration-700 hover:scale-[1.02]"
             style={{
               backgroundImage: `url(${imageSrc})`,
               clipPath: 'polygon(8% 0, 100% 0, 100% 100%, 0% 100%)',
             }}
           />
-          {/* Subtle atmospheric vignette */}
+          {/* Subtle atmospheric vignette for mobile */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent pointer-events-none lg:hidden" />
         </motion.div>
       </motion.section>
