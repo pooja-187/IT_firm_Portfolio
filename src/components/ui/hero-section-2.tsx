@@ -20,7 +20,7 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
   (
     {
       className,
-      sectionLabel = "ABOUT",
+      sectionLabel,
       heading = "The person behind the work.",
       paragraphs = [
         "I'm Nashim Nazar — a UI/UX designer, performance marketer, and CEO & Founder of Manzio Creative Studio Pvt Ltd.",
@@ -84,15 +84,17 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
 
         {/* Left Side: About Content (~52–54% on desktop) */}
         <div className="flex w-full flex-col justify-center p-6 sm:p-8 md:p-9 lg:w-[54%] xl:w-[52%] lg:p-9 xl:p-10 z-10">
-          {/* Section Label */}
-          <motion.div variants={itemVariants} className="mb-3">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-black/5 shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
-              <span className="font-sans text-[10.5px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-                {sectionLabel}
-              </span>
-            </div>
-          </motion.div>
+          {/* Optional Section Label if passed directly */}
+          {sectionLabel && (
+            <motion.div variants={itemVariants} className="mb-3">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-black/5 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
+                <span className="font-sans text-[10.5px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+                  {sectionLabel}
+                </span>
+              </div>
+            </motion.div>
+          )}
 
           {/* Main Heading: refined, compact editorial size */}
           <motion.h2

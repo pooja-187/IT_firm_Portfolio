@@ -45,7 +45,7 @@ export function HeroSectionDemo() {
         `,
       }}
     >
-      {/* Prominent atmospheric lime glow orbs across all quadrants */}
+      {/* Atmospheric lime glow orbs across quadrants */}
       <div
         aria-hidden="true"
         className="absolute -top-12 right-4 sm:right-16 w-[580px] h-[480px] bg-[#A3E635]/30 rounded-full blur-[115px] pointer-events-none"
@@ -68,9 +68,18 @@ export function HeroSectionDemo() {
       />
 
       <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header (Outside the Container) */}
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-2 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
+            <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+              ABOUT
+            </span>
+          </div>
+        </div>
+
         <HeroSection
           className="bg-white/95 backdrop-blur-md border border-lime-200/50 shadow-[0_20px_60px_rgba(132,204,22,0.12),0_4px_20px_rgba(0,0,0,0.03)]"
-          sectionLabel="ABOUT"
           heading="The person behind the work."
           paragraphs={[
             "I'm Nashim Nazar — a UI/UX designer, performance marketer, and CEO & Founder of Manzio Creative Studio Pvt Ltd.",
