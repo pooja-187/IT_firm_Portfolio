@@ -16,11 +16,11 @@ export default function HomePage() {
       {/* 03 — Selected Work (Animated 3D Carousel) */}
       <DemoVariant1 />
 
-      {/* 04 — Studio & Leadership Showcase */}
-      <HeroSectionDemo />
-
       {/* 07 — Process Section */}
       <ProcessSection />
+
+      {/* 08 — Studio & Leadership Showcase */}
+      <HeroSectionDemo />
     </div>
   );
 }
