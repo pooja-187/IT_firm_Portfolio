@@ -32,42 +32,42 @@ export default function ContactSection() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 800);
+    }, 850);
   };
 
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative w-full text-[#111111] py-10 sm:py-14 lg:py-16 overflow-hidden selection:bg-lime-200"
+      className="relative w-full text-[#111111] py-14 sm:py-20 lg:py-24 overflow-hidden selection:bg-lime-200"
       style={{
         backgroundColor: "#FAFAF8",
         backgroundImage: `
           radial-gradient(
             ellipse 75% 55% at 80% 40%,
-            rgba(183, 227, 106, 0.20) 0%,
-            rgba(241, 248, 222, 0.10) 42%,
+            rgba(183, 227, 106, 0.22) 0%,
+            rgba(241, 248, 222, 0.12) 42%,
             transparent 75%
           ),
           radial-gradient(
             ellipse 65% 45% at 15% 75%,
-            rgba(183, 227, 106, 0.10) 0%,
+            rgba(183, 227, 106, 0.12) 0%,
             transparent 65%
           )
         `,
       }}
     >
-      <div className="w-full max-w-[1080px] mx-auto px-4 sm:px-6 relative z-10">
+      <div className="w-full max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Badge */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-black/5 mb-5 sm:mb-7 shadow-xs"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-6 sm:mb-9 shadow-xs"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
-          <span className="font-sans text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+          <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
             12 / CONTACT
           </span>
         </motion.div>
@@ -75,7 +75,7 @@ export default function ContactSection() {
         {/* ===================================================
             TWO-COLUMN GRID (42% Left / 58% Right)
            =================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
           {/* ===================================================
               LEFT SIDE: Contact Info & 4 Leaf-shaped Cards
@@ -86,18 +86,18 @@ export default function ContactSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="font-sans text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase text-[#84CC16] block mb-1.5">
+              <span className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase text-[#84CC16] block mb-2">
                 BE IN TOUCH
               </span>
               <h2
                 id="contact-heading"
-                className="font-sans text-2xl sm:text-3xl lg:text-[34px] font-light text-[#111111] tracking-[-0.03em] leading-[1.15] mb-2.5"
+                className="font-sans text-3xl sm:text-4xl lg:text-[40px] font-light text-[#111111] tracking-[-0.03em] leading-[1.14] mb-3"
               >
                 Contact Info
               </h2>
-              <p className="font-sans text-xs sm:text-[13px] text-[#525B64] font-normal leading-relaxed mb-4 max-w-md">
+              <p className="font-sans text-xs sm:text-[14.5px] text-[#525B64] font-normal leading-relaxed mb-5 max-w-md">
                 Planning a new website, building software or an app, improving your marketing, or assessing your digital security? Tell me what you&apos;re working on and where you need support.
               </p>
             </motion.div>
@@ -108,7 +108,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-4 flex items-center gap-1.5 text-xs font-medium text-[#111111]"
+              className="mb-5 flex items-center gap-2 text-xs sm:text-sm font-medium text-[#111111]"
             >
               <span className="text-[#64748B]">Prefer a quick conversation?</span>
               <a
@@ -120,7 +120,7 @@ export default function ContactSection() {
             </motion.div>
 
             {/* 4 Asymmetrically Rounded Organic Cards (2x2 Grid) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
               
               {/* Card 01: WhatsApp (Top-Left leaf radius) */}
               <motion.div
@@ -128,16 +128,16 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-white border border-[#B7E36A]/40 rounded-tl-[24px] rounded-tr-[8px] rounded-bl-[8px] rounded-br-[8px] p-3.5 sm:p-4 transition-all duration-300 hover:shadow-xs hover:border-[#84CC16]/70 flex flex-col justify-between"
+                className="group relative bg-white border border-[#B7E36A]/40 rounded-tl-[30px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px] p-4 sm:p-5 transition-all duration-300 hover:shadow-sm hover:border-[#84CC16]/70 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-7 h-7 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-2.5 group-hover:scale-105 transition-transform">
-                    <MessageCircle className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-3 group-hover:scale-105 transition-transform">
+                    <MessageCircle className="w-4 h-4 sm:w-4.5 sm:h.4.5" />
                   </div>
-                  <h3 className="font-sans font-semibold text-xs sm:text-[13px] text-[#111111] mb-0.5">
+                  <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     WhatsApp
                   </h3>
-                  <p className="font-sans text-[11px] sm:text-xs text-[#64748B]">
+                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B]">
                     Chat on WhatsApp &gt;
                   </p>
                 </div>
@@ -149,16 +149,16 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-white border border-[#B7E36A]/40 rounded-tr-[24px] rounded-tl-[8px] rounded-bl-[8px] rounded-br-[8px] p-3.5 sm:p-4 transition-all duration-300 hover:shadow-xs hover:border-[#84CC16]/70 flex flex-col justify-between"
+                className="group relative bg-white border border-[#B7E36A]/40 rounded-tr-[30px] rounded-tl-[10px] rounded-bl-[10px] rounded-br-[10px] p-4 sm:p-5 transition-all duration-300 hover:shadow-sm hover:border-[#84CC16]/70 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-7 h-7 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-2.5 group-hover:scale-105 transition-transform">
-                    <Mail className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-3 group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4 sm:w-4.5 sm:h.4.5" />
                   </div>
-                  <h3 className="font-sans font-semibold text-xs sm:text-[13px] text-[#111111] mb-0.5">
+                  <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     Email
                   </h3>
-                  <p className="font-sans text-[11px] sm:text-xs text-[#64748B] break-all">
+                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B] break-all">
                     [Business email]
                   </p>
                 </div>
@@ -170,16 +170,16 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-white border border-[#B7E36A]/40 rounded-bl-[24px] rounded-tl-[8px] rounded-tr-[8px] rounded-br-[8px] p-3.5 sm:p-4 transition-all duration-300 hover:shadow-xs hover:border-[#84CC16]/70 flex flex-col justify-between"
+                className="group relative bg-white border border-[#B7E36A]/40 rounded-bl-[30px] rounded-tl-[10px] rounded-tr-[10px] rounded-br-[10px] p-4 sm:p-5 transition-all duration-300 hover:shadow-sm hover:border-[#84CC16]/70 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-7 h-7 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-2.5 group-hover:scale-105 transition-transform">
-                    <Phone className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-3 group-hover:scale-105 transition-transform">
+                    <Phone className="w-4 h-4 sm:w-4.5 sm:h.4.5" />
                   </div>
-                  <h3 className="font-sans font-semibold text-xs sm:text-[13px] text-[#111111] mb-0.5">
+                  <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     Phone / WhatsApp
                   </h3>
-                  <p className="font-sans text-[11px] sm:text-xs text-[#64748B]">
+                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B]">
                     [Verified WhatsApp number]
                   </p>
                 </div>
@@ -191,16 +191,16 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-white border border-[#B7E36A]/40 rounded-br-[24px] rounded-tl-[8px] rounded-tr-[8px] rounded-bl-[8px] p-3.5 sm:p-4 transition-all duration-300 hover:shadow-xs hover:border-[#84CC16]/70 flex flex-col justify-between"
+                className="group relative bg-white border border-[#B7E36A]/40 rounded-br-[30px] rounded-tl-[10px] rounded-tr-[10px] rounded-bl-[10px] p-4 sm:p-5 transition-all duration-300 hover:shadow-sm hover:border-[#84CC16]/70 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-7 h-7 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-2.5 group-hover:scale-105 transition-transform">
-                    <Send className="w-3.5 h-3.5" />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F1F8DE] flex items-center justify-center text-[#65a30d] mb-3 group-hover:scale-105 transition-transform">
+                    <Send className="w-4 h-4 sm:w-4.5 sm:h.4.5" />
                   </div>
-                  <h3 className="font-sans font-semibold text-xs sm:text-[13px] text-[#111111] mb-0.5">
+                  <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     Project Enquiry
                   </h3>
-                  <p className="font-sans text-[11px] sm:text-xs text-[#64748B]">
+                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B]">
                     Send me your project details through the form.
                   </p>
                 </div>
@@ -210,36 +210,36 @@ export default function ContactSection() {
           </div>
 
           {/* ===================================================
-              RIGHT SIDE: Organic Curved Compact Contact Form Panel
+              RIGHT SIDE: Organic Curved Contact Form Panel
              =================================================== */}
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            initial={{ opacity: 0, y: 26, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 relative bg-[#F1F8DE] border border-[#B7E36A]/60 shadow-[0_6px_25px_rgba(183,227,106,0.10)] p-5 sm:p-7 lg:p-8 
-              rounded-tl-[50px] sm:rounded-tl-[70px] 
-              rounded-br-[50px] sm:rounded-br-[70px] 
-              rounded-tr-[20px] sm:rounded-tr-[24px] 
-              rounded-bl-[20px] sm:rounded-bl-[24px] 
+            transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 relative bg-[#F1F8DE] border border-[#B7E36A]/60 shadow-[0_8px_30px_rgba(183,227,106,0.12)] p-6 sm:p-8 lg:p-10 
+              rounded-tl-[65px] sm:rounded-tl-[90px] 
+              rounded-br-[65px] sm:rounded-br-[90px] 
+              rounded-tr-[22px] sm:rounded-tr-[28px] 
+              rounded-bl-[22px] sm:rounded-bl-[28px] 
               overflow-hidden"
           >
             {/* Subtle atmospheric glow inside panel */}
             <div
               aria-hidden="true"
-              className="absolute -top-16 -right-16 w-60 h-60 rounded-full bg-[#B7E36A]/20 blur-2xl pointer-events-none"
+              className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#B7E36A]/20 blur-2xl pointer-events-none"
             />
 
             <div className="relative z-10">
               {/* Form Eyebrow & Headings */}
-              <div className="mb-4 sm:mb-5 text-center sm:text-left">
-                <span className="font-sans text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase text-[#65a30d] block mb-1">
+              <div className="mb-5 sm:mb-6 text-center sm:text-left">
+                <span className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase text-[#65a30d] block mb-1.5">
                   LET&apos;S TALK
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl lg:text-[25px] font-light text-[#111111] tracking-tight leading-[1.2] mb-1.5">
+                <h3 className="font-sans text-2xl sm:text-[28px] lg:text-[30px] font-light text-[#111111] tracking-tight leading-[1.2] mb-2">
                   Let&apos;s build your next digital experience.
                 </h3>
-                <p className="font-sans text-xs sm:text-[13px] text-[#525B64] font-normal leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-[#525B64] font-normal leading-relaxed">
                   Planning a new website, building software or an app, improving your marketing, or assessing your digital security? Tell me what you&apos;re working on and where you need support.
                 </p>
               </div>
@@ -249,15 +249,15 @@ export default function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white/90 backdrop-blur-xs rounded-xl p-6 text-center border border-[#B7E36A] shadow-xs my-4"
+                  className="bg-white/90 backdrop-blur-xs rounded-2xl p-7 text-center border border-[#B7E36A] shadow-xs my-4"
                 >
-                  <div className="w-11 h-11 rounded-full bg-[#F1F8DE] text-[#65a30d] mx-auto flex items-center justify-center mb-3">
-                    <CheckCircle2 className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-full bg-[#F1F8DE] text-[#65a30d] mx-auto flex items-center justify-center mb-3">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h4 className="font-sans text-lg font-medium text-[#111111] mb-1">
+                  <h4 className="font-sans text-lg sm:text-xl font-medium text-[#111111] mb-1.5">
                     Enquiry Received!
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-[#525B64] max-w-sm mx-auto mb-4">
+                  <p className="font-sans text-xs sm:text-sm text-[#525B64] max-w-sm mx-auto mb-5">
                     Thank you for reaching out. I&apos;ll review your project details and get back to you shortly.
                   </p>
                   <button
@@ -273,19 +273,19 @@ export default function ContactSection() {
                         timeline: "",
                       });
                     }}
-                    className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[#B7E36A] hover:bg-[#a6d852] text-[#111111] font-semibold text-xs tracking-wide uppercase transition-all"
+                    className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#B7E36A] hover:bg-[#a6d852] text-[#111111] font-semibold text-xs tracking-wide uppercase transition-all"
                   >
                     Send Another Message
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
+                <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
                   {/* Row 1: Your Name & Email Address */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                     <div>
                       <label
                         htmlFor="name"
-                        className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                        className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                       >
                         Your Name <span className="text-[#84CC16]">*</span>
                       </label>
@@ -297,14 +297,14 @@ export default function ContactSection() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Your Name"
-                        className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="email"
-                        className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                        className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                       >
                         Email Address <span className="text-[#84CC16]">*</span>
                       </label>
@@ -316,17 +316,17 @@ export default function ContactSection() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="Email Address"
-                        className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
                       />
                     </div>
                   </div>
 
                   {/* Row 2: Company / Website - Optional & Preferred Timeline - Optional */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                     <div>
                       <label
                         htmlFor="company"
-                        className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                        className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                       >
                         Company / Website - Optional
                       </label>
@@ -337,14 +337,14 @@ export default function ContactSection() {
                         value={formData.company}
                         onChange={handleChange}
                         placeholder="Company / Website - Optional"
-                        className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="timeline"
-                        className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                        className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                       >
                         Preferred Timeline - Optional
                       </label>
@@ -355,7 +355,7 @@ export default function ContactSection() {
                         value={formData.timeline}
                         onChange={handleChange}
                         placeholder="Preferred Timeline - Optional"
-                        className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all"
                       />
                     </div>
                   </div>
@@ -364,7 +364,7 @@ export default function ContactSection() {
                   <div>
                     <label
                       htmlFor="service"
-                      className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                      className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                     >
                       Service Needed <span className="text-[#84CC16]">*</span>
                     </label>
@@ -375,7 +375,7 @@ export default function ContactSection() {
                         required
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all appearance-none cursor-pointer"
+                        className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all appearance-none cursor-pointer"
                       >
                         <option value="" disabled className="text-gray-400">
                           Select Service Needed
@@ -387,9 +387,9 @@ export default function ContactSection() {
                         <option value="Ethical Hacking">Ethical Hacking</option>
                         <option value="Multiple Services">Multiple Services</option>
                       </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-[#64748B]">
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#64748B]">
                         <svg
-                          className="w-3.5 h-3.5"
+                          className="w-4 h-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -409,7 +409,7 @@ export default function ContactSection() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block font-sans text-[11px] font-semibold uppercase tracking-wider text-[#475569] mb-1 text-left"
+                      className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#475569] mb-1.5 text-left"
                     >
                       Tell Me About Your Project <span className="text-[#84CC16]">*</span>
                     </label>
@@ -421,19 +421,19 @@ export default function ContactSection() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell Me About Your Project"
-                      className="w-full px-3.5 py-2 bg-white/95 rounded-lg border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all resize-none"
+                      className="w-full px-4 py-2.5 sm:py-3 bg-white/95 rounded-xl border border-black/5 text-[#111111] placeholder:text-[#94A3B8] text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#84CC16]/60 focus:bg-white transition-all resize-none"
                     />
                   </div>
 
                   {/* Submit Button Area */}
-                  <div className="pt-1 flex justify-center sm:justify-end">
+                  <div className="pt-2 flex justify-center sm:justify-end">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 
                         bg-[#B7E36A] hover:bg-[#a6d852] active:bg-[#97ca42] text-[#111111] font-semibold text-xs sm:text-sm 
-                        rounded-tl-[18px] rounded-br-[18px] rounded-tr-[8px] rounded-bl-[8px] 
-                        shadow-[0_2px_12px_rgba(183,227,106,0.30)] hover:shadow-[0_4px_16px_rgba(183,227,106,0.45)] 
+                        rounded-tl-[20px] rounded-br-[20px] rounded-tr-[8px] rounded-bl-[8px] 
+                        shadow-[0_3px_14px_rgba(183,227,106,0.35)] hover:shadow-[0_5px_18px_rgba(183,227,106,0.5)] 
                         transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-70"
                     >
                       {isSubmitting ? (
