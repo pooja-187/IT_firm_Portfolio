@@ -7,6 +7,7 @@ import ProcessSection from '@/components/ProcessSection';
 import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import InsightsSection from '@/components/InsightsSection';
+import FaqSection from '@/components/FaqSection';
 
 export default function HomePage() {
   return (
@@ -37,6 +38,9 @@ export default function HomePage() {
 
       {/* 10 — Insights Section */}
       <InsightsSection />
+
+      {/* 11 — FAQ Section */}
+      <FaqSection />
     </div>
   );
 }
