@@ -134,11 +134,12 @@ export function FeatureCarousel() {
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-lime-200/60 bg-white/95 backdrop-blur-md shadow-[0_20px_60px_rgba(132,204,22,0.12),0_4px_25px_rgba(0,0,0,0.04)]">
+      {/* Open floating composition (no enclosing box container) */}
+      <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[550px] lg:min-h-[620px] w-full gap-8 lg:gap-12">
         {/* Left column / vertical track */}
-        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-[#FAFAF9] border-b lg:border-b-0 lg:border-r border-slate-200/80">
-          <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-[#FAFAF9] via-[#FAFAF9]/90 to-transparent z-40" />
-          <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-[#FAFAF9] via-[#FAFAF9]/90 to-transparent z-40" />
+        <div className="w-full lg:w-[42%] min-h-[380px] md:min-h-[460px] lg:h-[550px] relative z-20 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8">
+          <div className="absolute inset-x-0 top-0 h-14 md:h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-40 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-40 pointer-events-none" />
 
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
             {FEATURES.map((feature, index) => {
@@ -174,10 +175,10 @@ export function FeatureCarousel() {
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                     className={cn(
-                      "relative flex items-center gap-4 px-6 md:px-10 lg:px-8 py-3.5 md:py-5 lg:py-4 rounded-full transition-all duration-700 text-left group border",
+                      "relative flex items-center gap-4 px-6 md:px-9 lg:px-8 py-3.5 md:py-4.5 rounded-full transition-all duration-700 text-left group border backdrop-blur-xs",
                       isActive
-                        ? "bg-[#84CC16] text-[#111111] font-medium border-[#84CC16] z-10 shadow-[0_8px_25px_rgba(132,204,22,0.35)]"
-                        : "bg-transparent text-[#525B64] border-[#84CC16]/35 hover:border-[#84CC16] hover:text-[#111111] hover:bg-[#84CC16]/5"
+                        ? "bg-[#84CC16] text-[#111111] font-medium border-[#84CC16] z-10 shadow-[0_10px_30px_rgba(132,204,22,0.4)] scale-[1.03]"
+                        : "bg-white/80 text-[#525B64] border-black/[0.08] hover:border-[#84CC16]/60 hover:text-[#111111] hover:bg-white shadow-xs"
                     )}
                   >
                     <div
@@ -188,7 +189,7 @@ export function FeatureCarousel() {
                     >
                       <HugeiconsIcon icon={feature.icon} size={18} strokeWidth={2} />
                     </div>
-                    <span className="text-sm md:text-[15px] tracking-tight whitespace-nowrap uppercase">
+                    <span className="text-sm md:text-[15px] tracking-tight whitespace-nowrap uppercase font-sans">
                       {feature.label}
                     </span>
                   </button>
@@ -198,8 +199,8 @@ export function FeatureCarousel() {
           </div>
         </div>
 
-        {/* Right column / 3D cards */}
-        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-slate-50/60 flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden">
+        {/* Right column / 3D floating cards */}
+        <div className="flex-1 w-full min-h-[480px] md:min-h-[560px] lg:h-[550px] relative flex items-center justify-center py-6 px-4 overflow-visible">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
@@ -225,7 +226,7 @@ export function FeatureCarousel() {
                     damping: 25,
                     mass: 0.8,
                   }}
-                  className="absolute inset-0 rounded-[2rem] md:rounded-[2.8rem] overflow-hidden border-4 md:border-8 border-white bg-white origin-center shadow-2xl"
+                  className="absolute inset-0 rounded-[2.2rem] md:rounded-[2.8rem] overflow-hidden border-4 md:border-8 border-white bg-white origin-center shadow-[0_25px_65px_rgba(0,0,0,0.18)]"
                 >
                   <img
                     src={feature.image}
@@ -244,7 +245,7 @@ export function FeatureCarousel() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute inset-x-0 bottom-0 p-10 pt-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
+                        className="absolute inset-x-0 bottom-0 p-8 sm:p-10 pt-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
                       >
                         <div className="bg-white text-[#111111] px-4 py-1.5 rounded-full text-[11px] font-normal uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-black/5 flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
