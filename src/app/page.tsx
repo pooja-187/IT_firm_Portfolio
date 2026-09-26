@@ -6,6 +6,7 @@ import WhyWorkWithMe from '@/components/WhyWorkWithMe';
 import ProcessSection from '@/components/ProcessSection';
 import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import InsightsSection from '@/components/InsightsSection';
 
 export default function HomePage() {
   return (
@@ -33,6 +34,9 @@ export default function HomePage() {
 
       {/* 09 — Testimonials Section */}
       <TestimonialsSection />
+
+      {/* 10 — Insights Section */}
+      <InsightsSection />
     </div>
   );
 }
