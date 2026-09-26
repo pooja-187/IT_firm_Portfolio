@@ -172,6 +172,12 @@ export default function ServicesSection() {
     return "hidden";
   };
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src =
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' viewBox='0 0 800 1000'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='50%25' stop-color='%230f172a'/%3E%3Cstop offset='100%25' stop-color='%23020617'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E";
+  };
+
   return (
     <section
       id="services"
@@ -338,6 +344,9 @@ export default function ServicesSection() {
                     <img
                       src={service.image}
                       alt={service.name}
+                      onError={handleImageError}
+                      referrerPolicy="no-referrer"
+                      crossOrigin="anonymous"
                       className={cn(
                         "w-full h-full object-cover transition-all duration-700",
                         isActive
@@ -408,7 +417,7 @@ export default function ServicesSection() {
                     {/* Top Status Badge */}
                     <div
                       className={cn(
-                        "absolute top-4 left-4 flex items-center gap-2 transition-opacity duration-300",
+                        "absolute top-4 left-4 flex items-center gap-2 transition-opacity duration-300 pointer-events-none",
                         isActive ? "opacity-100" : "opacity-0"
                       )}
                     >
