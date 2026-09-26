@@ -210,14 +210,14 @@ export default function ContactSection() {
           </div>
 
           {/* ===================================================
-              RIGHT SIDE: Organic Curved Contact Form Panel with Exact Luminous Lime Shade
+              RIGHT SIDE: Organic Curved Contact Form Panel with Soft Subtle Lime Shade
              =================================================== */}
           <motion.div
             initial={{ opacity: 0, y: 26, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 relative border border-[#84CC16]/40 shadow-[0_15px_45px_rgba(132,204,22,0.16)] p-6 sm:p-8 lg:p-10 
+            className="lg:col-span-7 relative border border-[#84CC16]/25 shadow-[0_10px_35px_rgba(0,0,0,0.03)] p-6 sm:p-8 lg:p-10 
               rounded-tl-[65px] sm:rounded-tl-[90px] 
               rounded-br-[65px] sm:rounded-br-[90px] 
               rounded-tr-[22px] sm:rounded-tr-[28px] 
@@ -225,25 +225,21 @@ export default function ContactSection() {
               overflow-hidden bg-white"
             style={{
               background: `
-                radial-gradient(circle at 50% -10%, rgba(132, 204, 22, 0.38) 0%, rgba(163, 230, 53, 0.22) 32%, rgba(217, 249, 157, 0.10) 58%, transparent 80%),
-                linear-gradient(180deg, rgba(217, 249, 157, 0.28) 0%, rgba(244, 249, 228, 0.35) 30%, #FFFFFF 70%)
+                radial-gradient(ellipse 85% 45% at 50% 0%, rgba(163, 230, 53, 0.15) 0%, rgba(217, 249, 157, 0.06) 45%, transparent 75%),
+                linear-gradient(180deg, rgba(247, 252, 238, 0.65) 0%, #FFFFFF 50%)
               `,
             }}
           >
-            {/* Rich Luminous Ambient Glow matching Why Work With Me top bloom */}
+            {/* Soft Ambient Glow */}
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-b from-[#84CC16]/22 via-[#84CC16]/[0.06] to-transparent pointer-events-none"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#84CC16]/30 rounded-full blur-2xl pointer-events-none"
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#84CC16]/10 rounded-full blur-3xl pointer-events-none"
             />
 
             <div className="relative z-10">
               {/* Form Eyebrow & Headings */}
               <div className="mb-5 sm:mb-6 text-center sm:text-left">
-                <div className="inline-flex items-center justify-center font-mono text-[11px] font-semibold tracking-widest text-[#111111] bg-[#84CC16] px-3 py-0.5 rounded-full shadow-[0_0_12px_rgba(132,204,22,0.5)] mb-2.5">
+                <div className="inline-flex items-center justify-center font-mono text-[10px] sm:text-[11px] font-semibold tracking-widest text-[#4d7c0f] bg-[#84CC16]/15 border border-[#84CC16]/30 px-3 py-0.5 rounded-full mb-2.5">
                   LET&apos;S TALK
                 </div>
                 <h3 className="font-sans text-2xl sm:text-[28px] lg:text-[30px] font-light text-[#111111] tracking-tight leading-[1.2] mb-2">
