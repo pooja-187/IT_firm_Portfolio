@@ -137,6 +137,7 @@ const wrap = (min: number, max: number, v: number) => {
 export default function ServicesSection() {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const resumeTimerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const currentIndex =
     ((step % SERVICES_DATA.length) + SERVICES_DATA.length) %
@@ -146,10 +147,23 @@ export default function ServicesSection() {
     setStep((prev) => prev + 1);
   }, []);
 
+  const prevStep = useCallback(() => {
+    setStep((prev) => prev - 1);
+  }, []);
+
   const handleChipClick = (index: number) => {
-    const diff =
-      (index - currentIndex + SERVICES_DATA.length) % SERVICES_DATA.length;
-    if (diff > 0) setStep((s) => s + diff);
+    let diff = index - currentIndex;
+    const len = SERVICES_DATA.length;
+    if (diff > len / 2) diff -= len;
+    if (diff < -len / 2) diff += len;
+    setStep((s) => s + diff);
+
+    // Pause briefly on user interaction and automatically resume after 6s
+    setIsPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 6000);
   };
 
   useEffect(() => {
@@ -157,6 +171,13 @@ export default function ServicesSection() {
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
   }, [nextStep, isPaused]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    };
+  }, []);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
@@ -239,7 +260,11 @@ export default function ServicesSection() {
         {/* ===================================================
             INTERACTIVE 3D CAPABILITY SHOWCASE
            =================================================== */}
-        <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[480px] lg:min-h-[520px] w-full gap-6 lg:gap-10 max-w-5xl mx-auto">
+        <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="relative flex flex-col lg:flex-row items-center justify-between min-h-[480px] lg:min-h-[520px] w-full gap-6 lg:gap-10 max-w-5xl mx-auto"
+        >
           {/* Left column / vertical track with alpha transparency mask */}
           <div
             className="w-full lg:w-[46%] min-h-[350px] md:min-h-[400px] lg:h-[490px] relative z-20 flex flex-col items-start justify-center px-2 sm:px-6"
@@ -282,10 +307,8 @@ export default function ServicesSection() {
                   >
                     <button
                       onClick={() => handleChipClick(index)}
-                      onMouseEnter={() => setIsPaused(true)}
-                      onMouseLeave={() => setIsPaused(false)}
                       className={cn(
-                        "relative flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-500 text-left group border max-w-full",
+                        "relative flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-500 text-left group border max-w-full cursor-pointer select-none",
                         isActive
                           ? "bg-[#84CC16] text-[#111111] font-semibold border-[#84CC16] z-10 shadow-[0_8px_24px_rgba(132,204,22,0.35)] scale-[1.02]"
                           : "bg-transparent text-[#475569] border-black/[0.12] hover:border-[#84CC16] hover:text-[#111111] hover:bg-[#84CC16]/10"
@@ -324,21 +347,31 @@ export default function ServicesSection() {
                   <motion.div
                     key={service.id}
                     initial={false}
+                    onClick={() => {
+                      if (isPrev) prevStep();
+                      if (isNext) nextStep();
+                    }}
                     animate={{
                       x: isActive ? 0 : isPrev ? -80 : isNext ? 80 : 0,
                       scale: isActive ? 1 : isPrev || isNext ? 0.88 : 0.72,
-                      opacity: isActive ? 1 : isPrev || isNext ? 0.35 : 0,
+                      opacity: isActive ? 1 : isPrev || isNext ? 0.4 : 0,
                       rotate: isPrev ? -3 : isNext ? 3 : 0,
                       zIndex: isActive ? 20 : isPrev || isNext ? 10 : 0,
-                      pointerEvents: isActive ? "auto" : "none",
                     }}
+                    whileHover={
+                      isPrev || isNext ? { scale: 0.91, opacity: 0.6 } : {}
+                    }
                     transition={{
                       type: "spring",
                       stiffness: 260,
                       damping: 25,
                       mass: 0.8,
                     }}
-                    className="absolute inset-0 rounded-[1.8rem] sm:rounded-[2.2rem] overflow-hidden border-4 sm:border-[6px] border-white bg-neutral-900 origin-center shadow-[0_20px_50px_rgba(0,0,0,0.16)]"
+                    className={cn(
+                      "absolute inset-0 rounded-[1.8rem] sm:rounded-[2.2rem] overflow-hidden border-4 sm:border-[6px] border-white bg-neutral-900 origin-center shadow-[0_20px_50px_rgba(0,0,0,0.16)] transition-shadow duration-300",
+                      (isPrev || isNext) && "cursor-pointer hover:shadow-xl",
+                      !isActive && !isPrev && !isNext && "pointer-events-none"
+                    )}
                   >
                     {/* Card Background Photo */}
                     <img
