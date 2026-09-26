@@ -110,29 +110,39 @@ export default function WhyWorkWithMe() {
                     delay: 0.15 + idx * 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="group relative flex flex-col justify-between p-6 lg:p-7 xl:p-8 min-h-[380px] lg:min-h-[440px] xl:min-h-[460px] border-r border-black/[0.08] transition-colors duration-500 hover:bg-white/40"
+                  className="group relative flex flex-col justify-between p-6 lg:p-7 xl:p-8 min-h-[400px] lg:min-h-[460px] xl:min-h-[480px] border-r border-black/[0.08] transition-all duration-500 hover:bg-white/80 hover:backdrop-blur-xs hover:shadow-[0_25px_50px_rgba(132,204,22,0.14)] cursor-default select-none overflow-hidden"
                 >
-                  {/* Subtle Hover Ambient Glow Effect */}
+                  {/* Top Animated Lime Accent Line */}
+                  <div className="absolute top-0 inset-x-0 h-[2.5px] bg-[#84CC16] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out z-20 shadow-[0_0_14px_#84CC16]" />
+
+                  {/* Rich Luminous Ambient Glow on Hover */}
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-b from-[#84CC16]/[0.05] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    className="absolute inset-0 bg-gradient-to-b from-[#84CC16]/22 via-[#84CC16]/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   />
 
-                  {/* Top Block: Number & Title */}
+                  {/* Radial Spotlight Bloom */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#84CC16]/30 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  />
+
+                  {/* Top Block: Number Badge & Title */}
                   <div className="relative z-10">
-                    <span className="font-mono text-xs xl:text-[13px] font-semibold tracking-widest text-[#84CC16] block mb-5 select-none">
-                      {prop.number}
-                    </span>
-                    <h3 className="font-sans text-xl lg:text-[22px] xl:text-2xl font-normal text-[#111111] group-hover:text-black tracking-tight leading-[1.25] transition-colors duration-300">
+                    <div className="mb-5">
+                      <span className="inline-flex items-center justify-center font-mono text-xs xl:text-[13px] font-semibold tracking-widest text-[#65a30d] group-hover:text-[#111111] bg-black/[0.03] group-hover:bg-[#84CC16] px-2.5 py-0.5 rounded-full transition-all duration-300 select-none shadow-xs group-hover:shadow-[0_0_14px_rgba(132,204,22,0.6)] group-hover:scale-105">
+                        {prop.number}
+                      </span>
+                    </div>
+
+                    <h3 className="font-sans text-xl lg:text-[22px] xl:text-2xl font-normal text-[#111111] group-hover:text-black tracking-tight leading-[1.25] transition-all duration-300 group-hover:-translate-y-0.5">
                       {prop.title}
                     </h3>
                   </div>
 
-                  {/* Generous Editorial Whitespace in Middle (Flex-1) */}
-
                   {/* Bottom Block: Description Positioned in Lower Portion */}
                   <div className="relative z-10 pt-12 lg:pt-16">
-                    <p className="font-sans text-[13.5px] lg:text-[14px] xl:text-[15px] text-[#525B64] group-hover:text-[#1e293b] font-normal leading-[1.65] transition-colors duration-300">
+                    <p className="font-sans text-[13.5px] lg:text-[14px] xl:text-[15px] text-[#525B64] group-hover:text-[#0f172a] font-normal leading-[1.68] transition-colors duration-300">
                       {prop.description}
                     </p>
                   </div>
@@ -153,11 +163,13 @@ export default function WhyWorkWithMe() {
                     delay: idx * 0.08,
                     ease: "easeOut",
                   }}
-                  className="py-8 px-1 flex flex-col"
+                  className="py-8 px-2 flex flex-col relative group"
                 >
-                  <span className="font-mono text-xs font-semibold tracking-widest text-[#84CC16] block mb-3">
-                    {prop.number}
-                  </span>
+                  <div className="mb-3">
+                    <span className="inline-flex items-center font-mono text-xs font-semibold tracking-widest text-[#84CC16] bg-[#84CC16]/10 px-2 py-0.5 rounded-full">
+                      {prop.number}
+                    </span>
+                  </div>
                   <h3 className="font-sans text-xl font-normal text-[#111111] tracking-tight leading-snug mb-3">
                     {prop.title}
                   </h3>
