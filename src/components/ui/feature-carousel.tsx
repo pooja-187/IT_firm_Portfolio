@@ -134,11 +134,11 @@ export function FeatureCarousel() {
 
   return (
     <div className="w-full max-w-7xl mx-auto md:p-8">
-      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
-        {/* Left column / vertical track */}
-        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-[#62B2FE]">
-          <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-[#62B2FE] via-[#62B2FE]/80 to-transparent z-40" />
-          <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-[#62B2FE] via-[#62B2FE]/80 to-transparent z-40" />
+      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-black/5 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
+        {/* Left column / vertical track with portfolio matching lime green */}
+        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-[#84CC16]">
+          <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-[#84CC16] via-[#84CC16]/80 to-transparent z-40" />
+          <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-[#84CC16] via-[#84CC16]/80 to-transparent z-40" />
 
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
             {FEATURES.map((feature, index) => {
@@ -176,14 +176,14 @@ export function FeatureCarousel() {
                     className={cn(
                       "relative flex items-center gap-4 px-6 md:px-10 lg:px-8 py-3.5 md:py-5 lg:py-4 rounded-full transition-all duration-700 text-left group border",
                       isActive
-                        ? "bg-white text-[#62B2FE] border-white z-10 shadow-lg"
-                        : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white"
+                        ? "bg-white text-[#111111] border-white z-10 shadow-lg"
+                        : "bg-transparent text-white/70 border-white/20 hover:border-white/50 hover:text-white"
                     )}
                   >
                     <div
                       className={cn(
                         "flex items-center justify-center transition-colors duration-500",
-                        isActive ? "text-[#62B2FE]" : "text-white/40"
+                        isActive ? "text-[#84CC16]" : "text-white/60"
                       )}
                     >
                       <HugeiconsIcon icon={feature.icon} size={18} strokeWidth={2} />
@@ -246,8 +246,9 @@ export function FeatureCarousel() {
                         exit={{ opacity: 0, y: 10 }}
                         className="absolute inset-x-0 bottom-0 p-10 pt-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
                       >
-                        <div className="bg-white text-[#111111] px-4 py-1.5 rounded-full text-[11px] font-normal uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-black/5">
-                          {index + 1} • {feature.label}
+                        <div className="bg-white text-[#111111] px-4 py-1.5 rounded-full text-[11px] font-normal uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-black/5 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
+                          <span>{index + 1} • {feature.label}</span>
                         </div>
                         <p className="text-white font-normal text-xl md:text-2xl leading-tight drop-shadow-md tracking-tight">
                           {feature.description}
@@ -262,7 +263,7 @@ export function FeatureCarousel() {
                       isActive ? "opacity-100" : "opacity-0"
                     )}
                   >
-                    <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_white]" />
+                    <div className="w-2 h-2 rounded-full bg-[#84CC16] shadow-[0_0_10px_#84CC16]" />
                     <span className="text-white/80 text-[10px] font-normal uppercase tracking-[0.3em] font-mono">
                       Live Session
                     </span>
