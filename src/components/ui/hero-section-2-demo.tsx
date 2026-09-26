@@ -7,34 +7,47 @@ export function HeroSectionDemo() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden py-12 sm:py-16 lg:py-20 selection:bg-lime-200"
+      className="relative w-full overflow-hidden py-14 sm:py-18 lg:py-24 selection:bg-lime-200"
       style={{
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F4FAEB',
         backgroundImage: `
           radial-gradient(
-            ellipse 70% 50% at 50% 50%,
-            rgba(163, 230, 53, 0.22) 0%,
-            rgba(190, 242, 100, 0.12) 35%,
-            rgba(217, 249, 157, 0.05) 60%,
-            transparent 75%
+            ellipse 85% 65% at 50% 50%,
+            rgba(163, 230, 53, 0.45) 0%,
+            rgba(190, 242, 100, 0.28) 35%,
+            rgba(217, 249, 157, 0.18) 60%,
+            transparent 85%
           ),
           radial-gradient(
-            ellipse 90% 70% at 50% 45%,
-            rgba(163, 230, 53, 0.10) 0%,
-            transparent 75%
+            ellipse 60% 50% at 15% 30%,
+            rgba(132, 204, 22, 0.30) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 60% 50% at 85% 70%,
+            rgba(163, 230, 53, 0.30) 0%,
+            transparent 70%
           )
         `,
       }}
     >
-      {/* Additional ambient atmospheric glow elements */}
+      {/* Prominent atmospheric lime glow orbs */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[#A3E635]/15 rounded-full blur-3xl pointer-events-none"
+        className="absolute -top-16 -left-20 w-[520px] h-[520px] bg-[#84CC16]/25 rounded-full blur-[110px] pointer-events-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-16 -right-20 w-[560px] h-[560px] bg-[#A3E635]/30 rounded-full blur-[110px] pointer-events-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-[#A3E635]/20 rounded-full blur-[120px] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         <HeroSection
-          className="bg-white/95 backdrop-blur-md border border-black/5 shadow-[0_12px_45px_rgba(0,0,0,0.04)]"
+          className="bg-white/95 backdrop-blur-md border border-lime-200/50 shadow-[0_20px_60px_rgba(132,204,22,0.12),0_4px_20px_rgba(0,0,0,0.03)]"
           sectionLabel="ABOUT"
           heading="The person behind the work."
           paragraphs={[
