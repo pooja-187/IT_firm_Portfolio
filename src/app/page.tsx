@@ -4,7 +4,6 @@ import { DemoVariant1 } from '@/components/ui/demo';
 import ServicesSection from '@/components/ServicesSection';
 import ProcessSection from '@/components/ProcessSection';
 import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
-import FeatureCarouselDemo from '@/components/ui/feature-carousel-demo';
 
 export default function HomePage() {
   return (
@@ -26,9 +25,6 @@ export default function HomePage() {
 
       {/* 08 — About Section */}
       <HeroSectionDemo />
-
-      {/* 09 — Feature Highlights Carousel */}
-      <FeatureCarouselDemo />
     </div>
   );
 }
