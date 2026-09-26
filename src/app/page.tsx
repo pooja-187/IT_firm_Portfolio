@@ -8,6 +8,7 @@ import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import InsightsSection from '@/components/InsightsSection';
 import FaqSection from '@/components/FaqSection';
+import ContactSection from '@/components/ContactSection';
 
 export default function HomePage() {
   return (
@@ -41,6 +42,9 @@ export default function HomePage() {
 
       {/* 11 — FAQ Section */}
       <FaqSection />
+
+      {/* 12 — Contact Section */}
+      <ContactSection />
     </div>
   );
 }
