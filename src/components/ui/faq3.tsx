@@ -122,18 +122,18 @@ export const Faq3 = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto w-full max-w-3xl bg-white/70 backdrop-blur-xs rounded-3xl p-6 sm:p-8 md:p-10 border border-black/[0.06] shadow-[0_15px_40px_rgba(0,0,0,0.03)]"
+          className="mx-auto w-full max-w-3xl border-t border-black/[0.08]"
         >
           <Accordion type="single" collapsible className="w-full">
             {items.map((item) => (
-              <AccordionItem key={item.id} value={item.id}>
-                <AccordionTrigger className="transition-all duration-200 hover:no-underline hover:text-[#84CC16]">
+              <AccordionItem key={item.id} value={item.id} className="border-b border-black/[0.08]">
+                <AccordionTrigger className="py-5 sm:py-6 transition-all duration-200 hover:no-underline hover:text-[#84CC16]">
                   <span className="font-sans font-medium text-[#111111] text-base sm:text-lg lg:text-xl py-1 tracking-tight">
                     {item.question}
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="font-sans text-[#525B64] text-sm sm:text-base leading-relaxed pt-1 pb-2">
+                  <p className="font-sans text-[#525B64] text-sm sm:text-base leading-relaxed pt-1 pb-4">
                     {item.answer}
                   </p>
                 </AccordionContent>
