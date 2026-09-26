@@ -24,45 +24,70 @@ export interface Faq3Props {
 export const faqItems: FaqItem[] = [
   {
     id: "faq-1",
-    question: "What is your design and development process?",
+    question:
+      "How do I choose the best UI UX designer in Kottayam, Kerala for my project?",
     answer:
-      "We begin by understanding your core business goals and user requirements, then move into interactive wireframing, high-fidelity UI design, production-ready development, and comprehensive quality testing.",
+      "Look for relevant work, a clear design process, strong communication, and an understanding of your business goals. Ask about the designer's role in previous projects and how they approach user needs. You can explore my selected work and contact me to discuss whether we're a good fit.",
   },
   {
     id: "faq-2",
-    question: "How long does a typical project take?",
+    question: "What services do you provide?",
     answer:
-      "Timelines vary depending on scope. A focused marketing website typically takes 2–4 weeks, while complex SaaS products, mobile apps, or custom platforms typically range from 6–12 weeks.",
+      "I work with the Manzio Creative Studio team to provide UI/UX design, software development, app development, performance marketing, and ethical hacking. We'll define the deliverables and responsibilities around your project's needs.",
   },
   {
     id: "faq-3",
-    question: "Do you work with startups and established businesses?",
+    question: "What is your role at Manzio Creative Studio?",
     answer:
-      "Yes, we collaborate with early-stage founders launching new MVPs as well as established companies seeking to redesign, optimize, or scale their existing digital systems.",
+      "I'm the CEO & Founder of Manzio Creative Studio Pvt Ltd. I lead the team and work across UI/UX design, digital strategy, and performance marketing.",
   },
   {
     id: "faq-4",
-    question: "How do we communicate throughout the engagement?",
+    question: "Can I work with you directly?",
     answer:
-      "You collaborate directly with Nashim Nazar and our team through weekly video syncs, asynchronous Loom updates, and a dedicated Slack/WhatsApp channel for real-time clarity.",
+      "Yes. You can contact me directly to discuss your project. Depending on the scope, I may work on it personally or involve the Manzio team. We'll clarify responsibilities before starting.",
   },
   {
     id: "faq-5",
-    question: "Do you provide post-launch support and maintenance?",
+    question: "Do you offer both design and development?",
     answer:
-      "Yes. After launch, we offer continuous support, performance monitoring, feature expansions, and technical optimization to ensure your digital presence thrives.",
+      "Yes. I provide UI/UX and website design, with software and app development support available through Manzio. The proposal will clearly explain which services are included.",
   },
   {
     id: "faq-6",
-    question: "How do we get started?",
+    question: "Can you redesign my existing website or app?",
     answer:
-      "Simply reach out via our contact form or schedule a discovery call to discuss your goals, scope, and timeline.",
+      "Yes. We can start by reviewing the existing experience, understanding its challenges, and identifying what needs to improve before defining the redesign scope.",
+  },
+  {
+    id: "faq-7",
+    question: "Do you work with clients outside Kerala?",
+    answer:
+      "Yes. I work remotely with businesses across India and internationally, with communication and review arrangements agreed at the start.",
+  },
+  {
+    id: "faq-8",
+    question: "How much will my project cost?",
+    answer:
+      "Pricing depends on the scope, complexity, deliverables, and level of support required. Once I understand your brief, I'll provide a proposal covering the work, timeline, and fees.",
+  },
+  {
+    id: "faq-9",
+    question: "How long will the project take?",
+    answer:
+      "The timeline depends on the project's size, requirements, and review stages. We'll agree on a realistic schedule before work begins.",
+  },
+  {
+    id: "faq-10",
+    question: "How do I get started?",
+    answer:
+      "Send me a brief description of your business, what you need, and your preferred timeline. I'll review the details and discuss the next steps with you.",
   },
 ];
 
 export const Faq3 = ({
-  heading = "Frequently asked questions",
-  description = "Find answers to common questions about our services, workflow, and collaboration.",
+  heading = "Questions before we start?",
+  description,
   items = faqItems,
 }: Faq3Props) => {
   return (
@@ -101,19 +126,21 @@ export const Faq3 = ({
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
             <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-              11 / FAQ
+              11 / FREQUENTLY ASKED QUESTIONS
             </span>
           </div>
 
           <h2
             id="faq-heading"
-            className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[#111111] tracking-[-0.03em] leading-[1.12] mb-4"
+            className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[#111111] tracking-[-0.03em] leading-[1.12]"
           >
             {heading}
           </h2>
-          <p className="font-sans text-sm sm:text-base text-[#525B64] font-normal leading-relaxed max-w-xl text-center">
-            {description}
-          </p>
+          {description && (
+            <p className="font-sans text-sm sm:text-base text-[#525B64] font-normal leading-relaxed max-w-xl text-center mt-4">
+              {description}
+            </p>
+          )}
         </motion.div>
 
         {/* Accordion Component */}
@@ -126,14 +153,18 @@ export const Faq3 = ({
         >
           <Accordion type="single" collapsible className="w-full">
             {items.map((item) => (
-              <AccordionItem key={item.id} value={item.id} className="border-b border-black/[0.08]">
+              <AccordionItem
+                key={item.id}
+                value={item.id}
+                className="border-b border-black/[0.08]"
+              >
                 <AccordionTrigger className="py-5 sm:py-6 transition-all duration-200 hover:no-underline hover:text-[#84CC16]">
-                  <span className="font-sans font-medium text-[#111111] text-base sm:text-lg lg:text-xl py-1 tracking-tight">
+                  <span className="font-sans font-medium text-[#111111] text-base sm:text-lg lg:text-xl py-1 tracking-tight text-left">
                     {item.question}
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="font-sans text-[#525B64] text-sm sm:text-base leading-relaxed pt-1 pb-4">
+                  <p className="font-sans text-[#525B64] text-sm sm:text-base leading-relaxed pt-1 pb-4 text-left">
                     {item.answer}
                   </p>
                 </AccordionContent>
