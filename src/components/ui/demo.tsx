@@ -6,7 +6,7 @@ import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
 
 export const DemoVariant1 = () => {
   return (
-    <div id="work" className="relative bg-white pt-16 sm:pt-20 pb-16 sm:pb-24 overflow-hidden">
+    <div id="work" className="relative bg-white pt-16 sm:pt-20 pb-0 overflow-hidden">
       {/* ===================================================
           ATMOSPHERIC SOFT LIME-GREEN STUDIO LIGHT (SEAMLESSLY BLENDED)
          =================================================== */}
