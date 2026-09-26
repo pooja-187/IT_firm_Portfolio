@@ -7,56 +7,46 @@ export function HeroSectionDemo() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden py-14 sm:py-20 lg:py-28 selection:bg-lime-200"
+      className="relative w-full overflow-hidden py-14 sm:py-18 lg:py-24 selection:bg-lime-200"
       style={{
         backgroundColor: '#FFFFFF',
         backgroundImage: `
-          linear-gradient(
-            to bottom,
-            #FFFFFF 0%,
-            rgba(244, 250, 235, 0.4) 12%,
-            rgba(244, 250, 235, 0.95) 28%,
-            rgba(244, 250, 235, 1) 50%,
-            rgba(244, 250, 235, 0.95) 72%,
-            rgba(244, 250, 235, 0.4) 88%,
-            #FFFFFF 100%
+          radial-gradient(
+            ellipse 85% 65% at 50% 50%,
+            rgba(163, 230, 53, 0.42) 0%,
+            rgba(190, 242, 100, 0.25) 35%,
+            rgba(217, 249, 157, 0.12) 60%,
+            transparent 82%
           ),
           radial-gradient(
-            ellipse 80% 60% at 50% 50%,
-            rgba(163, 230, 53, 0.45) 0%,
-            rgba(190, 242, 100, 0.28) 40%,
-            rgba(217, 249, 157, 0.15) 65%,
-            transparent 90%
-          ),
-          radial-gradient(
-            ellipse 65% 50% at 15% 40%,
-            rgba(132, 204, 22, 0.30) 0%,
+            ellipse 60% 50% at 15% 35%,
+            rgba(132, 204, 22, 0.26) 0%,
             transparent 70%
           ),
           radial-gradient(
-            ellipse 65% 50% at 85% 60%,
-            rgba(163, 230, 53, 0.30) 0%,
+            ellipse 60% 50% at 85% 65%,
+            rgba(163, 230, 53, 0.26) 0%,
             transparent 70%
           )
         `,
       }}
     >
-      {/* Seamless feathering transitions for top and bottom edges */}
-      <div className="absolute top-0 inset-x-0 h-24 sm:h-36 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-[1]" />
-      <div className="absolute bottom-0 inset-x-0 h-24 sm:h-36 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-[1]" />
+      {/* Seamless blend gradient masks at top and bottom boundaries */}
+      <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-[1]" />
+      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-[1]" />
 
       {/* Prominent atmospheric lime glow orbs */}
       <div
         aria-hidden="true"
-        className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-[#84CC16]/22 rounded-full blur-[110px] pointer-events-none"
+        className="absolute top-1/4 -left-20 w-[520px] h-[520px] bg-[#84CC16]/22 rounded-full blur-[120px] pointer-events-none"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-1/4 -right-20 w-[540px] h-[540px] bg-[#A3E635]/26 rounded-full blur-[110px] pointer-events-none"
+        className="absolute bottom-1/4 -right-20 w-[560px] h-[560px] bg-[#A3E635]/26 rounded-full blur-[120px] pointer-events-none"
       />
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[#A3E635]/18 rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-[#A3E635]/18 rounded-full blur-[130px] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
