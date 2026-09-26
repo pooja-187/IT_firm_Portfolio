@@ -127,7 +127,7 @@ export const SERVICES_DATA: ServiceItem[] = [
 ];
 
 const AUTO_PLAY_INTERVAL = 4000;
-const ITEM_HEIGHT = 56;
+const ITEM_HEIGHT = 72;
 
 const wrap = (min: number, max: number, v: number) => {
   const rangeSize = max - min;
@@ -239,10 +239,10 @@ export default function ServicesSection() {
         {/* ===================================================
             INTERACTIVE 3D CAPABILITY SHOWCASE
            =================================================== */}
-        <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[460px] lg:min-h-[500px] w-full gap-6 lg:gap-10 max-w-5xl mx-auto">
+        <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[480px] lg:min-h-[520px] w-full gap-6 lg:gap-10 max-w-5xl mx-auto">
           {/* Left column / vertical track with alpha transparency mask */}
           <div
-            className="w-full lg:w-[44%] min-h-[320px] md:min-h-[380px] lg:h-[460px] relative z-20 flex flex-col items-start justify-center px-2 sm:px-6"
+            className="w-full lg:w-[46%] min-h-[350px] md:min-h-[400px] lg:h-[490px] relative z-20 flex flex-col items-start justify-center px-2 sm:px-6"
             style={{
               maskImage:
                 "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
