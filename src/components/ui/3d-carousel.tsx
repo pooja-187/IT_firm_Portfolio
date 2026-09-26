@@ -59,18 +59,14 @@ export function useMediaQuery(
 }
 
 const keywords = [
-  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=900&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=900&auto=format&fit=crop",
 ]
 
 const duration = 0.15
@@ -90,7 +86,8 @@ const Carousel = memo(
     isCarouselActive: boolean
   }) => {
     const isScreenSizeSm = useMediaQuery("(max-width: 640px)")
-    const cylinderWidth = isScreenSizeSm ? 1100 : 1800
+    const isScreenSizeMd = useMediaQuery("(max-width: 1024px)")
+    const cylinderWidth = isScreenSizeSm ? 1600 : isScreenSizeMd ? 2200 : 2800
     const faceCount = cards.length
     const faceWidth = cylinderWidth / faceCount
     const radius = cylinderWidth / (2 * Math.PI)
@@ -104,14 +101,14 @@ const Carousel = memo(
       <div
         className="flex h-full items-center justify-center"
         style={{
-          perspective: "1000px",
+          perspective: "1400px",
           transformStyle: "preserve-3d",
           willChange: "transform",
         }}
       >
         <motion.div
           drag={isCarouselActive ? "x" : false}
-          className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing"
+          className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing items-center"
           style={{
             transform,
             rotateY: rotation,
@@ -139,7 +136,7 @@ const Carousel = memo(
           {cards.map((imgUrl, i) => (
             <motion.div
               key={`key-${imgUrl}-${i}`}
-              className="absolute flex h-full origin-center items-center justify-center rounded-2xl p-2"
+              className="absolute flex origin-center items-center justify-center rounded-3xl p-3"
               style={{
                 width: `${faceWidth}px`,
                 transform: `rotateY(${
@@ -152,7 +149,7 @@ const Carousel = memo(
                 src={imgUrl}
                 alt={`Selected Work project ${i + 1}`}
                 layoutId={`img-${imgUrl}`}
-                className="pointer-events-none w-full rounded-2xl object-cover aspect-[4/3] shadow-[0_12px_32px_rgba(0,0,0,0.12)] border border-white/60 bg-slate-100"
+                className="pointer-events-none w-full rounded-2xl sm:rounded-3xl object-cover aspect-[16/11] shadow-[0_20px_50px_rgba(0,0,0,0.18)] border border-white/80 bg-slate-100"
                 initial={{ filter: "blur(4px)" }}
                 layout="position"
                 animate={{ filter: "blur(0px)" }}
@@ -204,7 +201,7 @@ function ThreeDPhotoCarousel({ items }: { items?: string[] }) {
             transition={transitionOverlay}
           >
             <motion.div
-              className="relative max-w-4xl max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-black"
+              className="relative max-w-5xl max-h-[88vh] rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-black"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.img
@@ -224,7 +221,7 @@ function ThreeDPhotoCarousel({ items }: { items?: string[] }) {
               />
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center text-sm font-bold border border-white/20 transition-all"
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center text-base font-bold border border-white/20 transition-all"
                 aria-label="Close modal"
               >
                 ✕
@@ -233,7 +230,7 @@ function ThreeDPhotoCarousel({ items }: { items?: string[] }) {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full overflow-hidden">
+      <div className="relative h-[560px] sm:h-[660px] md:h-[740px] lg:h-[800px] w-full overflow-hidden">
         <Carousel
           handleClick={handleClick}
           controls={controls}
