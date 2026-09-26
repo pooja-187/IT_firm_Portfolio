@@ -133,9 +133,9 @@ export function FeatureCarousel() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto md:p-8">
-      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
-        {/* Left column / vertical track: White background with green active chip and green-tinted outline chips */}
+    <div className="w-full max-w-7xl mx-auto">
+      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-lime-200/60 bg-white/95 backdrop-blur-md shadow-[0_20px_60px_rgba(132,204,22,0.12),0_4px_25px_rgba(0,0,0,0.04)]">
+        {/* Left column / vertical track */}
         <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-[#FAFAF9] border-b lg:border-b-0 lg:border-r border-slate-200/80">
           <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-[#FAFAF9] via-[#FAFAF9]/90 to-transparent z-40" />
           <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-[#FAFAF9] via-[#FAFAF9]/90 to-transparent z-40" />
@@ -198,8 +198,8 @@ export function FeatureCarousel() {
           </div>
         </div>
 
-        {/* Right column / 3D cards: Clean secondary backdrop */}
-        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-slate-50/50 flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden">
+        {/* Right column / 3D cards */}
+        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-slate-50/60 flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
