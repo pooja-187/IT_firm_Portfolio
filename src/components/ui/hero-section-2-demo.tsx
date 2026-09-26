@@ -7,9 +7,17 @@ export function HeroSectionDemo() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden pt-8 sm:pt-12 lg:pt-14 pb-14 sm:pb-18 lg:pb-24 selection:bg-lime-200"
+      className="relative w-full overflow-hidden pt-4 sm:pt-6 lg:pt-8 pb-14 sm:pb-18 lg:pb-24 selection:bg-lime-200"
       style={{
-        background: `
+        backgroundColor: '#FFFFFF',
+        backgroundImage: `
+          radial-gradient(
+            ellipse 75% 50% at 50% 0%,
+            rgba(163, 230, 53, 0.36) 0%,
+            rgba(190, 242, 100, 0.22) 38%,
+            rgba(217, 249, 157, 0.08) 65%,
+            transparent 82%
+          ),
           radial-gradient(
             ellipse 85% 65% at 50% 50%,
             rgba(163, 230, 53, 0.45) 0%,
@@ -18,13 +26,13 @@ export function HeroSectionDemo() {
             transparent 85%
           ),
           radial-gradient(
-            ellipse 75% 55% at 75% 22%,
+            ellipse 75% 55% at 75% 25%,
             rgba(163, 230, 53, 0.38) 0%,
             rgba(190, 242, 100, 0.22) 38%,
             transparent 75%
           ),
           radial-gradient(
-            ellipse 70% 55% at 20% 22%,
+            ellipse 70% 55% at 20% 25%,
             rgba(132, 204, 22, 0.35) 0%,
             rgba(190, 242, 100, 0.20) 38%,
             transparent 75%
@@ -33,42 +41,27 @@ export function HeroSectionDemo() {
             ellipse 65% 50% at 85% 75%,
             rgba(163, 230, 53, 0.30) 0%,
             transparent 70%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(244, 250, 235, 0.6) 18%,
-            rgba(244, 250, 235, 0.95) 35%,
-            #F4FAEB 50%,
-            rgba(244, 250, 235, 0.95) 65%,
-            rgba(244, 250, 235, 0.6) 82%,
-            rgba(255, 255, 255, 0) 100%
           )
         `,
       }}
     >
       {/* Prominent atmospheric lime glow orbs across all quadrants */}
-      {/* Top Right Glow */}
       <div
         aria-hidden="true"
         className="absolute -top-12 right-4 sm:right-16 w-[580px] h-[480px] bg-[#A3E635]/30 rounded-full blur-[115px] pointer-events-none"
       />
-      {/* Top Center Glow */}
       <div
         aria-hidden="true"
         className="absolute -top-16 left-1/3 w-[520px] h-[440px] bg-[#84CC16]/26 rounded-full blur-[120px] pointer-events-none"
       />
-      {/* Top Left Glow */}
       <div
         aria-hidden="true"
         className="absolute -top-12 -left-20 w-[540px] h-[520px] bg-[#84CC16]/28 rounded-full blur-[120px] pointer-events-none"
       />
-      {/* Bottom Right Glow */}
       <div
         aria-hidden="true"
         className="absolute -bottom-16 -right-20 w-[560px] h-[560px] bg-[#A3E635]/28 rounded-full blur-[120px] pointer-events-none"
       />
-      {/* Center Backdrop Glow */}
       <div
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[580px] bg-[#A3E635]/22 rounded-full blur-[130px] pointer-events-none"
