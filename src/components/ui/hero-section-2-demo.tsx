@@ -5,9 +5,36 @@ import { HeroSection } from '@/components/ui/hero-section-2';
 
 export function HeroSectionDemo() {
   return (
-    <section id="about" className="w-full bg-white relative py-8 sm:py-10 lg:py-12">
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="about"
+      className="relative w-full overflow-hidden py-12 sm:py-16 lg:py-20 selection:bg-lime-200"
+      style={{
+        backgroundColor: '#FFFFFF',
+        backgroundImage: `
+          radial-gradient(
+            ellipse 70% 50% at 50% 50%,
+            rgba(163, 230, 53, 0.22) 0%,
+            rgba(190, 242, 100, 0.12) 35%,
+            rgba(217, 249, 157, 0.05) 60%,
+            transparent 75%
+          ),
+          radial-gradient(
+            ellipse 90% 70% at 50% 45%,
+            rgba(163, 230, 53, 0.10) 0%,
+            transparent 75%
+          )
+        `,
+      }}
+    >
+      {/* Additional ambient atmospheric glow elements */}
+      <div
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[#A3E635]/15 rounded-full blur-3xl pointer-events-none"
+      />
+
+      <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
         <HeroSection
+          className="bg-white/95 backdrop-blur-md border border-black/5 shadow-[0_12px_45px_rgba(0,0,0,0.04)]"
           sectionLabel="ABOUT"
           heading="The person behind the work."
           paragraphs={[
