@@ -7,7 +7,7 @@ export function HeroSectionDemo() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden pt-4 sm:pt-6 lg:pt-8 pb-14 sm:pb-18 lg:pb-24 selection:bg-lime-200"
+      className="relative w-full overflow-hidden pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-22 lg:pb-28 selection:bg-lime-200"
       style={{
         backgroundColor: '#FFFFFF',
         backgroundImage: `
