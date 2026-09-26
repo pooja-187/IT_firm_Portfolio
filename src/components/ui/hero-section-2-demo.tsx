@@ -5,36 +5,25 @@ import { HeroSection } from '@/components/ui/hero-section-2';
 
 export function HeroSectionDemo() {
   return (
-    <div id="about" className="w-full bg-white relative py-12 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="w-full bg-white relative py-10 sm:py-14 lg:py-16">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         <HeroSection
-          className="rounded-3xl border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.04)] overflow-hidden"
-          logo={{
-            url: "https://cdn.21st.dev/assets/mirror/c9/c9babfd70e9056d8223e9d2eda28c4c7cc6c3555d666e10ef656b70a49f67a48.png",
-            alt: "Manzio Creative Studio Logo",
-            text: "Manzio Creative Studio",
-          }}
-          slogan="DIGITAL PRODUCT & DESIGN LEADERSHIP"
-          title={
-            <>
-              Every Project <br />
-              <span className="font-serif italic font-normal text-[#84CC16]">Shapes Tomorrow</span>
-            </>
-          }
-          subtitle="Delivering high-impact UI/UX design, modern software engineering, and strategic brand experiences for forward-thinking enterprises worldwide."
-          callToAction={{
-            text: "DISCUSS YOUR VISION",
+          sectionLabel="ABOUT"
+          heading="The person behind the work."
+          paragraphs={[
+            "I'm Nashim Nazar — a UI/UX designer, performance marketer, and CEO & Founder of Manzio Creative Studio Pvt Ltd.",
+            "My work brings together design, technology, and marketing. I help businesses understand what their customers need and turn those insights into websites and digital products that are clear, useful, and easy to navigate.",
+            "As a designer, I focus on how an experience works, from the first interaction to the final action. As a founder, I also consider the business behind it: its goals, priorities, and opportunities for growth.",
+            "Through Manzio, I lead a creative team working across design, software and app development, marketing, and digital security. Depending on your project, we can support you from the initial idea through launch and ongoing improvement.",
+          ]}
+          cta={{
+            text: "Let's Work Together →",
             href: "#contact",
           }}
-          backgroundImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
-          contactInfo={{
-            website: "manziostudio.com",
-            phone: "+91 94950 00000",
-            address: "Kottayam, Kerala, India",
-          }}
+          imageSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
         />
       </div>
-    </div>
+    </section>
   );
 }
 

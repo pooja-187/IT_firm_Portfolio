@@ -2,216 +2,152 @@
 
 import React from 'react';
 import { cn } from "@/lib/utils";
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
-// Icon component for contact details
-const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
-  const icons = {
-    website: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-5 w-5 text-lime-500"
-      >
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="2" x2="22" y1="12" y2="12"></line>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-      </svg>
-    ),
-    phone: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-5 w-5 text-lime-500"
-      >
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-      </svg>
-    ),
-    address: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-5 w-5 text-lime-500"
-      >
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-        <circle cx="12" cy="10" r="3"></circle>
-      </svg>
-    ),
-  };
-  return <div className="mr-2 flex-shrink-0">{icons[type]}</div>;
-};
-
-// Prop types for the HeroSection component
-export interface HeroSectionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
-  logo?: {
-    url: string;
-    alt: string;
-    text?: string;
-  };
-  slogan?: string;
-  title: React.ReactNode;
-  subtitle: string;
-  callToAction: {
+export interface AboutSectionProps {
+  className?: string;
+  sectionLabel?: string;
+  heading?: string;
+  paragraphs?: string[];
+  cta?: {
     text: string;
     href: string;
   };
-  backgroundImage: string;
-  contactInfo: {
-    website: string;
-    phone: string;
-    address: string;
-  };
+  imageSrc?: string;
 }
 
-export const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
+export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
   (
     {
       className,
-      logo,
-      slogan,
-      title,
-      subtitle,
-      callToAction,
-      backgroundImage,
-      contactInfo,
+      sectionLabel = "ABOUT",
+      heading = "The person behind the work.",
+      paragraphs = [
+        "I'm Nashim Nazar — a UI/UX designer, performance marketer, and CEO & Founder of Manzio Creative Studio Pvt Ltd.",
+        "My work brings together design, technology, and marketing. I help businesses understand what their customers need and turn those insights into websites and digital products that are clear, useful, and easy to navigate.",
+        "As a designer, I focus on how an experience works, from the first interaction to the final action. As a founder, I also consider the business behind it: its goals, priorities, and opportunities for growth.",
+        "Through Manzio, I lead a creative team working across design, software and app development, marketing, and digital security. Depending on your project, we can support you from the initial idea through launch and ongoing improvement.",
+      ],
+      cta = {
+        text: "Let's Work Together →",
+        href: "#contact",
+      },
+      imageSrc = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
     },
     ref
   ) => {
-    // Animation variants for the container to orchestrate children animations
-    const containerVariants = {
+    // Animation container orchestration
+    const containerVariants: Variants = {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.15,
-          delayChildren: 0.2,
+          staggerChildren: 0.1,
+          delayChildren: 0.15,
         },
       },
     };
 
-    // Animation variants for individual text/UI elements
-    const itemVariants = {
-      hidden: { y: 20, opacity: 0 },
+    // Editorial item entrance variant: soft fade + translateY (20-30px, 0.6-0.8s)
+    const itemVariants: Variants = {
+      hidden: { y: 24, opacity: 0 },
       visible: {
         y: 0,
         opacity: 1,
         transition: {
-          duration: 0.5,
-          ease: "easeOut" as const,
+          duration: 0.7,
+          ease: "easeOut",
         },
       },
     };
 
+    // Extract arrow from CTA text if present for separate hover animation
+    const ctaTextClean = cta.text.replace(/→$/, '').trim();
+
     return (
       <motion.section
-        ref={ref as React.Ref<HTMLElement>}
+        ref={ref}
         className={cn(
-          "relative flex w-full flex-col overflow-hidden bg-white text-[#111111] md:flex-row min-h-[600px] lg:min-h-[680px]",
+          "relative flex w-full flex-col overflow-hidden bg-[#FAFAF9]/80 border border-black/5 rounded-3xl text-[#111111] lg:flex-row min-h-[620px] lg:min-h-[680px] lg:max-h-[760px] shadow-[0_12px_40px_rgba(0,0,0,0.03)]",
           className
         )}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, margin: "-60px" }}
         variants={containerVariants}
       >
-        {/* Left Side: Content */}
-        <div className="flex w-full flex-col justify-between p-8 md:w-1/2 md:p-12 lg:w-3/5 lg:p-16 z-10">
-          {/* Top Section: Logo & Main Content */}
-          <div>
-            <motion.header className="mb-10 sm:mb-12" variants={itemVariants}>
-              {logo && (
-                <div className="flex items-center">
-                  {logo.url && (
-                    <img src={logo.url} alt={logo.alt} className="mr-3 h-8" />
-                  )}
-                  <div>
-                    {logo.text && (
-                      <p className="text-lg font-bold text-[#111111] tracking-tight">{logo.text}</p>
-                    )}
-                    {slogan && (
-                      <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-                        {slogan}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
-            </motion.header>
-            <motion.main variants={containerVariants}>
-              <motion.h2
-                className="text-4xl font-normal leading-[1.15] text-[#111111] md:text-5xl lg:text-6xl tracking-[-0.03em]"
-                variants={itemVariants}
-              >
-                {title}
-              </motion.h2>
-              <motion.div
-                className="my-6 h-1 w-20 bg-[#84CC16] rounded-full"
-                variants={itemVariants}
-              ></motion.div>
-              <motion.p
-                className="mb-8 max-w-md text-base text-[#64748B] leading-relaxed font-normal"
-                variants={itemVariants}
-              >
-                {subtitle}
-              </motion.p>
-              <motion.a
-                href={callToAction.href}
-                className="inline-flex items-center gap-2 text-base sm:text-lg font-bold tracking-widest uppercase text-[#111111] hover:text-[#84CC16] transition-colors group"
-                variants={itemVariants}
-              >
-                <span>{callToAction.text}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </motion.a>
-            </motion.main>
-          </div>
-          {/* Bottom Section: Footer Info */}
-          <motion.footer className="mt-12 w-full pt-8 border-t border-slate-100" variants={itemVariants}>
-            <div className="grid grid-cols-1 gap-6 text-xs font-medium text-[#64748B] sm:grid-cols-3">
-              <div className="flex items-center">
-                <InfoIcon type="website" /> <span>{contactInfo.website}</span>
-              </div>
-              <div className="flex items-center">
-                <InfoIcon type="phone" /> <span>{contactInfo.phone}</span>
-              </div>
-              <div className="flex items-center">
-                <InfoIcon type="address" /> <span>{contactInfo.address}</span>
-              </div>
+        {/* Soft lime ambient lighting backdrop */}
+        <div
+          aria-hidden="true"
+          className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#84CC16]/5 blur-3xl pointer-events-none"
+        />
+
+        {/* Left Side: About Content (~50–52% on desktop) */}
+        <div className="flex w-full flex-col justify-center p-6 sm:p-9 md:p-11 lg:w-[52%] xl:w-[50%] lg:p-12 xl:p-14 z-10">
+          {/* Section Label */}
+          <motion.div variants={itemVariants} className="mb-4 sm:mb-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/5 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
+              <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
+                {sectionLabel}
+              </span>
             </div>
-          </motion.footer>
+          </motion.div>
+
+          {/* Main Heading: 56–72px responsive clamp desktop, light & editorial */}
+          <motion.h2
+            variants={itemVariants}
+            className="text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[2.85rem] xl:text-[3.25rem] font-light text-[#111111] leading-[1.15] tracking-[-0.03em] mb-5 sm:mb-6"
+          >
+            {heading}
+          </motion.h2>
+
+          {/* Body Text: 4 approved paragraphs, readable line-height and max-width */}
+          <motion.div
+            variants={itemVariants}
+            className="space-y-3.5 sm:space-y-4 mb-7 sm:mb-8 max-w-[620px]"
+          >
+            {paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-[14.5px] sm:text-[15.5px] lg:text-[16.5px] text-[#4B5563] leading-[1.68] font-normal"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </motion.div>
+
+          {/* Subtle CTA with hover arrow movement */}
+          <motion.div variants={itemVariants}>
+            <a
+              href={cta.href}
+              className="inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-medium text-[#111111] hover:text-[#84CC16] transition-colors duration-300 group"
+            >
+              <span>{ctaTextClean}</span>
+              <span className="text-lg transition-transform duration-300 ease-out group-hover:translate-x-1.5">
+                →
+              </span>
+            </a>
+          </motion.div>
         </div>
-        {/* Right Side: Image with Clip Path Animation */}
+
+        {/* Right Side: Authentic Image with controlled proportions and organic clip path (~44–48%) */}
         <motion.div
-          className="w-full min-h-[350px] bg-cover bg-center md:w-1/2 md:min-h-full lg:w-2/5 relative"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-          }}
-          initial={{ clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' }}
-          whileInView={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}
+          className="w-full relative overflow-hidden lg:w-[48%] xl:w-[50%] min-h-[320px] sm:min-h-[400px] lg:min-h-full"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+          <div
+            className="w-full h-full min-h-[320px] sm:min-h-[400px] lg:min-h-[640px] bg-cover bg-center transition-transform duration-700 hover:scale-[1.02]"
+            style={{
+              backgroundImage: `url(${imageSrc})`,
+              clipPath: 'polygon(8% 0, 100% 0, 100% 100%, 0% 100%)',
+            }}
+          />
+          {/* Subtle atmospheric vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent pointer-events-none lg:hidden" />
         </motion.div>
       </motion.section>
     );
