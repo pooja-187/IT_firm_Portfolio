@@ -112,9 +112,6 @@ export default function WhyWorkWithMe() {
                   }}
                   className="group relative flex flex-col justify-between p-6 lg:p-7 xl:p-8 min-h-[400px] lg:min-h-[460px] xl:min-h-[480px] border-r border-black/[0.08] transition-all duration-500 hover:bg-white/80 hover:backdrop-blur-xs hover:shadow-[0_25px_50px_rgba(132,204,22,0.14)] cursor-default select-none overflow-hidden"
                 >
-                  {/* Top Animated Lime Accent Line */}
-                  <div className="absolute top-0 inset-x-0 h-[2.5px] bg-[#84CC16] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out z-20 shadow-[0_0_14px_#84CC16]" />
-
                   {/* Rich Luminous Ambient Glow on Hover */}
                   <div
                     aria-hidden="true"
