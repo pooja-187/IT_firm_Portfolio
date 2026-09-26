@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 export interface ServiceItem {
   id: string;
   category: string;
+  selectorLabel: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   image: string;
@@ -30,6 +31,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "design",
     category: "01 / Design",
+    selectorLabel: "01 / UI/UX DESIGN",
     name: "UI/UX Design",
     icon: Palette,
     image: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop",
@@ -48,6 +50,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "development",
     category: "02 / Development",
+    selectorLabel: "02 / SOFTWARE DEVELOPMENT",
     name: "Software Development",
     icon: Code2,
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
@@ -66,6 +69,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "mobile",
     category: "03 / Mobile",
+    selectorLabel: "03 / APP DEVELOPMENT",
     name: "App Development",
     icon: Smartphone,
     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
@@ -84,6 +88,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "growth",
     category: "04 / Growth",
+    selectorLabel: "04 / PERFORMANCE MARKETING",
     name: "Performance Marketing",
     icon: TrendingUp,
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
@@ -102,6 +107,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "security",
     category: "05 / Security",
+    selectorLabel: "05 / ETHICAL HACKING",
     name: "Ethical Hacking",
     icon: ShieldCheck,
     image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop",
@@ -230,7 +236,7 @@ export default function ServicesSection() {
         <div className="relative flex flex-col lg:flex-row items-center justify-between min-h-[460px] lg:min-h-[500px] w-full gap-6 lg:gap-10 max-w-5xl mx-auto">
           {/* Left column / vertical track with alpha transparency mask */}
           <div
-            className="w-full lg:w-[40%] min-h-[320px] md:min-h-[380px] lg:h-[460px] relative z-20 flex flex-col items-start justify-center px-2 sm:px-6"
+            className="w-full lg:w-[44%] min-h-[320px] md:min-h-[380px] lg:h-[460px] relative z-20 flex flex-col items-start justify-center px-2 sm:px-6"
             style={{
               maskImage:
                 "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
@@ -266,14 +272,14 @@ export default function ServicesSection() {
                       damping: 22,
                       mass: 1,
                     }}
-                    className="absolute flex items-center justify-start"
+                    className="absolute flex items-center justify-start max-w-full"
                   >
                     <button
                       onClick={() => handleChipClick(index)}
                       onMouseEnter={() => setIsPaused(true)}
                       onMouseLeave={() => setIsPaused(false)}
                       className={cn(
-                        "relative flex items-center gap-3 px-5 sm:px-6 py-2.5 rounded-full transition-all duration-500 text-left group border",
+                        "relative flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-500 text-left group border max-w-full",
                         isActive
                           ? "bg-[#84CC16] text-[#111111] font-semibold border-[#84CC16] z-10 shadow-[0_8px_24px_rgba(132,204,22,0.35)] scale-[1.02]"
                           : "bg-transparent text-[#475569] border-black/[0.12] hover:border-[#84CC16] hover:text-[#111111] hover:bg-[#84CC16]/10"
@@ -281,7 +287,7 @@ export default function ServicesSection() {
                     >
                       <div
                         className={cn(
-                          "w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-500",
+                          "w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-colors duration-500 shrink-0",
                           isActive
                             ? "bg-white/95 text-[#111111]"
                             : "bg-black/5 text-[#84CC16]"
@@ -289,8 +295,8 @@ export default function ServicesSection() {
                       >
                         <Icon className="w-3.5 h-3.5" />
                       </div>
-                      <span className="text-xs sm:text-sm tracking-tight whitespace-nowrap uppercase font-sans">
-                        {service.category}
+                      <span className="text-[11px] sm:text-xs md:text-[12.5px] font-semibold tracking-wide whitespace-nowrap uppercase font-sans">
+                        {service.selectorLabel}
                       </span>
                     </button>
                   </motion.div>
