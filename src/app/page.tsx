@@ -2,6 +2,7 @@ import HeroSection from '@/components/HeroSection';
 import ExpertiseSection from '@/components/ExpertiseSection';
 import { DemoVariant1 } from '@/components/ui/demo';
 import ServicesSection from '@/components/ServicesSection';
+import WhyWorkWithMe from '@/components/WhyWorkWithMe';
 import ProcessSection from '@/components/ProcessSection';
 import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
 
@@ -19,6 +20,9 @@ export default function HomePage() {
 
       {/* 05 — Services Section */}
       <ServicesSection />
+
+      {/* 06 — Why Work With Me Section */}
+      <WhyWorkWithMe />
 
       {/* 07 — Process Section */}
       <ProcessSection />
