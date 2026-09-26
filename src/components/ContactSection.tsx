@@ -97,7 +97,7 @@ export default function ContactSection() {
               >
                 Contact Info
               </h2>
-              <p className="font-sans text-xs sm:text-[14.5px] text-[#525B64] font-normal leading-relaxed mb-5 max-w-md">
+              <p className="font-sans text-xs sm:text-[14.5px] text-[#525B64] font-normal leading-relaxed mb-6 sm:mb-8 max-w-md">
                 Planning a new website, building software or an app, improving your marketing, or assessing your digital security? Tell me what you&apos;re working on and where you need support.
               </p>
             </motion.div>
@@ -108,7 +108,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-5 flex items-center gap-2 text-xs sm:text-sm font-medium text-[#111111]"
+              className="mb-6 sm:mb-8 pt-1 flex items-center gap-2 text-xs sm:text-sm font-medium text-[#111111]"
             >
               <span className="text-[#64748B]">Prefer a quick conversation?</span>
               <a
