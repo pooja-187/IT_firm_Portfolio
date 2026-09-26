@@ -36,26 +36,26 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
     },
     ref
   ) => {
-    // Animation container orchestration
+    // Animation container orchestration matching original effect
     const containerVariants: Variants = {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.08,
-          delayChildren: 0.1,
+          staggerChildren: 0.15,
+          delayChildren: 0.2,
         },
       },
     };
 
-    // Editorial item entrance variant
+    // Original text item entrance variant
     const itemVariants: Variants = {
-      hidden: { y: 16, opacity: 0 },
+      hidden: { y: 20, opacity: 0 },
       visible: {
         y: 0,
         opacity: 1,
         transition: {
-          duration: 0.6,
+          duration: 0.5,
           ease: "easeOut",
         },
       },
@@ -68,12 +68,12 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
       <motion.section
         ref={ref}
         className={cn(
-          "relative flex w-full flex-col overflow-hidden bg-[#FAFAF9]/90 border border-black/5 rounded-2xl sm:rounded-3xl text-[#111111] lg:flex-row min-h-[460px] lg:min-h-[500px] shadow-[0_8px_30px_rgba(0,0,0,0.03)]",
+          "relative flex w-full flex-col overflow-hidden bg-[#FAFAF9]/90 border border-black/5 rounded-3xl text-[#111111] lg:flex-row min-h-[480px] lg:min-h-[520px] shadow-[0_8px_30px_rgba(0,0,0,0.03)]",
           className
         )}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-80px" }}
         variants={containerVariants}
       >
         {/* Soft lime ambient lighting backdrop */}
@@ -83,9 +83,9 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
         />
 
         {/* Left Side: About Content (~52–54% on desktop) */}
-        <div className="flex w-full flex-col justify-center p-5 sm:p-7 md:p-8 lg:w-[54%] xl:w-[52%] lg:p-8 xl:p-9 z-10">
+        <div className="flex w-full flex-col justify-center p-6 sm:p-8 md:p-9 lg:w-[54%] xl:w-[52%] lg:p-9 xl:p-10 z-10">
           {/* Section Label */}
-          <motion.div variants={itemVariants} className="mb-2.5 sm:mb-3">
+          <motion.div variants={itemVariants} className="mb-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-black/5 shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
               <span className="font-sans text-[10.5px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-[#64748B]">
@@ -97,7 +97,7 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
           {/* Main Heading: refined, compact editorial size */}
           <motion.h2
             variants={itemVariants}
-            className="text-2xl sm:text-3xl md:text-[2.1rem] lg:text-[2.25rem] xl:text-[2.45rem] font-light text-[#111111] leading-[1.16] tracking-[-0.03em] mb-3.5 sm:mb-4"
+            className="text-2xl sm:text-3xl md:text-[2.1rem] lg:text-[2.35rem] xl:text-[2.5rem] font-light text-[#111111] leading-[1.16] tracking-[-0.03em] mb-4"
           >
             {heading}
           </motion.h2>
@@ -105,12 +105,12 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
           {/* Body Text: 4 approved paragraphs, compact & readable */}
           <motion.div
             variants={itemVariants}
-            className="space-y-2 sm:space-y-2.5 mb-5 sm:mb-6 max-w-[560px]"
+            className="space-y-2.5 mb-6 max-w-[560px]"
           >
             {paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className="text-[13px] sm:text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-[#4B5563] leading-[1.58] font-normal"
+                className="text-[13.5px] sm:text-[14px] lg:text-[14.5px] text-[#4B5563] leading-[1.6] font-normal"
               >
                 {paragraph}
               </p>
@@ -121,7 +121,7 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
           <motion.div variants={itemVariants}>
             <a
               href={cta.href}
-              className="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-medium text-[#111111] hover:text-[#84CC16] transition-colors duration-300 group"
+              className="inline-flex items-center gap-1.5 text-[14px] sm:text-[14.5px] font-medium text-[#111111] hover:text-[#84CC16] transition-colors duration-300 group"
             >
               <span>{ctaTextClean}</span>
               <span className="text-base transition-transform duration-300 ease-out group-hover:translate-x-1.5">
@@ -131,23 +131,18 @@ export const HeroSection = React.forwardRef<HTMLElement, AboutSectionProps>(
           </motion.div>
         </div>
 
-        {/* Right Side: Authentic Image with controlled proportions and organic clip path */}
+        {/* Right Side: Image with the Original Clip-Path Reveal Animation */}
         <motion.div
-          className="w-full relative overflow-hidden lg:w-[46%] xl:w-[48%] min-h-[260px] sm:min-h-[300px] lg:min-h-full"
-          initial={{ opacity: 0, x: 16 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full min-h-[300px] sm:min-h-[360px] bg-cover bg-center lg:w-[46%] xl:w-[48%] lg:min-h-full relative"
+          style={{
+            backgroundImage: `url(${imageSrc})`,
+          }}
+          initial={{ clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' }}
+          whileInView={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
         >
-          <div
-            className="w-full h-full min-h-[260px] sm:min-h-[300px] lg:min-h-[500px] bg-cover bg-center transition-transform duration-700 hover:scale-[1.02]"
-            style={{
-              backgroundImage: `url(${imageSrc})`,
-              clipPath: 'polygon(8% 0, 100% 0, 100% 100%, 0% 100%)',
-            }}
-          />
-          {/* Subtle atmospheric vignette for mobile */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent pointer-events-none lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
         </motion.div>
       </motion.section>
     );
