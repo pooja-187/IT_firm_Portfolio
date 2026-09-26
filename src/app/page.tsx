@@ -1,6 +1,7 @@
 import HeroSection from '@/components/HeroSection';
 import ExpertiseSection from '@/components/ExpertiseSection';
 import { DemoVariant1 } from '@/components/ui/demo';
+import HeroSectionDemo from '@/components/ui/hero-section-2-demo';
 import ProcessSection from '@/components/ProcessSection';
 
 export default function HomePage() {
@@ -12,8 +13,11 @@ export default function HomePage() {
       {/* 02 — Expertise Section */}
       <ExpertiseSection />
 
-      {/* 03 — Selected Work (Animated Gallery) */}
+      {/* 03 — Selected Work (Animated 3D Carousel) */}
       <DemoVariant1 />
+
+      {/* 04 — Studio & Leadership Showcase */}
+      <HeroSectionDemo />
 
       {/* 07 — Process Section */}
       <ProcessSection />
