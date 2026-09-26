@@ -49,7 +49,7 @@ export const DemoVariant1 = () => {
         />
       </div>
 
-      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12">
+      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center mb-2 sm:mb-4">
         {/* Section Label */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -89,7 +89,7 @@ export const DemoVariant1 = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-4 sm:mt-5 max-w-2xl mx-auto"
+          className="mt-3 sm:mt-4 max-w-2xl mx-auto"
         >
           <p className="font-sans text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
             Drag horizontally to explore projects in 3D. Click any card to inspect the full case study.
@@ -97,8 +97,8 @@ export const DemoVariant1 = () => {
         </motion.div>
       </div>
 
-      {/* 3D Cylindrical Interactive Photo Carousel */}
-      <div className="relative z-10 w-full overflow-hidden">
+      {/* 3D Cylindrical Interactive Photo Carousel (Tightly integrated below text) */}
+      <div className="relative z-10 w-full overflow-hidden -mt-6 sm:-mt-10 md:-mt-14">
         <ThreeDPhotoCarousel />
       </div>
     </div>
