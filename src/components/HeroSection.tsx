@@ -92,27 +92,13 @@ export default function HeroSection() {
       imageAlt={`${heroData?.name || "Nashim Nazar"} - UI/UX Designer`}
       overlayText={{
         part1: (
-          <span className="inline-flex flex-col items-start text-left w-fit max-w-full">
+          <span className="flex flex-col items-start text-left">
             <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
-            <span className="w-full flex justify-start items-center text-left my-0.5 sm:my-1 pl-3 sm:pl-4">
-              <FlipLine
-                text="of"
-                isSerif
-                baseDelay={220}
-                className="leading-[1.12] font-canela"
-                style={{
-                  fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
-                  fontStyle: 'italic',
-                  fontWeight: 350,
-                  letterSpacing: '-0.01em',
-                }}
-              />
-            </span>
             <FlipLine
               text="Manzio Studio"
               isSerif
-              baseDelay={340}
-              className="leading-[1.12] font-canela"
+              baseDelay={320}
+              className="leading-[1.12] mt-1 sm:mt-1.5 font-canela"
               style={{
                 fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
                 fontStyle: 'italic',
@@ -124,27 +110,13 @@ export default function HeroSection() {
         ),
       }}
       mobileOverlayText={
-        <span className="inline-flex flex-col items-start text-left w-fit max-w-full">
+        <span className="flex flex-col items-start text-left">
           <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
-          <span className="w-full flex justify-start items-center text-left my-0.5 pl-3">
-            <FlipLine
-              text="of"
-              isSerif
-              baseDelay={220}
-              className="leading-[1.12] font-canela"
-              style={{
-                fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
-                fontStyle: 'italic',
-                fontWeight: 350,
-                letterSpacing: '-0.01em',
-              }}
-            />
-          </span>
           <FlipLine
             text="Manzio Studio"
             isSerif
-            baseDelay={340}
-            className="leading-[1.12] font-canela"
+            baseDelay={320}
+            className="leading-[1.12] mt-1 font-canela"
             style={{
               fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
               fontStyle: 'italic',
