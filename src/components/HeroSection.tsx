@@ -95,10 +95,22 @@ export default function HeroSection() {
           <span className="flex flex-col items-start text-left">
             <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
             <FlipLine
+              text="of"
+              isSerif
+              baseDelay={220}
+              className="leading-[1.12] mt-0.5 sm:mt-1 font-canela"
+              style={{
+                fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
+                fontStyle: 'italic',
+                fontWeight: 350,
+                letterSpacing: '-0.01em',
+              }}
+            />
+            <FlipLine
               text="Manzio Studio"
               isSerif
-              baseDelay={320}
-              className="leading-[1.12] mt-1 sm:mt-1.5 font-canela"
+              baseDelay={340}
+              className="leading-[1.12] mt-0.5 sm:mt-1 font-canela"
               style={{
                 fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
                 fontStyle: 'italic',
@@ -113,10 +125,22 @@ export default function HeroSection() {
         <span className="flex flex-col items-start text-left">
           <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
           <FlipLine
+            text="of"
+            isSerif
+            baseDelay={220}
+            className="leading-[1.12] mt-0.5 font-canela"
+            style={{
+              fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
+              fontStyle: 'italic',
+              fontWeight: 350,
+              letterSpacing: '-0.01em',
+            }}
+          />
+          <FlipLine
             text="Manzio Studio"
             isSerif
-            baseDelay={320}
-            className="leading-[1.12] mt-1 font-canela"
+            baseDelay={340}
+            className="leading-[1.12] mt-0.5 font-canela"
             style={{
               fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
               fontStyle: 'italic',
