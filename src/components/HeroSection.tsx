@@ -94,7 +94,7 @@ export default function HeroSection() {
         part1: (
           <span className="inline-flex flex-col items-start text-left w-fit max-w-full">
             <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
-            <span className="w-full self-stretch flex justify-center items-center text-center my-0.5 sm:my-1">
+            <span className="w-full flex justify-start items-center text-left my-0.5 sm:my-1 pl-3 sm:pl-4">
               <FlipLine
                 text="of"
                 isSerif
@@ -126,7 +126,7 @@ export default function HeroSection() {
       mobileOverlayText={
         <span className="inline-flex flex-col items-start text-left w-fit max-w-full">
           <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
-          <span className="w-full self-stretch flex justify-center items-center text-center my-0.5">
+          <span className="w-full flex justify-start items-center text-left my-0.5 pl-3">
             <FlipLine
               text="of"
               isSerif
