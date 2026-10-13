@@ -1,8 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, Phone, Send, CheckCircle2 } from "lucide-react";
+import { EditorialRule } from "@/components/ui/EditorialGrid";
+import { contentService } from "@/services/ContentService";
+import { STORAGE_KEYS } from "@/services/StorageService";
+import { PortfolioSettings } from "@/types/portfolio";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -15,6 +19,27 @@ export default function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [settings, setSettings] = useState<PortfolioSettings>(() => ({
+    brandName: "Nashim Nazar",
+    contactEmail: "hello@nashimnazar.in",
+    contactPhone: "+91 99999 99999",
+    whatsappNumber: "+91 99999 99999",
+    location: "Kottayam, Kerala",
+    availability: "AVAILABLE WORLDWIDE",
+    footerBio: "UI/UX Designer, Software & Digital Product Professional.",
+    copyrightText: "© 2026 Nashim Nazar. All rights reserved.",
+  }));
+
+  useEffect(() => {
+    const loaded = contentService.getSettings();
+    if (loaded) setSettings(loaded);
+
+    const unsubscribe = contentService.subscribe(STORAGE_KEYS.SETTINGS, (updated: PortfolioSettings) => {
+      if (updated) setSettings(updated);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -28,35 +53,64 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate submission
+    try {
+      contentService.submitEnquiry({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        service: formData.service || "General Inquiry",
+        timeline: formData.timeline || "Flexible",
+        message: formData.message,
+      });
+    } catch (err) {
+      console.error("Enquiry submission error:", err);
+    }
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 850);
+    }, 600);
   };
 
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative w-full text-[#111111] py-14 sm:py-20 lg:py-24 overflow-hidden selection:bg-lime-200"
+      className="relative w-full text-[#111111] py-14 sm:py-20 lg:py-24 overflow-hidden selection:bg-lime-200 scroll-mt-24 sm:scroll-mt-28"
       style={{
-        backgroundColor: "#FAFAF8",
+        backgroundColor: "#FFFFFF",
         backgroundImage: `
           radial-gradient(
-            ellipse 75% 55% at 80% 40%,
-            rgba(183, 227, 106, 0.22) 0%,
-            rgba(241, 248, 222, 0.12) 42%,
-            transparent 75%
+            ellipse 80% 50% at 50% 8%,
+            rgba(183, 227, 106, 0.20) 0%,
+            rgba(190, 242, 100, 0.09) 38%,
+            rgba(217, 249, 157, 0.02) 65%,
+            transparent 78%
           ),
           radial-gradient(
-            ellipse 65% 45% at 15% 75%,
-            rgba(183, 227, 106, 0.12) 0%,
-            transparent 65%
+            ellipse 80% 55% at 80% 35%,
+            rgba(163, 230, 53, 0.18) 0%,
+            rgba(190, 242, 100, 0.08) 38%,
+            rgba(217, 249, 157, 0.02) 65%,
+            transparent 78%
+          ),
+          radial-gradient(
+            ellipse 70% 50% at 20% 75%,
+            rgba(163, 230, 53, 0.09) 0%,
+            transparent 70%
           )
         `,
       }}
     >
+      {/* Top Soft Lime Ambient Glow bridging from FAQ */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[85%] max-w-[950px] h-[350px] rounded-full blur-[85px] opacity-75 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(183, 227, 106, 0.22) 0%, rgba(183, 227, 106, 0.08) 45%, transparent 72%)",
+        }}
+      />
+
       <div className="w-full max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Badge */}
         <motion.div
@@ -64,13 +118,16 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-6 sm:mb-9 shadow-xs"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-4 sm:mb-6 shadow-xs"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
           <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
             12 / CONTACT
           </span>
         </motion.div>
+
+        {/* Subtle Horizontal Rule framing the contact area */}
+        <EditorialRule level={2} className="mb-6 sm:mb-9" withCorners={true} />
 
         {/* ===================================================
             TWO-COLUMN GRID (42% Left / 58% Right)
@@ -112,7 +169,9 @@ export default function ContactSection() {
             >
               <span className="text-[#64748B]">Prefer a quick conversation?</span>
               <a
-                href="#whatsapp"
+                href={settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, "")}` : "https://wa.me/"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 font-semibold text-[#65a30d] hover:text-[#4d7c0f] transition-colors"
               >
                 Chat on WhatsApp &gt;
@@ -137,9 +196,14 @@ export default function ContactSection() {
                   <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     WhatsApp
                   </h3>
-                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B]">
-                    Chat on WhatsApp &gt;
-                  </p>
+                  <a
+                    href={settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, "")}` : "https://wa.me/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-sans text-xs sm:text-[13px] text-[#64748B] hover:text-[#65a30d] transition-colors"
+                  >
+                    {settings.whatsappNumber || "Chat on WhatsApp >"}
+                  </a>
                 </div>
               </motion.div>
 
@@ -158,9 +222,12 @@ export default function ContactSection() {
                   <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
                     Email
                   </h3>
-                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B] break-all">
-                    [Business email]
-                  </p>
+                  <a
+                    href={`mailto:${settings.contactEmail}`}
+                    className="font-sans text-xs sm:text-[13px] text-[#64748B] hover:text-[#65a30d] transition-colors break-all"
+                  >
+                    {settings.contactEmail}
+                  </a>
                 </div>
               </motion.div>
 
@@ -177,11 +244,14 @@ export default function ContactSection() {
                     <Phone className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
                   </div>
                   <h3 className="font-sans font-semibold text-sm sm:text-[15px] text-[#111111] mb-1">
-                    Phone / WhatsApp
+                    Phone / Call
                   </h3>
-                  <p className="font-sans text-xs sm:text-[13px] text-[#64748B]">
-                    [Verified WhatsApp number]
-                  </p>
+                  <a
+                    href={`tel:${settings.contactPhone.replace(/\s+/g, "")}`}
+                    className="font-sans text-xs sm:text-[13px] text-[#64748B] hover:text-[#65a30d] transition-colors"
+                  >
+                    {settings.contactPhone}
+                  </a>
                 </div>
               </motion.div>
 

@@ -1,7 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { MinimalistHero } from '@/components/ui/minimalist-hero';
+import { contentService } from "@/services/ContentService";
+import { STORAGE_KEYS } from "@/services/StorageService";
+import { INITIAL_PORTFOLIO_DATA } from "@/services/seedData";
+import { HeroData } from "@/types/portfolio";
+
+import { FlipLine } from '@/components/ui/FlipText';
 
 // Lucide-compatible social icons
 const Facebook = (props: React.SVGProps<SVGSVGElement>) => (
@@ -33,10 +40,29 @@ const Linkedin = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function HeroSection() {
+  const [heroData, setHeroData] = useState<HeroData>(INITIAL_PORTFOLIO_DATA.hero);
+
+  useEffect(() => {
+    const loadHero = () => {
+      setHeroData(contentService.getHero());
+    };
+    loadHero();
+
+    const unsubscribe = contentService.subscribe((key) => {
+      if (key === STORAGE_KEYS.HERO) {
+        loadHero();
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const navLinks = [
-    { label: 'EXPERTISE', href: '#expertise' },
-    { label: 'WORK', href: '#work' },
+    { label: 'WORK', href: '#selected-work' },
+    { label: 'SERVICES', href: '#services' },
     { label: 'PROCESS', href: '#process' },
+    { label: 'ABOUT', href: '#about' },
+    { label: 'CONTACT', href: '#contact' },
   ];
 
   const socialLinks = [
@@ -46,24 +72,62 @@ export default function HeroSection() {
     { icon: Facebook, href: 'https://facebook.com' },
   ];
 
+
+
   return (
     <MinimalistHero
-      logoText="Nashim Nazar"
+      logoText={heroData?.name || "Nashim Nazar"}
       navLinks={navLinks}
-      mainText="UI/UX Designer, Software & Digital Product Professional. Crafting high-conversion digital experiences and scalable interfaces."
-      readMoreLink="#expertise"
-      imageSrc="https://cdn.21st.dev/assets/mirror/21/2172cd84238bbee1a57a87b64322655b09c2ffa4ea89acaef7e9989c3abd272d.png"
-      imageAlt="Nashim Nazar - UI/UX Designer"
+      mainText={
+        heroData?.bio ||
+        heroData?.mainText ||
+        "UI/UX Designer, Software & Digital Product Professional. Crafting high-conversion digital experiences and scalable interfaces."
+      }
+      readMoreLink={heroData?.ctaUrl || "#expertise"}
+      imageSrc={
+        heroData?.portraitImage ||
+        heroData?.imageSrc ||
+        "/images/projects/ChatGPT Image Sep 28, 2026, 03_14_07 PM.png"
+      }
+      imageAlt={`${heroData?.name || "Nashim Nazar"} - UI/UX Designer`}
       overlayText={{
-        part1: "Kerala's Best",
-        part2: (
-          <span>
-            <span className="font-serif italic font-normal tracking-normal text-[#111315]">UI/UX</span> Designer
+        part1: (
+          <span className="flex flex-col items-start text-left">
+            <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
+            <FlipLine
+              text="Manzio Studio"
+              isSerif
+              baseDelay={320}
+              className="leading-[1.12] mt-1 sm:mt-1.5 font-canela"
+              style={{
+                fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
+                fontStyle: 'italic',
+                fontWeight: 350,
+                letterSpacing: '-0.01em',
+              }}
+            />
           </span>
         ),
       }}
+      mobileOverlayText={
+        <span className="flex flex-col items-start text-left">
+          <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
+          <FlipLine
+            text="Manzio Studio"
+            isSerif
+            baseDelay={320}
+            className="leading-[1.12] mt-1 font-canela"
+            style={{
+              fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
+              fontStyle: 'italic',
+              fontWeight: 350,
+              letterSpacing: '-0.01em',
+            }}
+          />
+        </span>
+      }
       socialLinks={socialLinks}
-      locationText="Kottayam, Kerala"
+      locationText={heroData?.location || heroData?.locationText || "Kottayam, Kerala"}
     />
   );
 }

@@ -3,6 +3,7 @@
 import React from "react";
 import { TestimonialsColumn, TestimonialItem } from "@/components/ui/testimonials-columns-1";
 import { motion } from "motion/react";
+import { EditorialGridLines, EditorialRule } from "@/components/ui/EditorialGrid";
 
 export const testimonials: TestimonialItem[] = [
   {
@@ -61,34 +62,69 @@ export const testimonials: TestimonialItem[] = [
   },
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+import { contentService } from "@/services/ContentService";
+import { STORAGE_KEYS } from "@/services/StorageService";
 
 export const Testimonials = () => {
+  const [items, setItems] = React.useState<TestimonialItem[]>(testimonials);
+
+  React.useEffect(() => {
+    const loadTestimonials = () => {
+      const managed = contentService.getTestimonials(true);
+      if (managed && managed.length > 0) {
+        setItems(
+          managed.map((t) => ({
+            text: t.quote || t.text,
+            image: t.avatar || t.image,
+            name: t.name,
+            role: `${t.role}${t.company ? ` • ${t.company}` : ""}`,
+          }))
+        );
+      } else if (managed) {
+        setItems([]);
+      }
+    };
+    loadTestimonials();
+
+    const unsubscribe = contentService.subscribe((key) => {
+      if (key === STORAGE_KEYS.TESTIMONIALS || key === "ALL") {
+        loadTestimonials();
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const colSize = Math.max(1, Math.ceil(items.length / 3));
+  const firstColumn = items.slice(0, colSize);
+  const secondColumn = items.slice(colSize, colSize * 2);
+  const thirdColumn = items.slice(colSize * 2);
   return (
     <section
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="relative w-full py-20 sm:py-24 lg:py-32 overflow-hidden selection:bg-lime-200"
+      className="relative w-full py-20 sm:py-24 lg:py-32 overflow-hidden selection:bg-lime-200 scroll-mt-24 sm:scroll-mt-28"
       style={{
         backgroundColor: "#FFFFFF",
         backgroundImage: `
           radial-gradient(
-            ellipse 75% 50% at 50% 40%,
-            rgba(163, 230, 53, 0.20) 0%,
-            rgba(190, 242, 100, 0.10) 38%,
-            rgba(217, 249, 157, 0.03) 65%,
-            transparent 78%
+            ellipse 80% 60% at 50% 55%,
+            rgba(163, 230, 53, 0.28) 0%,
+            rgba(190, 242, 100, 0.16) 40%,
+            rgba(217, 249, 157, 0.05) 68%,
+            transparent 82%
           ),
           radial-gradient(
-            ellipse 85% 60% at 50% 60%,
-            rgba(163, 230, 53, 0.08) 0%,
-            transparent 72%
+            ellipse 90% 70% at 50% 65%,
+            rgba(163, 230, 53, 0.14) 0%,
+            transparent 75%
           )
         `,
       }}
     >
+      {/* Level 1 Subtle Editorial Grid Lines Foundation */}
+      <EditorialGridLines level={1} className="z-0" />
+
       <div className="container z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,7 +137,7 @@ export const Testimonials = () => {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
             <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-              09 / TESTIMONIALS
+              08 / TESTIMONIALS
             </span>
           </div>
 
@@ -114,20 +150,34 @@ export const Testimonials = () => {
           <p className="text-sm sm:text-base text-[#525B64] font-normal leading-relaxed mt-4 max-w-md">
             Real feedback from founders and teams we&apos;ve collaborated with to build digital products.
           </p>
+
+          {/* Subtle Horizontal Rule framing the testimonial columns */}
+          <div className="mt-8 sm:mt-10 w-full max-w-md mx-auto">
+            <EditorialRule level={1} />
+          </div>
         </motion.div>
 
-        <div className="flex justify-center gap-6 mt-14 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] max-h-[740px] overflow-hidden">
-          <TestimonialsColumn testimonials={firstColumn} duration={16} />
-          <TestimonialsColumn
-            testimonials={secondColumn}
-            className="hidden md:block"
-            duration={20}
+        {/* Testimonials Cards with Rich Green Luminous Background Glow */}
+        <div className="relative mt-12 sm:mt-14">
+          {/* Luminous Ambient Green Glow Orb behind cards */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] xs:w-[480px] sm:w-[700px] lg:w-[920px] h-[380px] xs:h-[460px] sm:h-[540px] bg-gradient-to-tr from-[#A3E635]/35 via-[#84CC16]/25 to-[#BEF264]/20 rounded-full blur-[70px] sm:blur-[120px] z-0"
           />
-          <TestimonialsColumn
-            testimonials={thirdColumn}
-            className="hidden lg:block"
-            duration={18}
-          />
+
+          <div className="relative z-10 flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)] max-h-[740px] overflow-hidden">
+            <TestimonialsColumn testimonials={firstColumn} duration={16} />
+            <TestimonialsColumn
+              testimonials={secondColumn}
+              className="hidden md:block"
+              duration={20}
+            />
+            <TestimonialsColumn
+              testimonials={thirdColumn}
+              className="hidden lg:block"
+              duration={18}
+            />
+          </div>
         </div>
       </div>
     </section>

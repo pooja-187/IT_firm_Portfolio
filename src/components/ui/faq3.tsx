@@ -94,7 +94,7 @@ export const Faq3 = ({
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative w-full py-16 sm:py-24 lg:py-32 overflow-hidden selection:bg-lime-200"
+      className="relative w-full py-16 sm:py-24 lg:py-32 overflow-hidden selection:bg-lime-200 scroll-mt-24 sm:scroll-mt-28"
       style={{
         backgroundColor: "#FFFFFF",
         backgroundImage: `
@@ -106,14 +106,30 @@ export const Faq3 = ({
             transparent 78%
           ),
           radial-gradient(
-            ellipse 85% 60% at 50% 65%,
-            rgba(163, 230, 53, 0.06) 0%,
+            ellipse 85% 55% at 50% 70%,
+            rgba(163, 230, 53, 0.10) 0%,
             transparent 70%
+          ),
+          radial-gradient(
+            ellipse 80% 50% at 50% 95%,
+            rgba(183, 227, 106, 0.18) 0%,
+            rgba(190, 242, 100, 0.08) 40%,
+            transparent 75%
           )
         `,
       }}
     >
-      <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12 sm:space-y-16">
+      {/* Bottom Soft Lime Glow bridging into Contact */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4 w-[85%] max-w-[950px] h-[350px] rounded-full blur-[85px] opacity-75 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(183, 227, 106, 0.22) 0%, rgba(183, 227, 106, 0.08) 45%, transparent 72%)",
+        }}
+      />
+
+      <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10 sm:space-y-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -126,7 +142,7 @@ export const Faq3 = ({
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
             <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
-              11 / FREQUENTLY ASKED QUESTIONS
+              10 / FREQUENTLY ASKED QUESTIONS
             </span>
           </div>
 

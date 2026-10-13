@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Instrument_Serif } from 'next/font/google';
+import {
+  Plus_Jakarta_Sans,
+  Instrument_Serif,
+  Cormorant_Garamond,
+  Pinyon_Script,
+  Fraunces,
+} from 'next/font/google';
 import './globals.css';
 
 const sansFont = Plus_Jakarta_Sans({
@@ -15,6 +21,30 @@ const serifFont = Instrument_Serif({
   display: 'swap',
   weight: ['400'],
   style: ['normal', 'italic'],
+});
+
+const scriptFont = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-script',
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+// Refined, legal Google Font pairing fallbacks for Burgues Script and Canela Italic
+const burguesFallbackFont = Pinyon_Script({
+  subsets: ['latin'],
+  variable: '--font-burgues-fallback',
+  weight: ['400'],
+  display: 'swap',
+});
+
+const canelaFallbackFont = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-canela-fallback',
+  style: ['italic'],
+  weight: ['300', '400'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -91,7 +121,10 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${sansFont.variable} ${serifFont.variable} scroll-smooth`}>
+    <html
+      lang="en"
+      className={`${sansFont.variable} ${serifFont.variable} ${scriptFont.variable} ${burguesFallbackFont.variable} ${canelaFallbackFont.variable} scroll-smooth`}
+    >
       <head>
         <script
           type="application/ld+json"

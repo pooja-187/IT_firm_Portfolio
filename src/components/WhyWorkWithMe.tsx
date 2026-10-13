@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export interface ValueProposition {
   number: string;
@@ -36,12 +37,42 @@ export const VALUE_PROPOSITIONS: ValueProposition[] = [
   },
 ];
 
+import { contentService } from "@/services/ContentService";
+import { STORAGE_KEYS } from "@/services/StorageService";
+
 export default function WhyWorkWithMe() {
+  const [propositions, setPropositions] = useState<ValueProposition[]>(VALUE_PROPOSITIONS);
+  const [activeMobileIdx, setActiveMobileIdx] = useState<number | null>(null);
+
+  React.useEffect(() => {
+    const loadValues = () => {
+      const managed = contentService.getValues(true);
+      if (managed && managed.length > 0) {
+        setPropositions(
+          managed.map((v) => ({
+            number: v.number,
+            title: v.title,
+            description: v.description,
+          }))
+        );
+      }
+    };
+    loadValues();
+
+    const unsubscribe = contentService.subscribe((key) => {
+      if (key === STORAGE_KEYS.VALUES) {
+        loadValues();
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <section
       id="why-work-with-me"
       aria-labelledby="why-work-heading"
-      className="relative w-full text-[#111111] pt-16 sm:pt-20 lg:pt-28 pb-20 sm:pb-28 lg:pb-36 overflow-hidden selection:bg-lime-200"
+      className="relative w-full text-[#111111] pt-14 sm:pt-20 lg:pt-28 pb-16 sm:pb-28 lg:pb-36 overflow-hidden selection:bg-lime-200 scroll-mt-24 sm:scroll-mt-28"
       style={{
         backgroundColor: "#FFFFFF",
         backgroundImage: `
@@ -60,8 +91,9 @@ export default function WhyWorkWithMe() {
         `,
       }}
     >
+
       <div className="w-full max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-8 xl:gap-14">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-8 xl:gap-14">
           {/* ===================================================
               LEFT SIDE: Editorial Section Anchor (~36%)
              =================================================== */}
@@ -72,7 +104,7 @@ export default function WhyWorkWithMe() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-6 shadow-xs"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-black/5 mb-5 sm:mb-6 shadow-xs"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
               <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#64748B]">
@@ -80,26 +112,26 @@ export default function WhyWorkWithMe() {
               </span>
             </motion.div>
 
-            {/* Main Editorial Heading */}
+            {/* Main Editorial Heading - unified size on mobile */}
             <motion.h2
               id="why-work-heading"
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-sans text-4xl sm:text-5xl lg:text-5xl xl:text-[58px] 2xl:text-[64px] font-light text-[#111111] tracking-[-0.035em] leading-[1.08] max-w-lg"
+              className="font-sans text-3xl sm:text-4xl lg:text-5xl xl:text-[58px] 2xl:text-[64px] font-light text-[#111111] tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] max-w-lg mb-2 sm:mb-0"
             >
               Design decisions with a business purpose.
             </motion.h2>
           </div>
 
           {/* ===================================================
-              RIGHT SIDE: 4 Vertical Editorial Columns (~64%)
+              RIGHT SIDE: Columns (Desktop) / Horizontal Rows (Mobile)
              =================================================== */}
           <div className="w-full lg:w-[64%] xl:w-[66%]">
-            {/* Desktop & Tablet Column Grid */}
+            {/* Desktop & Tablet Column Grid (100% preserved) */}
             <div className="hidden md:grid md:grid-cols-4 relative border-l border-black/[0.08]">
-              {VALUE_PROPOSITIONS.map((prop, idx) => (
+              {propositions.map((prop, idx) => (
                 <motion.div
                   key={prop.number}
                   initial={{ opacity: 0, y: 25 }}
@@ -147,34 +179,100 @@ export default function WhyWorkWithMe() {
               ))}
             </div>
 
-            {/* Mobile Vertical Editorial Stack (< 768px) */}
-            <div className="md:hidden flex flex-col divide-y divide-black/[0.08] border-y border-black/[0.08]">
-              {VALUE_PROPOSITIONS.map((prop, idx) => (
-                <motion.div
-                  key={`mobile-${prop.number}`}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{
-                    duration: 0.5,
-                    delay: idx * 0.08,
-                    ease: "easeOut",
-                  }}
-                  className="py-8 px-2 flex flex-col relative group"
-                >
-                  <div className="mb-3">
-                    <span className="inline-flex items-center font-mono text-xs font-semibold tracking-widest text-[#84CC16] bg-[#84CC16]/10 px-2 py-0.5 rounded-full">
-                      {prop.number}
-                    </span>
-                  </div>
-                  <h3 className="font-sans text-xl font-normal text-[#111111] tracking-tight leading-snug mb-3">
-                    {prop.title}
-                  </h3>
-                  <p className="font-sans text-sm text-[#525B64] font-normal leading-relaxed">
-                    {prop.description}
-                  </p>
-                </motion.div>
-              ))}
+            {/* Mobile Horizontal Rows (< 768px) with matching colors, design & dynamic hover effects */}
+            <div
+              className="md:hidden flex flex-col space-y-3.5 w-full"
+              onPointerLeave={() => setActiveMobileIdx(null)}
+              onMouseLeave={() => setActiveMobileIdx(null)}
+            >
+              {propositions.map((prop, idx) => {
+                const isSelected = activeMobileIdx === idx;
+                return (
+                  <motion.div
+                    key={`mobile-${prop.number}`}
+                    onClick={() => setActiveMobileIdx((prev) => (prev === idx ? null : idx))}
+                    onPointerEnter={() => setActiveMobileIdx(idx)}
+                    onPointerMove={() => {
+                      if (activeMobileIdx !== idx) setActiveMobileIdx(idx);
+                    }}
+                    onPointerOver={() => {
+                      if (activeMobileIdx !== idx) setActiveMobileIdx(idx);
+                    }}
+                    onMouseEnter={() => setActiveMobileIdx(idx)}
+                    onMouseMove={() => {
+                      if (activeMobileIdx !== idx) setActiveMobileIdx(idx);
+                    }}
+                    onTouchStart={() => setActiveMobileIdx(idx)}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{
+                      duration: 0.45,
+                      delay: idx * 0.08,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className={cn(
+                      "group relative flex flex-col p-5 xs:p-6 rounded-[22px] border transition-all duration-300 select-none overflow-hidden cursor-pointer",
+                      isSelected
+                        ? "bg-white/95 border-[#84CC16]/50 shadow-[0_16px_36px_rgba(132,204,22,0.18)] -translate-y-0.5"
+                        : "bg-white/60 hover:bg-white/95 border-black/[0.08] hover:border-[#84CC16]/50 shadow-xs hover:shadow-[0_16px_36px_rgba(132,204,22,0.18)] hover:-translate-y-0.5"
+                    )}
+                  >
+                    {/* Rich Luminous Ambient Glow (matching desktop) */}
+                    <div
+                      aria-hidden="true"
+                      className={cn(
+                        "absolute inset-0 bg-gradient-to-r from-[#84CC16]/22 via-[#84CC16]/[0.08] to-transparent pointer-events-none transition-opacity duration-300",
+                        isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      )}
+                    />
+
+                    {/* Radial Spotlight Bloom (matching desktop) */}
+                    <div
+                      aria-hidden="true"
+                      className={cn(
+                        "absolute -top-16 -left-10 w-48 h-48 bg-[#84CC16]/30 rounded-full blur-2xl pointer-events-none transition-opacity duration-300",
+                        isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      )}
+                    />
+
+                    {/* Top Row: Number Badge & Title */}
+                    <div className="relative z-10 flex items-start gap-3.5 mb-2.5">
+                      <span
+                        className={cn(
+                          "inline-flex items-center justify-center font-mono text-xs font-semibold tracking-widest px-2.5 py-0.5 rounded-full transition-all duration-300 select-none shadow-xs shrink-0 mt-0.5",
+                          isSelected
+                            ? "bg-[#84CC16] text-[#111111] shadow-[0_0_14px_rgba(132,204,22,0.6)] scale-105"
+                            : "bg-black/[0.04] text-[#65a30d] group-hover:bg-[#84CC16] group-hover:text-[#111111] group-hover:shadow-[0_0_14px_rgba(132,204,22,0.6)] group-hover:scale-105"
+                        )}
+                      >
+                        {prop.number}
+                      </span>
+
+                      <h3
+                        className={cn(
+                          "font-sans text-lg xs:text-[19px] font-normal tracking-tight leading-snug transition-colors duration-300",
+                          isSelected ? "text-black font-medium" : "text-[#111111] group-hover:text-black group-hover:font-medium"
+                        )}
+                      >
+                        {prop.title}
+                      </h3>
+                    </div>
+
+                    {/* Bottom Row: Description */}
+                    <div className="relative z-10 pl-10 xs:pl-11">
+                      <p
+                        className={cn(
+                          "font-sans text-[12.5px] xs:text-[13.5px] font-normal leading-relaxed transition-colors duration-300",
+                          isSelected ? "text-[#0f172a]" : "text-[#525B64] group-hover:text-[#0f172a]"
+                        )}
+                      >
+                        {prop.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
