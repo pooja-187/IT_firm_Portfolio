@@ -30,6 +30,8 @@ const config = {
           'sans-serif',
         ],
         serif: ['var(--font-serif)', 'serif'],
+        outfit: ['var(--font-outfit)', 'sans-serif'],
+        playfair: ['var(--font-playfair)', 'serif'],
       },
       colors: {
         lime: {

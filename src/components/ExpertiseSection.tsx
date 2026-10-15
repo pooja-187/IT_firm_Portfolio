@@ -269,18 +269,20 @@ export default function ExpertiseSection() {
       ref={sectionRef}
       id="expertise"
       aria-labelledby="expertise-heading"
-      className="relative w-full bg-white pt-10 sm:pt-32 pb-20 sm:pb-32 lg:py-40 overflow-hidden selection:bg-lime-200"
+      className="relative w-full bg-white pt-14 sm:pt-32 pb-20 sm:pb-32 lg:py-40 overflow-hidden selection:bg-lime-200"
     >
-      {/* Continuous Soft Ambient Seam Blend — Top of Expertise (Mirroring Hero Bottom) */}
+      {/* Continuous Soft Ambient Seam Blend — Top of Expertise (Smoothly feathered, zero hard edge) */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-0 right-0 h-64 sm:h-72 z-0 overflow-hidden"
         style={{
           background: `
-            radial-gradient(ellipse 110% 100% at 50% 0%, rgba(162, 246, 36, 0.22) 0%, rgba(184, 252, 60, 0.14) 35%, rgba(214, 255, 115, 0.05) 65%, transparent 85%),
-            radial-gradient(circle 280px at 20% 10%, rgba(150, 245, 30, 0.10) 0%, transparent 70%),
-            radial-gradient(circle 280px at 80% 10%, rgba(150, 245, 30, 0.08) 0%, transparent 70%)
+            radial-gradient(ellipse 110% 100% at 50% 25%, rgba(162, 246, 36, 0.22) 0%, rgba(184, 252, 60, 0.14) 35%, rgba(214, 255, 115, 0.05) 65%, transparent 85%),
+            radial-gradient(circle 280px at 20% 25%, rgba(150, 245, 30, 0.10) 0%, transparent 70%),
+            radial-gradient(circle 280px at 80% 25%, rgba(150, 245, 30, 0.08) 0%, transparent 70%)
           `,
+          maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 18%, black 50%, black 85%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 18%, black 50%, black 85%, transparent 100%)",
         }}
       />
 

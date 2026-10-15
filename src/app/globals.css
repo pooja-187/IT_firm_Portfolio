@@ -77,8 +77,8 @@ body {
 
 /* Editorial Grid System Utilities */
 .editorial-grid-mask {
-  mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 5%, black 14%, black 86%, rgba(0, 0, 0, 0.25) 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 5%, black 14%, black 86%, rgba(0, 0, 0, 0.25) 95%, transparent 100%);
 }
 
 .editorial-grid-mask-hero {
@@ -110,7 +110,7 @@ body {
        local('BurguesScript');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -121,7 +121,7 @@ body {
        local('Canela-Italic');
   font-weight: 300 400;
   font-style: italic;
-  font-display: swap;
+  font-display: block;
 }
 
 .font-burgues {
@@ -130,6 +130,18 @@ body {
 
 .font-canela {
   font-family: 'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif;
+}
+
+.font-outfit {
+  font-family: var(--font-outfit), 'Outfit', -apple-system, sans-serif;
+}
+
+.font-playfair {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+.font-instrument {
+  font-family: var(--font-serif), 'Instrument Serif', Georgia, serif;
 }
 
 /* =========================================================================
@@ -144,7 +156,7 @@ body {
        local('Satoshi Medium');
   font-weight: 500;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -155,7 +167,7 @@ body {
        local('Satoshi Bold');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 .font-satoshi {
@@ -174,7 +186,7 @@ body {
        local('ITC Edwardian Script');
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 .font-edwardian {
@@ -200,7 +212,7 @@ body {
        local('Italianno-Regular');
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 .font-italianno {

@@ -93,16 +93,15 @@ export default function HeroSection() {
       overlayText={{
         part1: (
           <span className="flex flex-col items-start text-left">
-            <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
+            <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-outfit font-extrabold" />
             <FlipLine
               text="Manzio Studio"
               isSerif
               baseDelay={320}
-              className="leading-[1.12] mt-1 sm:mt-1.5 font-canela"
+              className="leading-[1.12] mt-1 sm:mt-1.5 font-playfair"
               style={{
-                fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
                 fontStyle: 'italic',
-                fontWeight: 350,
+                fontWeight: 400,
                 letterSpacing: '-0.01em',
               }}
             />
@@ -110,21 +109,38 @@ export default function HeroSection() {
         ),
       }}
       mobileOverlayText={
-        <span className="flex flex-col items-start text-left">
-          <FlipLine text="CEO and Founder" baseDelay={100} className="leading-[0.95] tracking-tight font-sans font-extrabold" />
-          <FlipLine
-            text="Manzio Studio"
-            isSerif
-            baseDelay={320}
-            className="leading-[1.12] mt-1 font-canela"
+        <div className="flex flex-col items-start text-left select-none">
+          {/* Line 1: CEO */}
+          <span className="font-outfit font-extrabold text-[#0D0F11] leading-[0.92] tracking-[-0.03em] uppercase text-[clamp(32px,8.5vw,46px)] whitespace-nowrap">
+            CEO
+          </span>
+
+          {/* Line 2: and */}
+          <span className="font-outfit font-light text-[#2A2E33] leading-[1.05] tracking-tight lowercase text-[clamp(17px,4.8vw,22px)] my-1 sm:my-1.5 select-none whitespace-nowrap">
+            and
+          </span>
+
+          {/* Line 3: Founder */}
+          <span className="font-outfit font-extrabold text-[#0D0F11] leading-[0.92] tracking-[-0.03em] text-[clamp(32px,8.5vw,46px)] whitespace-nowrap">
+            Founder
+          </span>
+
+          {/* Line 4: Manzio Studio */}
+          <span
+            className="leading-[1.12] mt-1.5 sm:mt-2 font-playfair italic font-normal text-[#0D0F11] text-[clamp(22px,6vw,30px)] whitespace-nowrap"
             style={{
-              fontFamily: "'Canela', 'Canela Italic', var(--font-canela-fallback), var(--font-serif), serif",
-              fontStyle: 'italic',
-              fontWeight: 350,
               letterSpacing: '-0.01em',
             }}
+          >
+            Manzio Studio
+          </span>
+
+          {/* Line 5: Short Lime-Green Accent Line */}
+          <div
+            className="h-[3.5px] w-16 sm:w-20 rounded-full mt-2.5 sm:mt-3 bg-[#84CC16] shadow-[0_0_10px_rgba(132,204,22,0.55)]"
+            aria-hidden="true"
           />
-        </span>
+        </div>
       }
       socialLinks={socialLinks}
       locationText={heroData?.location || heroData?.locationText || "Kottayam, Kerala"}

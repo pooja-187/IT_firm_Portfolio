@@ -5,20 +5,37 @@ import {
   Cormorant_Garamond,
   Pinyon_Script,
   Fraunces,
+  Outfit,
+  Playfair_Display,
 } from 'next/font/google';
 import './globals.css';
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
+  display: 'block',
   weight: ['400', '500', '600', '700', '800'],
+});
+
+const outfitFont = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'block',
+});
+
+const playfairFont = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  display: 'block',
 });
 
 const serifFont = Instrument_Serif({
   subsets: ['latin'],
   variable: '--font-serif',
-  display: 'swap',
+  display: 'block',
   weight: ['400'],
   style: ['normal', 'italic'],
 });
@@ -28,7 +45,7 @@ const scriptFont = Cormorant_Garamond({
   variable: '--font-script',
   weight: ['300', '400', '500', '600'],
   style: ['normal', 'italic'],
-  display: 'swap',
+  display: 'block',
 });
 
 // Refined, legal Google Font pairing fallbacks for Burgues Script and Canela Italic
@@ -36,7 +53,7 @@ const burguesFallbackFont = Pinyon_Script({
   subsets: ['latin'],
   variable: '--font-burgues-fallback',
   weight: ['400'],
-  display: 'swap',
+  display: 'block',
 });
 
 const canelaFallbackFont = Fraunces({
@@ -44,7 +61,7 @@ const canelaFallbackFont = Fraunces({
   variable: '--font-canela-fallback',
   style: ['italic'],
   weight: ['300', '400'],
-  display: 'swap',
+  display: 'block',
 });
 
 export const metadata: Metadata = {
@@ -123,7 +140,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sansFont.variable} ${serifFont.variable} ${scriptFont.variable} ${burguesFallbackFont.variable} ${canelaFallbackFont.variable} scroll-smooth`}
+      className={`${sansFont.variable} ${outfitFont.variable} ${playfairFont.variable} ${serifFont.variable} ${scriptFont.variable} ${burguesFallbackFont.variable} ${canelaFallbackFont.variable} scroll-smooth`}
     >
       <head>
         <script

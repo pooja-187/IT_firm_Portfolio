@@ -55,151 +55,192 @@ export const MinimalistHero = ({
       )}
     >
       {/* =========================================================================
-          1. DEDICATED MOBILE HERO (< 768px): Fills full viewport (100svh)
-             Order & Geometry:
-             1. Fixed Header clearance (safe-area aware)
-             2. Ambient green atmosphere & glow across full viewport
-             3. Centered, responsively scaled portrait with grounded contact shadow
-             4. Balanced typography below portrait (CEO and Founder / Manzio Studio)
-             5. Next section (Expertise) stays completely below the fold
+          1. DEDICATED MOBILE HERO (< 768px): Matches Reference Image 2 Precisely
+             - Split 2-column composition: Portrait on LEFT (~58%), Typography on RIGHT (~42%)
+             - Concentrated vibrant lime-green glow behind portrait on the left
+             - Clean, soft warm off-white/pale lime background (#F2F8E7)
+             - Prominent sharp Nashim portrait with bottom-only gradual feather fade
+             - Typography aligned with face & upper chest:
+                 • CEO (large, black, heavy sans-serif, uppercase)
+                 • and (smaller, thin sans-serif, lowercase)
+                 • Founder (large, black, heavy sans-serif)
+                 • Manzio Studio (elegant italic serif)
+                 • Short lime-green accent bar directly beneath subtitle
+             - Seamless blend at bottom into the page
          ========================================================================= */}
       <div
-        className="md:hidden relative w-full flex flex-col justify-between overflow-hidden bg-white min-h-screen min-h-[100dvh] min-h-[100svh]"
+        className="md:hidden relative w-full flex flex-col justify-between overflow-hidden min-h-screen min-h-[100dvh] min-h-[100svh]"
         style={{
           minHeight: '100svh',
+          background: 'linear-gradient(180deg, #E6F5C9 0%, #E3F2C2 35%, #E9F6D0 68%, #F2F8E7 100%)',
         }}
       >
-        {/* Rich Ambient Lime-Green Studio Light & Gradient Atmosphere (matching desktop hero) */}
+        {/* Rich Saturated Ambient Lime-Green Glow & Atmosphere */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
           style={{
             background: `
-              radial-gradient(ellipse 100% 70% at 50% 38%, rgba(162, 246, 36, 0.62) 0%, rgba(184, 252, 60, 0.42) 30%, rgba(214, 255, 115, 0.20) 55%, transparent 82%),
-              radial-gradient(circle 350px at 15% 42%, rgba(150, 245, 30, 0.32) 0%, transparent 70%),
-              radial-gradient(circle 350px at 85% 32%, rgba(150, 245, 30, 0.32) 0%, transparent 70%),
-              radial-gradient(ellipse 110% 85% at 50% 38%, rgba(210, 250, 140, 0.22) 0%, transparent 78%)
+              /* Top ambient light wrapping navigation and upper card */
+              radial-gradient(ellipse 110% 55% at 50% 10%, rgba(163, 230, 53, 0.45) 0%, rgba(190, 242, 100, 0.28) 35%, transparent 75%),
+              /* Core saturated lime glow directly behind portrait */
+              radial-gradient(ellipse 85% 68% at 28% 38%, rgba(162, 246, 36, 0.88) 0%, rgba(184, 252, 60, 0.62) 32%, rgba(214, 255, 115, 0.32) 58%, transparent 84%),
+              /* High-intensity lime sphere centered at shoulder/neck */
+              radial-gradient(circle 360px at 20% 40%, rgba(150, 245, 30, 0.52) 0%, transparent 70%),
+              /* Soft right-side ambient fill */
+              radial-gradient(circle 380px at 80% 30%, rgba(190, 242, 100, 0.32) 0%, transparent 72%),
+              /* Bottom ambient grounding */
+              radial-gradient(ellipse 95% 50% at 50% 92%, rgba(163, 230, 53, 0.28) 0%, transparent 75%)
             `,
-            maskImage: "linear-gradient(to bottom, black 0%, black 65%, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0.2) 92%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 65%, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0.2) 92%, transparent 100%)",
           }}
         >
-          {/* Concentrated Soft Depth Glow Behind Portrait */}
+          {/* Intense Concentrated Core Glow */}
           <div
             className="absolute"
             style={{
-              width: "70%",
-              height: "45%",
-              left: "50%",
+              width: "75%",
+              height: "58%",
+              left: "28%",
               top: "38%",
               transform: "translate(-50%, -50%)",
-              background: "rgba(162, 246, 36, 0.30)",
-              filter: "blur(60px)",
+              background: "rgba(162, 246, 36, 0.48)",
+              filter: "blur(65px)",
               borderRadius: "50%",
             }}
           />
         </div>
 
-        {/* Soft Organic Green Dome Contour SVG */}
+        {/* Soft Organic Green Dome / Curved Shape behind portrait (matching Image 2) */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 390 844"
-          preserveAspectRatio="xMidYMin slice"
+          preserveAspectRatio="none"
           style={{
-            maskImage: "linear-gradient(to bottom, black 0%, black 65%, rgba(0, 0, 0, 0.6) 80%, transparent 95%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 65%, rgba(0, 0, 0, 0.6) 80%, transparent 95%)",
+            opacity: 0.82,
+            maskImage: "linear-gradient(to bottom, black 0%, black 78%, transparent 98%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 78%, transparent 98%)",
           }}
         >
           <defs>
-            <radialGradient id="mobileHeroDomeGradient" cx="50%" cy="46%" r="56%">
-              <stop offset="0%" stopColor="#A3E635" stopOpacity="0.48" />
-              <stop offset="35%" stopColor="#BEF264" stopOpacity="0.32" />
-              <stop offset="70%" stopColor="#D9F99D" stopOpacity="0.18" />
-              <stop offset="90%" stopColor="#D9F99D" stopOpacity="0.08" />
-              <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+            <radialGradient id="mobileOrganicGlow" cx="24%" cy="40%" r="58%">
+              <stop offset="0%" stopColor="#84CC16" stopOpacity="0.55" />
+              <stop offset="35%" stopColor="#A3E635" stopOpacity="0.42" />
+              <stop offset="68%" stopColor="#BEF264" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#E6F5C9" stopOpacity="0" />
             </radialGradient>
           </defs>
-
-          {/* Soft Organic Green Dome behind Nashim */}
           <path
-            d="M 10 740 C 10 320, 95 210, 195 210 C 295 210, 380 320, 380 740 Z"
-            fill="url(#mobileHeroDomeGradient)"
+            d="M -30 800 C -30 290, 80 170, 230 190 C 330 205, 370 270, 350 510 C 330 710, 200 800, -30 800 Z"
+            fill="url(#mobileOrganicGlow)"
           />
         </svg>
 
-        {/* Continuous Soft Ambient Seam Blend — Bottom of Hero (Feathers seamlessly into Expertise) */}
+        {/* Continuous Soft Ambient Seam Blend — Bottom of Hero (feathers cleanly into next section) */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 sm:h-72 z-0 overflow-hidden"
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 sm:h-56 z-0 overflow-hidden"
           style={{
-            background: `
-              radial-gradient(ellipse 110% 100% at 50% 100%, rgba(162, 246, 36, 0.22) 0%, rgba(184, 252, 60, 0.14) 35%, rgba(214, 255, 115, 0.05) 65%, transparent 85%),
-              radial-gradient(circle 280px at 20% 90%, rgba(150, 245, 30, 0.10) 0%, transparent 70%),
-              radial-gradient(circle 280px at 80% 90%, rgba(150, 245, 30, 0.08) 0%, transparent 70%)
-            `,
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(230, 245, 201, 0.35) 30%, rgba(255, 255, 255, 0.82) 75%, #FFFFFF 100%)',
           }}
         />
 
-        {/* Content Flow Container in Normal Document Flow */}
+        {/* Main Content Area: Top clearance for fixed navigation, Left/Right split */}
         <div
-          className="relative z-10 w-full flex-1 min-h-0 flex flex-col justify-between px-5 sm:px-6"
+          className="relative z-10 w-full flex-1 min-h-0 flex flex-col justify-start"
           style={{
-            paddingTop: 'max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3.25rem))',
-            paddingBottom: 'max(3.85rem, calc(env(safe-area-inset-bottom, 0px) + 3.25rem))',
+            paddingTop: 'max(4.75rem, calc(env(safe-area-inset-top, 0px) + 3.75rem))',
+            paddingBottom: 'max(2rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem))',
           }}
         >
-          {/* 1. NASHIM PORTRAIT — Centered & Responsively Sized (Larger Mobile Presence) */}
-          <div className="relative w-full flex-1 min-h-0 flex flex-col justify-center items-center z-10 py-1">
-            <motion.div
-              initial={{ y: shouldReduceMotion ? '0vh' : '100vh' }}
-              animate={{ y: '0vh' }}
-              transition={{
-                duration: 1.5,
-                ease: [0.16, 1, 0.3, 1],
-                delay: shouldReduceMotion ? 0 : 0.15,
-              }}
-              className="relative flex flex-col items-center justify-end will-change-transform max-h-full"
-            >
-              <img
-                src={imageSrc}
-                alt={imageAlt}
-                loading="eager"
-                fetchPriority="high"
-                className="w-auto h-auto max-h-[500px] max-w-[92vw] sm:max-w-[460px] object-contain select-none will-change-transform"
-                style={{
-                  maxHeight: 'min(58svh, 510px)',
-                  filter: 'grayscale(100%) contrast(1.05) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.14))',
+          {/* 2-Column Split Composition: Left Portrait + Right Typography */}
+          <div className="relative w-full flex items-start pl-0 pr-1 xs:pr-2 sm:pr-4">
+            {/* 1. LEFT COLUMN: NASHIM PORTRAIT (Prominent scale matching reference) */}
+            <div className="relative w-[48%] xs:w-[50%] shrink-0 flex flex-col justify-start items-start pointer-events-none overflow-visible pt-4 xs:pt-6 sm:pt-8">
+              <motion.div
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 1.2,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: shouldReduceMotion ? 0 : 0.1,
                 }}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null;
-                  target.src = '/images/projects/ChatGPT Image Sep 28, 2026, 03_14_07 PM.png';
-                }}
-              />
+                className="relative w-full flex justify-start items-start will-change-transform"
+              >
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  loading="eager"
+                  fetchPriority="high"
+                  className="w-auto select-none will-change-transform"
+                  style={{
+                    height: 'min(78svh, 625px)',
+                    maxHeight: 'min(78svh, 625px)',
+                    maxWidth: 'none',
+                    transform: 'translateX(-30%)', // Shifted further to the left
+                    filter: 'grayscale(100%) contrast(1.08) drop-shadow(0 14px 24px rgba(0, 0, 0, 0.10))',
+                    maskImage: 'linear-gradient(to bottom, black 0%, black 72%, rgba(0, 0, 0, 0.70) 84%, rgba(0, 0, 0, 0.15) 94%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 72%, rgba(0, 0, 0, 0.70) 84%, rgba(0, 0, 0, 0.15) 94%, transparent 100%)',
+                  }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null;
+                    target.src = '/images/projects/ChatGPT Image Sep 28, 2026, 03_14_07 PM.png';
+                  }}
+                />
+              </motion.div>
+            </div>
 
-              {/* Floor Contact Shadow Grounded Directly Below Image */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 w-[82%] max-w-[340px] h-6 rounded-[100%] opacity-35 -z-10"
-                style={{
-                  background:
-                    'radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.12) 50%, transparent 80%)',
-                  filter: 'blur(10px)',
+            {/* 2. RIGHT COLUMN: TYPOGRAPHY (Shifted further right and downward matching reference) */}
+            <div className="flex-1 min-w-0 flex flex-col items-start justify-start z-20 pt-28 xs:pt-32 sm:pt-36 pl-9 xs:pl-12 sm:pl-16">
+              <motion.div
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.9,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: shouldReduceMotion ? 0 : 0.25,
                 }}
-              />
-            </motion.div>
-          </div>
+                className="w-full"
+              >
+                {mobileOverlayText ? (
+                  mobileOverlayText
+                ) : (
+                  <div className="flex flex-col items-start text-left select-none">
+                    {/* Line 1: CEO */}
+                    <span className="font-outfit font-extrabold text-[#0D0F11] leading-[0.92] tracking-[-0.03em] uppercase text-[clamp(32px,8.5vw,46px)] whitespace-nowrap">
+                      CEO
+                    </span>
 
-          {/* 2. PRIMARY HEADLINE — CEO and Founder / Manzio Studio */}
-          <div className="w-full text-left relative z-20 shrink-0 px-1 pt-1">
-            <h1
-              suppressHydrationWarning
-              className="text-left font-extrabold text-[#111111] leading-[0.92] tracking-[-0.03em]"
-              style={{ fontSize: 'clamp(28px, 8.2vw, 42px)' }}
-            >
-              {mobileOverlayText || overlayText.part1}
-            </h1>
+                    {/* Line 2: and */}
+                    <span className="font-outfit font-light text-[#2A2E33] leading-[1.05] tracking-tight lowercase text-[clamp(17px,4.8vw,22px)] my-1 sm:my-1.5 select-none whitespace-nowrap">
+                      and
+                    </span>
+
+                    {/* Line 3: Founder */}
+                    <span className="font-outfit font-extrabold text-[#0D0F11] leading-[0.92] tracking-[-0.03em] text-[clamp(32px,8.5vw,46px)] whitespace-nowrap">
+                      Founder
+                    </span>
+
+                    {/* Line 4: Manzio Studio */}
+                    <span
+                      className="leading-[1.12] mt-1.5 sm:mt-2 font-playfair italic font-normal text-[#0D0F11] text-[clamp(22px,6vw,30px)] whitespace-nowrap"
+                      style={{
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      Manzio Studio
+                    </span>
+
+                    {/* Line 5: Short Lime-Green Accent Line */}
+                    <div
+                      className="h-[3.5px] w-16 sm:w-20 rounded-full mt-2.5 sm:mt-3 bg-[#84CC16] shadow-[0_0_10px_rgba(132,204,22,0.55)]"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
